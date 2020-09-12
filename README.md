@@ -12,7 +12,7 @@ I also love to work with data analysis using Microsoft Excel + VBA or Redash, bu
 
 * HTML5/CSS: semantic, clean, sass/compass
 * Javascript: NPM/Yarn, **VueJS**, React, Angular
-* PHP 7: OOP, PSRs, Composer, **Laravel Expert** (features + Valet, Mix, Echo, Socialite, Cashier, Horizon, Passport, Forge, Envoyer)
+* PHP 7: Clean + understandable code, OOP, PSRs, Composer, **Laravel Expert** (features + Valet, Mix, Echo, Socialite, Cashier, Horizon, Passport, Forge, Envoyer)
 * Databases: Design, MySQL replication, relationships, indexes, migrations, ORMs
 * DevOps: Continuous integration, continuous deployment (Now in love with **Github Actions**)
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
