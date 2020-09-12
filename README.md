@@ -19,4 +19,4 @@ Knowledge:
 * Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
 * Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
 
-You can check my posts on [Medium](https://medium.com/@gabrielmkoerich) or follow me on [Twitter](https://twitter.com/gabrielmkoerich).
+You can check my posts on [Medium](https://medium.com/@gabrielkoerich) or follow me on [Twitter](https://twitter.com/gabrielmkoerich).
