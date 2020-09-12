@@ -4,7 +4,7 @@ I'm a technical, productivity focused entrepreneur. Graduated in Business Admini
 
 Love to solve problems developing ideas and transform them in reality, specially if related to marketing or finance. 
 
-Over 15 years of experience in web development (full-stack) and 7 in Laravel (started using Laravel 3 in 2012).
+Over 12 years of experience in web development (full-stack) and 7 in Laravel (started using Laravel 3 in 2012).
 
 I also love to work with data analysis using Microsoft Excel + VBA or Redash, building usefull dashboards for businesses decisions.
 
