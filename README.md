@@ -8,7 +8,7 @@ Over 12 years of experience in web development (full-stack) and 7 in Laravel (st
 
 I also love to work with data analysis using Microsoft Excel + VBA or Redash, building usefull dashboards for businesses decisions.
 
-Knowledge:
+#### Knowledge
 
 * HTML5/CSS: semantic, clean, sass/compass
 * Javascript: NPM/Yarn, VueJS
