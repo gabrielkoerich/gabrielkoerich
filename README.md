@@ -2,9 +2,11 @@
 
 I'm a technical, productivity focused entrepreneur. Graduated in Business Administration and self-taught in software development. 
 
-Love to solve problems developing ideas and transform them in reality, specially if related to marketing or finance. 
+Love to solve problems developing ideas and transforming them in reality, especially if related to marketing or finance. 
 
 Over 12 years of experience in web development (full-stack) and 7 in Laravel (started using Laravel 3 in 2012).
+
+My focus is on the backend, my passion is to understand the problem and come up with a beautiful software architecture to solve it.
 
 I also love to work with data analysis using Microsoft Excel + VBA or Redash, building usefull dashboards for businesses decisions.
 
