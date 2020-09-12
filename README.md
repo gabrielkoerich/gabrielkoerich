@@ -1,16 +1,22 @@
 ### Hi there 👋
 
-<!--
-**gabrielkoerich/gabrielkoerich** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+I'm a technical, productivity focused entrepreneur. Graduated in Business Administration and self-taught in software development. 
 
-Here are some ideas to get you started:
+Love to solve problems developing ideas and transform them in reality, specially if related to marketing or finance. 
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+Over 15 years of experience in web development (full-stack) and 7 in Laravel (started using Laravel 3 in 2012).
+
+I also love to work with data analysis using Microsoft Excel + VBA or Redash, building usefull dashboards for businesses decisions.
+
+Knowledge:
+
+* HTML5/CSS: semantic, clean, sass/compass
+* Javascript: NPM/Yarn, VueJS, Angular
+* PHP 7: OOP, PSRs, Composer, Laravel Expert (features + Valet, Mix, Echo, Socialite, Cashier, Horizon, Passport, Forge, Envoyer)
+* Databases: Design, MySQL replication, relationships, indexes, migrations, ORMs
+* DevOps: Continuous integration, continuous deployment (In love with Github Actions)
+* Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
+* Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
+* Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
+
+You can check my posts on [Medium](https://medium.com/@gabrielmkoerich) or follow me on [Twitter](https://twitter.com/gabrielmkoerich).
