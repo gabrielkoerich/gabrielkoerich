@@ -11,10 +11,10 @@ I also love to work with data analysis using Microsoft Excel + VBA or Redash, bu
 Knowledge:
 
 * HTML5/CSS: semantic, clean, sass/compass
-* Javascript: NPM/Yarn, VueJS, Angular
-* PHP 7: OOP, PSRs, Composer, Laravel Expert (features + Valet, Mix, Echo, Socialite, Cashier, Horizon, Passport, Forge, Envoyer)
+* Javascript: NPM/Yarn, VueJS
+* PHP 7: OOP, PSRs, Composer, **Laravel Expert** (features + Valet, Mix, Echo, Socialite, Cashier, Horizon, Passport, Forge, Envoyer)
 * Databases: Design, MySQL replication, relationships, indexes, migrations, ORMs
-* DevOps: Continuous integration, continuous deployment (In love with Github Actions)
+* DevOps: Continuous integration, continuous deployment (Now in love with **Github Actions**)
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
 * Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
 * Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
