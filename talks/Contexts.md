@@ -318,6 +318,9 @@ This is a "first stage" move, in the "second stage" we could even move the contr
 ^
 You can see the AppServiceProvide and EventServiceProvider in the root of the /app
 
+^
+You could even have a service provider for a context if needed.
+
 --- 
 
 ## We can go deeper and move the Controllers too 
@@ -465,7 +468,6 @@ AppServiceProvider.php
 - Creating aliases in `config/app.php` should not be allowed in any project
 - Classes must have and respect its namespaces
 
-
 ---
 
 # Explicit Event > Listener Register
@@ -473,6 +475,15 @@ AppServiceProvider.php
 - Keep `EventServiceProvider.php` in the root of the project
 - Registering events/listeners outside the EventServiceProvider should not be allowed in any project
 - This provider should be seen as the *route* of events and is good for newcomers to understand the project
+
+---
+
+# You don't need to be an expert of PSRs or guidelines
+
+### We can just use php-cs-fixer
+
+- The repository must have the `.php_cs` config file and `friendsofphp/php-cs-fixer` dependency
+- Run `vendor/bin/php-cs-fixer .` and commit the changes
 
 ---
 
