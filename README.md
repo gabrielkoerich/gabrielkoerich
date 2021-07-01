@@ -20,5 +20,3 @@ I also love to work with data analysis using Microsoft Excel + VBA or Redash, bu
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
 * Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
 * Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
-
-You can check my posts on [Medium](https://medium.com/@gabrielkoerich) or follow me on [Twitter](https://twitter.com/gabrielmkoerich).
