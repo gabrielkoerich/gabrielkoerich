@@ -27,11 +27,11 @@ In the last year, I've been focusing on smart contract development with Rust.
 #### Knowledge
 
 * HTML5/CSS: semantic, clean, sass/compass
-* Javascript: NPM/Yarn, **VueJS**, React
+* Javascript: NPM/Yarn/PNPM, **VueJS**, React
 * PHP 8: Clean + understandable code, OOP, PSRs, Composer, **Laravel Expert** (features + Valet, Mix, Echo, Socialite, Cashier, Horizon, Passport, Forge, Envoyer)
 * Databases: Design, MySQL replication, relationships, indexes, migrations, ORMs
 * DevOps: Continuous integration, continuous deployment (Now in love with **Github Actions**)
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
 * Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
 * Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
-* Web3: Solana Smart Contracts in Rust + Javascript integrations
+* Web3: **Solana Smart Contracts in Rust** + Javascript integrations
