@@ -34,4 +34,4 @@ In the last year, I've been focusing on smart contract development with Rust.
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
 * Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
 * Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
-* Web3: **Solana Smart Contracts in Rust** + Javascript integrations
+* Web3: **Solana Smart Contracts in Rust** + dApps
