@@ -20,7 +20,9 @@ Over 12 years of experience in web development (full-stack) and 7 in Laravel (st
 
 My focus is on the backend, my passion is to understand the problem and come up with a beautiful software architecture to solve it.
 
-I also love to work with data analysis using Microsoft Excel + VBA or Redash, building usefull dashboards for businesses decisions.
+I also love to work with data analysis, building usefull dashboards for businesses decisions.
+
+In the last year, I've been focusing on smart contract development with Rust.
 
 #### Knowledge
 
@@ -32,3 +34,4 @@ I also love to work with data analysis using Microsoft Excel + VBA or Redash, bu
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
 * Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
 * Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
+* Web3: Solana Smart Contracts in Rust + Javascript integrations
