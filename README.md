@@ -18,11 +18,11 @@ Love to solve problems developing ideas and transforming them in reality, especi
 
 Over 12 years of experience in web development (full-stack) and 7 in Laravel (started using Laravel 3 in 2012).
 
-My focus is on the backend, my passion is to understand the problem and come up with a beautiful software architecture to solve it.
-
-I also love to work with data analysis, building usefull dashboards for businesses decisions.
+Main focus is backend, my passion is to understand the problem and come up with a beautiful software architecture to solve it.
 
 In this last year I've been focusing on smart contract development with Rust.
+
+I also love to work with data analysis, building usefull dashboards for businesses decisions.
 
 #### Knowledge
 
