@@ -22,7 +22,7 @@ My focus is on the backend, my passion is to understand the problem and come up 
 
 I also love to work with data analysis, building usefull dashboards for businesses decisions.
 
-In the last year, I've been focusing on smart contract development with Rust.
+In this last year I've been focusing on smart contract development with Rust.
 
 #### Knowledge
 
