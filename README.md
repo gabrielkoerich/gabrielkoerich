@@ -16,7 +16,7 @@ I'm a technical, productivity focused entrepreneur. Graduated in Business Admini
 
 Love to solve problems developing ideas and transforming them in reality, especially if related to marketing or finance. 
 
-Over 12 years of experience in web development (full-stack) and 7 in Laravel (started using Laravel 3 in 2012).
+Over 12 years of experience in web development (full-stack).
 
 Main focus is backend, my passion is to understand the problem and come up with a beautiful software architecture to solve it.
 
@@ -27,11 +27,11 @@ I also love to work with data analysis, building usefull dashboards for business
 #### Knowledge
 
 * HTML5/CSS: semantic, clean, sass/compass
-* Javascript: NPM/Yarn/PNPM, **VueJS**, React
-* PHP 8: Clean + understandable code, OOP, PSRs, Composer, **Laravel Expert** (features + Valet, Mix, Echo, Socialite, Cashier, Horizon, Passport, Forge, Envoyer)
-* Databases: Design, MySQL replication, relationships, indexes, migrations, ORMs
-* DevOps: Continuous integration, continuous deployment (Now in love with **Github Actions**)
+* Javascript: Node, NPM/Yarn/PNPM, Typescript, **VueJS**, React
+* Web3: **Solana Smart Contracts in Rust** + dApps
+* PHP 8: OOP, PSRs, Composer, **Laravel Expert**
+* Databases: MongoDB, Design, MySQL replication, relationships, indexes, migrations, ORMs
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
 * Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
+* DevOps: Continuous integration, continuous deployment (Now in love with **Github Actions**)
 * Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
-* Web3: **Solana Smart Contracts in Rust** + dApps
