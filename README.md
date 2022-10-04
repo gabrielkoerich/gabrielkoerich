@@ -28,7 +28,7 @@ I also love to work with data analysis, building usefull dashboards for business
 
 * HTML5/CSS: semantic, clean, sass/compass
 * Javascript: Node, NPM/Yarn/PNPM, Typescript, **VueJS**, React
-* Web3: **Solana Smart Contracts in Rust** + dApps
+* Solana + Rust: Sealevel, Instructions, Accounts, Types, [de]Serialization, PDAs, ATAs, CPI Calls, RPC
 * PHP 8: OOP, PSRs, Composer, **Laravel Expert**
 * Databases: MongoDB, Design, MySQL replication, relationships, indexes, migrations, ORMs
 * Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
