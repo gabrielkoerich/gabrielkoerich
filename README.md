@@ -12,26 +12,8 @@
 
 ### Hi there 👋
 
-I'm a technical, productivity focused entrepreneur. Graduated in Business Administration and self-taught in software development. 
+I'm a technical, productivity focused entrepreneur & software engineer.
 
-Love to solve problems developing ideas and transforming them in reality, especially if related to marketing or finance. 
+With over 12 years of experience in software development, I love to be challenged and solve real world problems, especially when related to finance.
 
-Over 12 years of experience in web development (full-stack).
-
-Main focus is backend, my passion is to understand the problem and come up with a beautiful software architecture to solve it.
-
-In this last year I've been focusing on smart contract development with Rust.
-
-I also love to work with data analysis, building usefull dashboards for businesses decisions.
-
-#### Knowledge
-
-* HTML5/CSS: semantic, clean, sass/compass
-* Javascript: Node, NPM/Yarn/PNPM, Typescript, **VueJS**, React
-* Solana + Rust: Sealevel, Instructions, Accounts, Types, [de]Serialization, PDAs, ATAs, CPI Calls, RPC
-* PHP 8: OOP, PSRs, Composer, **Laravel Expert**
-* Databases: MongoDB, Design, MySQL replication, relationships, indexes, migrations, ORMs
-* Cloud: Digital Ocean, Amazon AWS; Cloudflare, Newrelic, Datadog, Papertrail, Bugsnag
-* Unix, LAMP, Bash, ZSH, Git, Beanstalkd (queues), Redis (queues, cache, sessions)
-* DevOps: Continuous integration, continuous deployment (Now in love with **Github Actions**)
-* Business Inteligence: Excel + VBA, Google Sheets + Javascript, Redash
+Since 2021 I've been using Rust as main language and digging deeper on the Solana ecosystem.
