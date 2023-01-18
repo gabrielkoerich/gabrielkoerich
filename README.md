@@ -9,8 +9,6 @@
   <img align="left" alt="Linkedin" width="22px" src="https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/linkedin.svg" />
 </a>
 -->
-<img align="center" width="0px" src="https://visitor-badge.glitch.me/badge?page_id=gabrielkoerich.gabrielkoerich" />
-
 ### Hi there 👋
 
 I'm a technical, productivity focused entrepreneur & software engineer.
@@ -18,3 +16,5 @@ I'm a technical, productivity focused entrepreneur & software engineer.
 With over 12 years of experience in software development, I love to be challenged and solve real world problems, especially when related to finance.
 
 Since 2021 I've been using Rust as main language and digging deeper on the Solana ecosystem.
+
+<img align="center" width="0px" src="https://visitor-badge.glitch.me/badge?page_id=gabrielkoerich.gabrielkoerich" />
