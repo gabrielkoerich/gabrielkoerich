@@ -1,3 +1,4 @@
+<!--
 <a href="https://www.instagram.com/gabrielmkoerich" target="_blank">
   <img align="left" alt="Instagram" width="22px" src="https://raw.githubusercontent.com/hussainweb/hussainweb/main/icons/instagram.png" />
 </a>
@@ -7,7 +8,7 @@
 <a href="https://www.linkedin.com/in/gabrielkoerich" target="_blank">
   <img align="left" alt="Linkedin" width="22px" src="https://raw.githubusercontent.com/peterthehan/peterthehan/master/assets/linkedin.svg" />
 </a>
-
+-->
 <img align="center" width="0px" src="https://visitor-badge.glitch.me/badge?page_id=gabrielkoerich.gabrielkoerich" />
 
 ### Hi there 👋
