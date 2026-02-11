@@ -23,52 +23,47 @@ def slugify(text):
 
 def clean_html(html_content):
     """Convert HTML to markdown with proper code block handling"""
-    # Medium uses specific HTML structures for code blocks
-    # Let's handle them step by step
 
-    # Step 1: Remove script and style tags
+    # Remove script and style tags
     html_content = re.sub(
         r"<script[^>]*>.*?</script>", "", html_content, flags=re.DOTALL
     )
     html_content = re.sub(r"<style[^>]*>.*?</style>", "", html_content, flags=re.DOTALL)
 
-    # Step 2: Handle code blocks BEFORE other processing
-    # Medium uses various structures for code blocks:
-    # - <pre><code>...</code></pre>
-    # - <figure><pre><code>...</code></pre></figure>
-    # - <pre>...</pre> (with code directly inside)
-
-    # Replace code blocks with a placeholder
+    # Step 1: Extract code blocks first, before any other processing
+    # Use a unique delimiter that won't appear in normal content
     code_blocks = []
+    CODE_BLOCK_DELIMITER = "\n___CODE_BLOCK_{idx}___\n"
 
     def extract_code_block(match):
-        full_match = match.group(0)
-        # Try to get content from <code> inside <pre>
-        code_match = re.search(r"<code[^>]*>(.*?)</code>", full_match, re.DOTALL)
+        full_html = match.group(0)
+
+        # Try to extract from <code> inside first
+        code_match = re.search(r"<code[^>]*>(.*?)</code>", full_html, re.DOTALL)
         if code_match:
             code = code_match.group(1)
         else:
-            # Get content directly from <pre>
-            pre_match = re.search(r"<pre[^>]*>(.*?)</pre>", full_match, re.DOTALL)
+            # Try <pre> content
+            pre_match = re.search(r"<pre[^>]*>(.*?)</pre>", full_html, re.DOTALL)
             if pre_match:
                 code = pre_match.group(1)
             else:
-                code = full_match
+                code = full_html
 
-        # Clean the code content
+        # Clean the code - be careful not to over-process
         code = html.unescape(code)
         code = re.sub(r"<br\s*/?>", "\n", code)
         code = re.sub(r"&nbsp;", " ", code)
-        code = re.sub(r"<[^>]+>", "", code)
+        # Remove remaining HTML tags but preserve code structure
+        code = re.sub(r"</?[^>]+>", "", code)
 
-        # Store and return placeholder
+        idx = len(code_blocks)
         code_blocks.append(code.strip())
-        return f"___CODE_BLOCK_{len(code_blocks) - 1}___"
+        return CODE_BLOCK_DELIMITER.format(idx=idx)
 
-    # Match various code block patterns
     # Pattern 1: <figure><pre><code>...</code></pre></figure>
     html_content = re.sub(
-        r"<figure[^>]*>\s*<pre[^>]*>.*?</pre>\s*</figure>",
+        r"<figure[^>]*>\s*<pre[^>]*>\s*<code[^>]*>.*?</code>\s*</pre>\s*</figure>",
         extract_code_block,
         html_content,
         flags=re.DOTALL,
@@ -87,7 +82,7 @@ def clean_html(html_content):
         r"<pre[^>]*>(.*?)</pre>", extract_code_block, html_content, flags=re.DOTALL
     )
 
-    # Step 3: Convert headings
+    # Step 2: Convert headings
     html_content = re.sub(
         r"<h1[^>]*>(.*?)</h1>", r"# \1\n\n", html_content, flags=re.DOTALL
     )
@@ -107,10 +102,9 @@ def clean_html(html_content):
         r"<h6[^>]*>(.*?)</h6>", r"###### \1\n\n", html_content, flags=re.DOTALL
     )
 
-    # Step 4: Convert paragraphs
+    # Step 3: Convert paragraphs
     def convert_paragraph(match):
         content = match.group(1)
-        # Clean up inline tags first
         content = re.sub(r"<br\s*/?>", "\n", content)
         content = html.unescape(content)
         content = re.sub(r"<[^>]+>", "", content)
@@ -120,7 +114,7 @@ def clean_html(html_content):
         r"<p[^>]*>(.*?)</p>", convert_paragraph, html_content, flags=re.DOTALL
     )
 
-    # Step 5: Convert formatting
+    # Step 4: Convert formatting
     html_content = re.sub(
         r"<strong[^>]*>(.*?)</strong>", r"**\1**", html_content, flags=re.DOTALL
     )
@@ -132,14 +126,14 @@ def clean_html(html_content):
     )
     html_content = re.sub(r"<i[^>]*>(.*?)</i>", r"*\1*", html_content, flags=re.DOTALL)
 
-    # Step 6: Convert inline code (remaining <code> tags)
+    # Handle inline code (not in code blocks)
     html_content = re.sub(
         r"<code[^>]*>(.*?)</code>",
         lambda m: f"`{html.unescape(m.group(1))}`",
         html_content,
     )
 
-    # Step 7: Convert links
+    # Convert links
     def replace_link(match):
         href = match.group(1)
         text = match.group(2)
@@ -154,8 +148,7 @@ def clean_html(html_content):
         flags=re.DOTALL,
     )
 
-    # Step 8: Convert lists
-    # Unordered lists
+    # Convert lists
     def convert_li(match):
         content = match.group(1)
         content = re.sub(r"<[^>]+>", "", content)
@@ -169,7 +162,6 @@ def clean_html(html_content):
         r"<ul[^>]*>(.*?)</ul>", r"\1\n", html_content, flags=re.DOTALL
     )
 
-    # Ordered lists
     def convert_ol(match):
         content = match.group(1)
         items = re.findall(r"<li[^>]*>(.*?)</li>", content, re.DOTALL)
@@ -184,9 +176,12 @@ def clean_html(html_content):
         r"<ol[^>]*>(.*?)</ol>", convert_ol, html_content, flags=re.DOTALL
     )
 
-    # Step 9: Blockquotes
+    # Blockquotes
     def convert_blockquote(match):
         content = match.group(1)
+        content = re.sub(
+            r"<blockquote[^>]*>(.*?)</blockquote>", r"\1", content, flags=re.DOTALL
+        )
         content = re.sub(r"<[^>]+>", "", content)
         content = html.unescape(content)
         lines = content.strip().split("\n")
@@ -200,45 +195,49 @@ def clean_html(html_content):
         flags=re.DOTALL,
     )
 
-    # Step 10: Horizontal rules
+    # Horizontal rules
     html_content = re.sub(r"<hr[^>]*/?>", "---\n\n", html_content)
 
-    # Step 11: Remove remaining HTML tags
+    # Line breaks
+    html_content = re.sub(r"<br\s*/?>", "\n", html_content)
+
+    # Remove remaining HTML tags
     html_content = re.sub(r"<[^>]+>", "", html_content)
 
-    # Step 12: Restore code blocks with proper markdown formatting
-    for i, code in enumerate(code_blocks):
-        placeholder = f"___CODE_BLOCK_{i}___"
-        # Detect language from content
-        lang = ""
-        if code.startswith("<?php"):
-            lang = "php"
-        elif code.startswith("<?="):
-            lang = "php"
-        elif any(
-            line.startswith(("import ", "from ")) for line in code.split("\n")[:3]
-        ):
-            lang = "python"
-        elif code.startswith(("function ", "const ", "let ", "var ")):
-            lang = "javascript"
-        elif "<" in code and ">" in code and "=" in code:
-            lang = "html"
-
-        # Format code block
-        code_block_md = f"```{lang}\n{code}\n```\n\n"
-        html_content = html_content.replace(placeholder, code_block_md)
-
-    # Step 13: Clean up
+    # Clean up HTML entities
     html_content = html.unescape(html_content)
 
     # Fix excessive newlines
     html_content = re.sub(r"\n{4,}", "\n\n\n", html_content)
 
-    # Fix escaped characters
-    html_content = html_content.replace("\\*", "*")
-    html_content = html_content.replace("\\`", "`")
-    html_content = html_content.replace("\\[", "[")
-    html_content = html_content.replace("\\]", "]")
+    # Step 5: Restore code blocks
+    for idx, code in enumerate(code_blocks):
+        placeholder = CODE_BLOCK_DELIMITER.format(idx=idx)
+
+        # Detect language from content
+        lang = ""
+        first_line = code.strip().split("\n")[0] if code.strip() else ""
+
+        if code.strip().startswith("<?php") or code.strip().startswith("<?="):
+            lang = "php"
+        elif any(
+            line.startswith(("import ", "from ", "def ", "class "))
+            for line in code.split("\n")[:3]
+            if line.strip()
+        ):
+            lang = "python"
+        elif any(
+            line.startswith(("function ", "const ", "let ", "var "))
+            for line in code.split("\n")[:3]
+            if line.strip()
+        ):
+            lang = "javascript"
+        elif "<?php" in code[:100]:
+            lang = "php"
+
+        # Format code block with proper markdown
+        code_block_md = f"\n```{lang}\n{code}\n```\n"
+        html_content = html_content.replace(placeholder, code_block_md)
 
     return html_content.strip()
 
@@ -306,9 +305,9 @@ def fetch_wtf_posts():
 
     try:
         urls = [
+            "https://wtf.gabrielkoerich.com/rss",
             "https://wtf.gabrielkoerich.com/feed.xml",
             "https://wtf.gabrielkoerich.com/feed",
-            "https://wtf.gabrielkoerich.com/rss",
             "https://wtf.gabrielkoerich.com/index.xml",
         ]
 
