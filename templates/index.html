@@ -125,7 +125,7 @@ all_posts = all_posts | concat(with=page) %} {% endfor %} {% endif %} {% if
 all_posts | length > 0 %} {% set sorted_posts = all_posts |
 sort(attribute="date") | reverse %}
 
-<h2>Writing <a href="{{get_url(path='rss.xml')}}" title="RSS Feed">rss</a></h2>
+<h2>Posts</h2>
 <ul id="posts">
     {% for page in sorted_posts | slice(end=10) %}
     <li>
