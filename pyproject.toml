@@ -1,0 +1,12 @@
+[project]
+name = "gabrielkoerich"
+version = "0.1.0"
+description = "Personal website built with Zola"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31.0",
+    "feedparser>=6.0.10",
+]
+
+[tool.uv]
+dev-dependencies = []

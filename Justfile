@@ -11,13 +11,12 @@ fetch-github-auth TOKEN:
     python3 scripts/fetch-github.py {{TOKEN}}
 
 # Fetch blog posts from Medium and wtf.gabrielkoerich.com
-# Uses bean repo's virtual environment for Python dependencies
 fetch-posts:
-    uv run python ../gabrielkoerich/scripts/fetch-blog-posts.py --output ../gabrielkoerich/content/posts/external
+    uv run python scripts/fetch-blog-posts.py --output content/posts/external
 
 # Fetch only Medium posts
 fetch-posts-medium:
-    uv run python ../gabrielkoerich/scripts/fetch-blog-posts.py --medium-only --output ../gabrielkoerich/content/posts/external
+    uv run python scripts/fetch-blog-posts.py --medium-only --output content/posts/external
 
 # Build the site locally (with GitHub data and blog posts)
 build: fetch-github fetch-posts-medium

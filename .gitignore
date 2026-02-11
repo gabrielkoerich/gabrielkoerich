@@ -1,5 +1,10 @@
 .DS_Store
 
+# Python
+.venv/
+__pycache__/
+*.pyc
+
 # Zola build output
 public/
 
