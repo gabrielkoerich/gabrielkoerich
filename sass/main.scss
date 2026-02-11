@@ -309,10 +309,17 @@ article h1 {
 #page-footer a {
     color: var(--text-secondary);
     margin-left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
 }
 
 #page-footer a:hover {
     color: var(--accent-color);
+}
+
+#page-footer svg {
+    vertical-align: middle;
 }
 
 /* Responsive */
