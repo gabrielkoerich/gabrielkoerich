@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{page.title}} | {% endif %}{{config.title}}</title>
+    <meta name="description" content="{% if page.description %}{{page.description}}{% else %}{{config.description}}{% endif %}">
+    
+    <!-- OpenGraph -->
+    <meta property="og:type" content="{% if page.title %}article{% else %}website{% endif %}">
+    <meta property="og:title" content="{% if page.title %}{{page.title}}{% else %}{{config.title}}{% endif %}">
+    <meta property="og:description" content="{% if page.description %}{{page.description}}{% else %}{{config.description}}{% endif %}">
+    <meta property="og:url" content="{{current_url | safe}}">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% if page.title %}{{page.title}}{% else %}{{config.title}}{% endif %}">
+    <meta name="twitter:description" content="{% if page.description %}{{page.description}}{% else %}{{config.description}}{% endif %}">
+    
+    <link rel="canonical" href="{{current_url | safe}}">
+    {% if config.generate_feeds %}
+    <link rel="alternate" type="application/rss+xml" title="{{config.title}}" href="{{get_url(path='rss.xml')}}">
+    {% endif %}
+    
+    <link rel="stylesheet" href="{{get_url(path='main.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Source+Serif+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1><a href="{{config.base_url | safe}}">{{config.title}}</a></h1>
+        </header>
+        
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer id="page-footer">
+            <p>
+                &copy; {{now() | date(format="%Y")}} {{config.extra.author}}
+                <a href="{{config.extra.github}}" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">github</a>
+                <a href="{{config.extra.linkedin}}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">linkedin</a>
+                <a href="mailto:{{config.extra.email}}" title="Email" aria-label="Email">email</a>
+                {% if config.generate_feeds %}
+                <a href="{{get_url(path='rss.xml')}}" title="RSS Feed" aria-label="RSS Feed">rss</a>
+                {% endif %}
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

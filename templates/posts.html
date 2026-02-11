@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>All Posts</h1>
+
+{% set posts_section = get_section(path="posts/_index.md") %}
+{% set external_section = get_section(path="posts/external/_index.md") %}
+
+{% set all_posts = [] %}
+{% if posts_section.pages %}
+    {% for page in posts_section.pages %}
+        {% set_global all_posts = all_posts | concat(with=page) %}
+    {% endfor %}
+{% endif %}
+{% if external_section.pages %}
+    {% for page in external_section.pages %}
+        {% set_global all_posts = all_posts | concat(with=page) %}
+    {% endfor %}
+{% endif %}
+
+{% if all_posts | length > 0 %}
+{% set sorted_posts = all_posts | sort(attribute="date") | reverse %}
+
+<ul id="posts">
+    {% for page in sorted_posts %}
+    <li>
+        <h3><a href="{{page.permalink}}">{{page.title}}</a></h3>
+        <span class="post-date">{{page.date | date(format="%b %d, %Y")}}</span>
+    </li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>No posts found.</p>
+{% endif %}
+
+<p><a href="/">← Back to home</a></p>
+{% endblock content %}

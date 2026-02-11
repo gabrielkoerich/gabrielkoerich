@@ -1,0 +1,440 @@
+#!/usr/bin/env python3
+"""
+Fetch blog posts from Medium and wtf.gabrielkoerich.com
+Generates markdown files for gabrielkoerich.com site
+"""
+
+import requests
+import feedparser
+import re
+from datetime import datetime
+from pathlib import Path
+import html
+import sys
+
+
+def slugify(text):
+    """Convert text to URL-friendly slug"""
+    text = text.lower()
+    text = re.sub(r"[^\w\s-]", "", text)
+    text = re.sub(r"[-\s]+", "-", text)
+    return text.strip("-")
+
+
+def clean_html(html_content):
+    """Convert HTML to markdown with proper code block handling"""
+    # Medium uses specific HTML structures for code blocks
+    # Let's handle them step by step
+
+    # Step 1: Remove script and style tags
+    html_content = re.sub(
+        r"<script[^>]*>.*?</script>", "", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(r"<style[^>]*>.*?</style>", "", html_content, flags=re.DOTALL)
+
+    # Step 2: Handle code blocks BEFORE other processing
+    # Medium uses various structures for code blocks:
+    # - <pre><code>...</code></pre>
+    # - <figure><pre><code>...</code></pre></figure>
+    # - <pre>...</pre> (with code directly inside)
+
+    # Replace code blocks with a placeholder
+    code_blocks = []
+
+    def extract_code_block(match):
+        full_match = match.group(0)
+        # Try to get content from <code> inside <pre>
+        code_match = re.search(r"<code[^>]*>(.*?)</code>", full_match, re.DOTALL)
+        if code_match:
+            code = code_match.group(1)
+        else:
+            # Get content directly from <pre>
+            pre_match = re.search(r"<pre[^>]*>(.*?)</pre>", full_match, re.DOTALL)
+            if pre_match:
+                code = pre_match.group(1)
+            else:
+                code = full_match
+
+        # Clean the code content
+        code = html.unescape(code)
+        code = re.sub(r"<br\s*/?>", "\n", code)
+        code = re.sub(r"&nbsp;", " ", code)
+        code = re.sub(r"<[^>]+>", "", code)
+
+        # Store and return placeholder
+        code_blocks.append(code.strip())
+        return f"___CODE_BLOCK_{len(code_blocks) - 1}___"
+
+    # Match various code block patterns
+    # Pattern 1: <figure><pre><code>...</code></pre></figure>
+    html_content = re.sub(
+        r"<figure[^>]*>\s*<pre[^>]*>.*?</pre>\s*</figure>",
+        extract_code_block,
+        html_content,
+        flags=re.DOTALL,
+    )
+
+    # Pattern 2: <pre><code>...</code></pre>
+    html_content = re.sub(
+        r"<pre[^>]*>\s*<code[^>]*>.*?</code>\s*</pre>",
+        extract_code_block,
+        html_content,
+        flags=re.DOTALL,
+    )
+
+    # Pattern 3: <pre>...</pre> (code directly inside)
+    html_content = re.sub(
+        r"<pre[^>]*>(.*?)</pre>", extract_code_block, html_content, flags=re.DOTALL
+    )
+
+    # Step 3: Convert headings
+    html_content = re.sub(
+        r"<h1[^>]*>(.*?)</h1>", r"# \1\n\n", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<h2[^>]*>(.*?)</h2>", r"## \1\n\n", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<h3[^>]*>(.*?)</h3>", r"### \1\n\n", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<h4[^>]*>(.*?)</h4>", r"#### \1\n\n", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<h5[^>]*>(.*?)</h5>", r"##### \1\n\n", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<h6[^>]*>(.*?)</h6>", r"###### \1\n\n", html_content, flags=re.DOTALL
+    )
+
+    # Step 4: Convert paragraphs
+    def convert_paragraph(match):
+        content = match.group(1)
+        # Clean up inline tags first
+        content = re.sub(r"<br\s*/?>", "\n", content)
+        content = html.unescape(content)
+        content = re.sub(r"<[^>]+>", "", content)
+        return content.strip() + "\n\n"
+
+    html_content = re.sub(
+        r"<p[^>]*>(.*?)</p>", convert_paragraph, html_content, flags=re.DOTALL
+    )
+
+    # Step 5: Convert formatting
+    html_content = re.sub(
+        r"<strong[^>]*>(.*?)</strong>", r"**\1**", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<b[^>]*>(.*?)</b>", r"**\1**", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<em[^>]*>(.*?)</em>", r"*\1*", html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(r"<i[^>]*>(.*?)</i>", r"*\1*", html_content, flags=re.DOTALL)
+
+    # Step 6: Convert inline code (remaining <code> tags)
+    html_content = re.sub(
+        r"<code[^>]*>(.*?)</code>",
+        lambda m: f"`{html.unescape(m.group(1))}`",
+        html_content,
+    )
+
+    # Step 7: Convert links
+    def replace_link(match):
+        href = match.group(1)
+        text = match.group(2)
+        text = re.sub(r"<[^>]+>", "", text)
+        text = html.unescape(text)
+        return f"[{text}]({href})"
+
+    html_content = re.sub(
+        r'<a[^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+        replace_link,
+        html_content,
+        flags=re.DOTALL,
+    )
+
+    # Step 8: Convert lists
+    # Unordered lists
+    def convert_li(match):
+        content = match.group(1)
+        content = re.sub(r"<[^>]+>", "", content)
+        content = html.unescape(content)
+        return f"- {content.strip()}\n"
+
+    html_content = re.sub(
+        r"<li[^>]*>(.*?)</li>", convert_li, html_content, flags=re.DOTALL
+    )
+    html_content = re.sub(
+        r"<ul[^>]*>(.*?)</ul>", r"\1\n", html_content, flags=re.DOTALL
+    )
+
+    # Ordered lists
+    def convert_ol(match):
+        content = match.group(1)
+        items = re.findall(r"<li[^>]*>(.*?)</li>", content, re.DOTALL)
+        result = ""
+        for i, item in enumerate(items, 1):
+            item = re.sub(r"<[^>]+>", "", item)
+            item = html.unescape(item)
+            result += f"{i}. {item.strip()}\n"
+        return result + "\n"
+
+    html_content = re.sub(
+        r"<ol[^>]*>(.*?)</ol>", convert_ol, html_content, flags=re.DOTALL
+    )
+
+    # Step 9: Blockquotes
+    def convert_blockquote(match):
+        content = match.group(1)
+        content = re.sub(r"<[^>]+>", "", content)
+        content = html.unescape(content)
+        lines = content.strip().split("\n")
+        quoted = "\n".join(f"> {line}" for line in lines if line.strip())
+        return quoted + "\n\n"
+
+    html_content = re.sub(
+        r"<blockquote[^>]*>(.*?)</blockquote>",
+        convert_blockquote,
+        html_content,
+        flags=re.DOTALL,
+    )
+
+    # Step 10: Horizontal rules
+    html_content = re.sub(r"<hr[^>]*/?>", "---\n\n", html_content)
+
+    # Step 11: Remove remaining HTML tags
+    html_content = re.sub(r"<[^>]+>", "", html_content)
+
+    # Step 12: Restore code blocks with proper markdown formatting
+    for i, code in enumerate(code_blocks):
+        placeholder = f"___CODE_BLOCK_{i}___"
+        # Detect language from content
+        lang = ""
+        if code.startswith("<?php"):
+            lang = "php"
+        elif code.startswith("<?="):
+            lang = "php"
+        elif any(
+            line.startswith(("import ", "from ")) for line in code.split("\n")[:3]
+        ):
+            lang = "python"
+        elif code.startswith(("function ", "const ", "let ", "var ")):
+            lang = "javascript"
+        elif "<" in code and ">" in code and "=" in code:
+            lang = "html"
+
+        # Format code block
+        code_block_md = f"```{lang}\n{code}\n```\n\n"
+        html_content = html_content.replace(placeholder, code_block_md)
+
+    # Step 13: Clean up
+    html_content = html.unescape(html_content)
+
+    # Fix excessive newlines
+    html_content = re.sub(r"\n{4,}", "\n\n\n", html_content)
+
+    # Fix escaped characters
+    html_content = html_content.replace("\\*", "*")
+    html_content = html_content.replace("\\`", "`")
+    html_content = html_content.replace("\\[", "[")
+    html_content = html_content.replace("\\]", "]")
+
+    return html_content.strip()
+
+
+def fetch_medium_posts(username="gabrielkoerich"):
+    """Fetch posts from Medium RSS feed"""
+    print(f"Fetching Medium posts for @{username}...")
+
+    urls = [
+        f"https://medium.com/feed/@{username}",
+        f"https://{username}.medium.com/feed",
+    ]
+
+    posts = []
+    for url in urls:
+        try:
+            response = requests.get(url, timeout=30)
+            if response.status_code == 200:
+                feed = feedparser.parse(response.content)
+
+                for entry in feed.entries:
+                    published = entry.get("published_parsed")
+                    if (
+                        published
+                        and isinstance(published, (tuple, list))
+                        and len(published) >= 6
+                    ):
+                        try:
+                            date = datetime(*published[:6])
+                        except:
+                            date = datetime.now()
+                    else:
+                        date = datetime.now()
+
+                    # Get content
+                    if entry.get("content"):
+                        content = entry["content"][0].get("value", "")
+                    else:
+                        content = entry.get("summary", "")
+
+                    # Clean HTML to Markdown
+                    content = clean_html(content)
+
+                    post = {
+                        "title": entry.get("title", "Untitled"),
+                        "date": date,
+                        "content": content,
+                        "url": entry.get("link", ""),
+                        "source": "medium",
+                    }
+                    posts.append(post)
+
+                print(f"  ✓ Found {len(feed.entries)} posts from {url}")
+                break
+        except Exception as e:
+            print(f"  ✗ Failed to fetch from {url}: {e}")
+            continue
+
+    return posts
+
+
+def fetch_wtf_posts():
+    """Fetch posts from wtf.gabrielkoerich.com"""
+    print("Fetching posts from wtf.gabrielkoerich.com...")
+
+    try:
+        urls = [
+            "https://wtf.gabrielkoerich.com/feed.xml",
+            "https://wtf.gabrielkoerich.com/feed",
+            "https://wtf.gabrielkoerich.com/rss",
+            "https://wtf.gabrielkoerich.com/index.xml",
+        ]
+
+        posts = []
+        for url in urls:
+            try:
+                response = requests.get(url, timeout=30)
+                if response.status_code == 200:
+                    feed = feedparser.parse(response.content)
+
+                    for entry in feed.entries:
+                        published = entry.get("published_parsed")
+                        if (
+                            published
+                            and isinstance(published, (tuple, list))
+                            and len(published) >= 6
+                        ):
+                            try:
+                                date = datetime(*published[:6])
+                            except:
+                                date = datetime.now()
+                        else:
+                            date = datetime.now()
+
+                        if entry.get("content"):
+                            content = entry["content"][0].get("value", "")
+                        else:
+                            content = entry.get("summary", "")
+
+                        content = clean_html(content)
+
+                        post = {
+                            "title": entry.get("title", "Untitled"),
+                            "date": date,
+                            "content": content,
+                            "url": entry.get("link", ""),
+                            "source": "wtf",
+                        }
+                        posts.append(post)
+
+                    print(f"  ✓ Found {len(feed.entries)} posts from {url}")
+                    return posts
+            except:
+                continue
+
+        print("  Note: Could not fetch from wtf.gabrielkoerich.com")
+
+    except Exception as e:
+        print(f"  ✗ Failed to fetch: {e}")
+
+    return []
+
+
+def generate_markdown(posts, output_dir):
+    """Generate markdown files from posts"""
+    output_path = Path(output_dir)
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    print(f"\nGenerating markdown files in {output_dir}...")
+
+    for post in posts:
+        date_str = post["date"].strftime("%Y-%m-%d")
+        slug = slugify(post["title"])
+        filename = f"{date_str}-{slug}.md"
+        filepath = output_path / filename
+
+        # Escape quotes in title for TOML
+        safe_title = post["title"].replace('"', '\\"')
+
+        content = f"""+++
+title = "{safe_title}"
+date = {post["date"].strftime("%Y-%m-%d")}
+[taxonomies]
+tags = ["{post["source"]}"]
+[extra]
+source = "{post["source"]}"
+original_url = "{post["url"]}"
++++
+
+{post["content"]}
+
+*Originally published on [{post["source"].upper()}]({post["url"]})*
+"""
+
+        filepath.write_text(content, encoding="utf-8")
+        print(f"  ✓ {filename}")
+
+    print(f"\nGenerated {len(posts)} markdown files")
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Fetch blog posts and generate markdown"
+    )
+    parser.add_argument(
+        "--output",
+        "-o",
+        default="./content/posts/external",
+        help="Output directory for markdown files",
+    )
+    parser.add_argument(
+        "--medium-only", action="store_true", help="Only fetch Medium posts"
+    )
+    parser.add_argument("--wtf-only", action="store_true", help="Only fetch wtf posts")
+
+    args = parser.parse_args()
+
+    all_posts = []
+
+    if not args.wtf_only:
+        medium_posts = fetch_medium_posts()
+        all_posts.extend(medium_posts)
+
+    if not args.medium_only:
+        wtf_posts = fetch_wtf_posts()
+        all_posts.extend(wtf_posts)
+
+    if all_posts:
+        all_posts.sort(key=lambda x: x["date"], reverse=True)
+        generate_markdown(all_posts, args.output)
+    else:
+        print("\nNo posts found!")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

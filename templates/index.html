@@ -1,0 +1,140 @@
+{% extends "base.html" %} {% block content %} {# Load GitHub data #} {% set
+github_profile = load_data(path="data/github-profile.json", required=false) %}
+{% set github_pinned = load_data(path="data/github-pinned.json", required=false)
+%}
+
+<div id="intro">
+    {% if github_profile %}
+    <p>
+        <em
+            >{{github_profile.bio}} I started coding at 13 out of curiosity. 17+
+            years later, I'm building DeFi protocols and scalable systems.</em
+        >
+    </p>
+    {% else %}
+    <p>
+        <em
+            >I started coding at 13 out of curiosity. 17+ years later, I'm
+            building DeFi protocols and scalable systems.</em
+        >
+    </p>
+    {% endif %}
+
+    <p>
+        Currently architecting Solana smart contracts at
+        <a href="https://lulo.fi" target="_blank">Lulo</a> (+$100M TVL).
+        Previously founded Bulldesk (marketing automation SaaS, acquired 2021).
+    </p>
+
+    <p>
+        <a href="{{config.extra.github}}" target="_blank">gabrielkoerich</a> on
+        the Internet. Key highlights:
+    </p>
+
+    <ul>
+        <li>
+            <strong>Lulo</strong> — DeFi protocol with dual-pool security
+            system, protecting +$100M in user funds
+        </li>
+        <li>
+            <strong>Blockchain Development</strong> — Solana smart contracts
+            (Rust/Anchor), EVM protocols, NFT marketplaces, DeFi integrations
+        </li>
+        <li>
+            <strong>Bulldesk</strong> — Marketing automation SaaS processing
+            80M+ requests/mo, 500M+ background jobs/mo, acquired 2021
+        </li>
+        <li>
+            <strong>Full-Stack Engineering</strong> — 13 years with Laravel
+            ecosystem, Vue.js, TypeScript, high-scale infrastructure
+        </li>
+    </ul>
+
+    <p>Have a look at my <a href="{{get_url(path='@/cv.md')}}">CV</a>.</p>
+</div>
+
+{# Pinned GitHub Repositories #} {% if github_pinned and github_pinned | length
+> 0 %} {% set own_repos = [] %} {% set contributed_repos = [] %} {% for repo in
+github_pinned %} {% if repo.owner.login == "gabrielkoerich" %} {% set_global
+own_repos = own_repos | concat(with=repo) %} {% else %} {% set_global
+contributed_repos = contributed_repos | concat(with=repo) %} {% endif %} {%
+endfor %}
+
+<h2>Open Source Contributions</h2>
+<p>Featured projects I've built or contributed to:</p>
+
+<ul id="repos">
+    {# My repos first #} {% for repo in own_repos |
+    sort(attribute="stargazers.totalCount") | reverse %}
+    <li class="repo-item">
+        <h3>
+            <a href="{{repo.html_url}}" target="_blank" rel="noopener"
+                >{{repo.name}}</a
+            >
+        </h3>
+        {% if repo.description %}
+        <p class="repo-description">{{repo.description}}</p>
+        {% endif %}
+        <div class="repo-meta">
+            {% if repo.language.name %}
+            <span class="repo-lang">{{repo.language.name}}</span>
+            {% endif %}
+            <span class="repo-stars"
+                ><span class="star-icon">★</span>
+                {{repo.stargazers.totalCount}}</span
+            >
+        </div>
+    </li>
+    {% endfor %} {# Contributed repos at the end #} {% for repo in
+    contributed_repos | sort(attribute="stargazers.totalCount") | reverse %}
+    <li class="repo-item">
+        <h3>
+            <a href="{{repo.html_url}}" target="_blank" rel="noopener"
+                >{{repo.name}}</a
+            >
+            <span class="repo-owner">by {{repo.owner.login}}</span>
+        </h3>
+        {% if repo.description %}
+        <p class="repo-description">{{repo.description}}</p>
+        {% endif %}
+        <div class="repo-meta">
+            {% if repo.language.name %}
+            <span class="repo-lang">{{repo.language.name}}</span>
+            {% endif %}
+            <span class="repo-stars"
+                ><span class="star-icon">★</span>
+                {{repo.stargazers.totalCount}}</span
+            >
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+<p>
+    <a href="{{config.extra.github}}?tab=repositories" target="_blank"
+        >View all repositories on GitHub →</a
+    >
+</p>
+{% endif %} {# Blog Posts #} {% set posts_section =
+get_section(path="posts/_index.md") %} {% set external_section =
+get_section(path="posts/external/_index.md") %} {% set all_posts = [] %} {% if
+posts_section.pages %} {% for page in posts_section.pages %} {% set_global
+all_posts = all_posts | concat(with=page) %} {% endfor %} {% endif %} {% if
+external_section.pages %} {% for page in external_section.pages %} {% set_global
+all_posts = all_posts | concat(with=page) %} {% endfor %} {% endif %} {% if
+all_posts | length > 0 %} {% set sorted_posts = all_posts |
+sort(attribute="date") | reverse %}
+
+<h2>Writing <a href="{{get_url(path='rss.xml')}}" title="RSS Feed">rss</a></h2>
+<ul id="posts">
+    {% for page in sorted_posts | slice(end=10) %}
+    <li>
+        <h3><a href="{{page.permalink}}">{{page.title}}</a></h3>
+        <span class="post-date">{{page.date | date(format="%b %d, %Y")}}</span>
+    </li>
+    {% endfor %}
+</ul>
+
+{% if sorted_posts | length > 10 %}
+<p><a href="/posts/">View all posts →</a></p>
+{% endif %} {% endif %} {% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article>
+    {% if page.date %}
+    <span class="post-date">{{page.date | date(format="%B %d, %Y")}}</span>
+    {% endif %}
+    
+    <h1>{{page.title}}</h1>
+    
+    {% if page.taxonomies.tags %}
+    <div class="tags">
+        {% for tag in page.taxonomies.tags %}
+        <span class="tag">{{tag}}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="content">
+        {{page.content | safe}}
+    </div>
+</article>
+
+{% if page.lower or page.higher %}
+<nav class="post-nav">
+    {% if page.lower %}
+    <a href="{{page.lower.permalink | safe}}" class="prev">← {{page.lower.title}}</a>
+    {% endif %}
+    {% if page.higher %}
+    <a href="{{page.higher.permalink | safe}}" class="next">{{page.higher.title}} →</a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endblock content %}
