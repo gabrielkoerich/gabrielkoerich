@@ -17,8 +17,8 @@ I combine deep expertise in both traditional backend development and blockchain 
 
 ## Education
 
-**BBA Finance** Universidade do Sul de Santa Catarina (2008 – 2012)
-**English Language Studies** LSI (London) (2010)
+- **BBA Finance** Universidade do Sul de Santa Catarina (2008 – 2012)
+- **English Language Studies** LSI (London) (2010)
 
 ## Languages
 
