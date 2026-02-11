@@ -11,8 +11,6 @@ As founder of Bulldesk (acquired 2021), I developed strong product intuition and
 
 Currently focused on smart contract development and DeFi protocol architecture, with experience building systems that have scaled to +$100M TVL. Passionate about clean code, rigorous testing, and solving real-world problems.
 
----
-
 ## Contact
 
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg> [gabrielmk@gmail.com](mailto:gabrielmk@gmail.com)  
@@ -55,8 +53,6 @@ Currently focused on smart contract development and DeFi protocol architecture, 
 - Agile methodologies
 - System design & architecture
 - [Coding Agents orchestration](https://github.com/gabrielkoerich/orchestrator) - Testing Claude, Codex and OpenCode on my daily workflow.
-
----
 
 ## Professional Experience
 
@@ -147,8 +143,6 @@ Self-taught web development during university years. Built websites and web appl
 
 **Stack:** PHP, JavaScript, HTML/CSS, MySQL, WordPress
 
----
-
 ## Education
 
 ### Universidade do Sul de Santa Catarina  
@@ -157,14 +151,10 @@ Self-taught web development during university years. Built websites and web appl
 ### LSI Language Studies International (London)  
 **English Language Studies** (2010)
 
----
-
 ## Languages
 
 - **Portuguese:** Native
 - **English:** Fluent (professional working proficiency)
-
----
 
 ## Notable Projects & Achievements
 
@@ -172,8 +162,6 @@ Self-taught web development during university years. Built websites and web appl
 - **Marketing Automation at Scale:** Built Bulldesk to handle millions of leads and complex automation workflows
 - **Solana Ecosystem:** Multiple production smart contracts including marketplaces and DeFi integrations
 - **Open Source:** Active contributor to various PHP and Rust projects (github.com/gabrielkoerich)
-
----
 
 ## Interests & Values
 

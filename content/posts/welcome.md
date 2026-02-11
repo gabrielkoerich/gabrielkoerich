@@ -12,6 +12,6 @@ Maybe this is a new start. This is where I'll share thoughts on software enginee
 - Technical deep-dives on Solana and Rust
 - Lessons learned from 17+ years of building software
 - Thoughts on DeFi, fintech, and value investing
-- Occasional ramblings on productivity and systems
+- Occasional ramblings on AI, productivity and systems
 
-Stay tuned.
+Stay tuned. Or not.

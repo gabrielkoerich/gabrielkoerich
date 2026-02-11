@@ -11,6 +11,8 @@ from datetime import datetime
 from pathlib import Path
 import html
 import sys
+import hashlib
+import urllib.parse
 
 
 def slugify(text):
@@ -21,8 +23,41 @@ def slugify(text):
     return text.strip("-")
 
 
-def clean_html(html_content):
-    """Convert HTML to markdown with proper code block handling"""
+def download_image(url, output_dir, post_slug):
+    """Download an image and save it locally"""
+    try:
+        # Skip tracking pixels and data URLs
+        if "medium.com/_/stat" in url or url.startswith("data:"):
+            return None
+
+        response = requests.get(url, timeout=30)
+        if response.status_code == 200:
+            # Generate filename from URL
+            parsed = urllib.parse.urlparse(url)
+            filename = Path(parsed.path).name
+            if not filename or "." not in filename:
+                # Generate hash-based filename
+                ext = ".jpg"  # default
+                if "png" in url.lower():
+                    ext = ".png"
+                elif "gif" in url.lower():
+                    ext = ".gif"
+                filename = f"{hashlib.md5(url.encode()).hexdigest()[:8]}{ext}"
+
+            # Add post slug prefix to avoid conflicts
+            filename = f"{post_slug}_{filename}"
+            filepath = output_dir / filename
+
+            filepath.write_bytes(response.content)
+            print(f"    Downloaded image: {filename}")
+            return f"/images/posts/{filename}"
+    except Exception as e:
+        print(f"    Failed to download image {url}: {e}")
+    return None
+
+
+def clean_html(html_content, post_slug, images_dir):
+    """Convert HTML to markdown with proper code block and image handling"""
 
     # Remove script and style tags
     html_content = re.sub(
@@ -30,8 +65,30 @@ def clean_html(html_content):
     )
     html_content = re.sub(r"<style[^>]*>.*?</style>", "", html_content, flags=re.DOTALL)
 
-    # Step 1: Extract code blocks first, before any other processing
-    # Use a unique delimiter that won't appear in normal content
+    # Track images to download
+    images_to_download = []
+
+    def extract_image(match):
+        full_tag = match.group(0)
+        src_match = re.search(r'src="([^"]+)"', full_tag)
+        alt_match = re.search(r'alt="([^"]*)"', full_tag)
+
+        if src_match:
+            src = src_match.group(1)
+            alt = alt_match.group(1) if alt_match else ""
+
+            # Queue for download
+            images_to_download.append((src, alt))
+
+            # Return placeholder that will be replaced after download
+            return f"___IMAGE_{len(images_to_download) - 1}___"
+
+        return ""
+
+    # Extract images first
+    html_content = re.sub(r"<img[^>]*>", extract_image, html_content, flags=re.DOTALL)
+
+    # Step 1: Extract code blocks
     code_blocks = []
     CODE_BLOCK_DELIMITER = "\n___CODE_BLOCK_{idx}___\n"
 
@@ -50,17 +107,17 @@ def clean_html(html_content):
             else:
                 code = full_html
 
-        # Clean the code - be careful not to over-process
+        # Clean the code
         code = html.unescape(code)
         code = re.sub(r"<br\s*/?>", "\n", code)
         code = re.sub(r"&nbsp;", " ", code)
-        # Remove remaining HTML tags but preserve code structure
         code = re.sub(r"</?[^>]+>", "", code)
 
         idx = len(code_blocks)
         code_blocks.append(code.strip())
         return CODE_BLOCK_DELIMITER.format(idx=idx)
 
+    # Extract code blocks
     # Pattern 1: <figure><pre><code>...</code></pre></figure>
     html_content = re.sub(
         r"<figure[^>]*>\s*<pre[^>]*>\s*<code[^>]*>.*?</code>\s*</pre>\s*</figure>",
@@ -77,12 +134,12 @@ def clean_html(html_content):
         flags=re.DOTALL,
     )
 
-    # Pattern 3: <pre>...</pre> (code directly inside)
+    # Pattern 3: <pre>...</pre>
     html_content = re.sub(
         r"<pre[^>]*>(.*?)</pre>", extract_code_block, html_content, flags=re.DOTALL
     )
 
-    # Step 2: Convert headings
+    # Convert headings
     html_content = re.sub(
         r"<h1[^>]*>(.*?)</h1>", r"# \1\n\n", html_content, flags=re.DOTALL
     )
@@ -102,7 +159,7 @@ def clean_html(html_content):
         r"<h6[^>]*>(.*?)</h6>", r"###### \1\n\n", html_content, flags=re.DOTALL
     )
 
-    # Step 3: Convert paragraphs
+    # Convert paragraphs
     def convert_paragraph(match):
         content = match.group(1)
         content = re.sub(r"<br\s*/?>", "\n", content)
@@ -114,7 +171,7 @@ def clean_html(html_content):
         r"<p[^>]*>(.*?)</p>", convert_paragraph, html_content, flags=re.DOTALL
     )
 
-    # Step 4: Convert formatting
+    # Convert formatting
     html_content = re.sub(
         r"<strong[^>]*>(.*?)</strong>", r"**\1**", html_content, flags=re.DOTALL
     )
@@ -210,34 +267,35 @@ def clean_html(html_content):
     # Fix excessive newlines
     html_content = re.sub(r"\n{4,}", "\n\n\n", html_content)
 
-    # Step 5: Restore code blocks
+    # Restore code blocks
     for idx, code in enumerate(code_blocks):
         placeholder = CODE_BLOCK_DELIMITER.format(idx=idx)
 
-        # Detect language from content
+        # Detect language
         lang = ""
-        first_line = code.strip().split("\n")[0] if code.strip() else ""
-
-        if code.strip().startswith("<?php") or code.strip().startswith("<?="):
+        if code.strip().startswith("<?php"):
             lang = "php"
-        elif any(
-            line.startswith(("import ", "from ", "def ", "class "))
-            for line in code.split("\n")[:3]
-            if line.strip()
-        ):
+        elif "import " in code[:200] or "def " in code[:200]:
             lang = "python"
-        elif any(
-            line.startswith(("function ", "const ", "let ", "var "))
-            for line in code.split("\n")[:3]
-            if line.strip()
-        ):
+        elif "function " in code[:200] or "const " in code[:200]:
             lang = "javascript"
         elif "<?php" in code[:100]:
             lang = "php"
 
-        # Format code block with proper markdown
         code_block_md = f"\n```{lang}\n{code}\n```\n"
         html_content = html_content.replace(placeholder, code_block_md)
+
+    # Download images and replace placeholders
+    images_dir.mkdir(parents=True, exist_ok=True)
+    for idx, (src, alt) in enumerate(images_to_download):
+        placeholder = f"___IMAGE_{idx}___"
+        local_path = download_image(src, images_dir, post_slug)
+        if local_path:
+            html_content = html_content.replace(
+                placeholder, f"\n![{alt}]({local_path})\n"
+            )
+        else:
+            html_content = html_content.replace(placeholder, "")
 
     return html_content.strip()
 
@@ -277,9 +335,6 @@ def fetch_medium_posts(username="gabrielkoerich"):
                         content = entry["content"][0].get("value", "")
                     else:
                         content = entry.get("summary", "")
-
-                    # Clean HTML to Markdown
-                    content = clean_html(content)
 
                     post = {
                         "title": entry.get("title", "Untitled"),
@@ -337,8 +392,6 @@ def fetch_wtf_posts():
                         else:
                             content = entry.get("summary", "")
 
-                        content = clean_html(content)
-
                         post = {
                             "title": entry.get("title", "Untitled"),
                             "date": date,
@@ -361,10 +414,13 @@ def fetch_wtf_posts():
     return []
 
 
-def generate_markdown(posts, output_dir):
+def generate_markdown(posts, output_dir, images_dir):
     """Generate markdown files from posts"""
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
+
+    images_path = Path(images_dir)
+    images_path.mkdir(parents=True, exist_ok=True)
 
     print(f"\nGenerating markdown files in {output_dir}...")
 
@@ -374,10 +430,13 @@ def generate_markdown(posts, output_dir):
         filename = f"{date_str}-{slug}.md"
         filepath = output_path / filename
 
+        # Clean HTML with image downloading
+        content = clean_html(post["content"], slug, images_path)
+
         # Escape quotes in title for TOML
         safe_title = post["title"].replace('"', '\\"')
 
-        content = f"""+++
+        markdown = f"""+++
 title = "{safe_title}"
 date = {post["date"].strftime("%Y-%m-%d")}
 [taxonomies]
@@ -387,12 +446,12 @@ source = "{post["source"]}"
 original_url = "{post["url"]}"
 +++
 
-{post["content"]}
+{content}
 
 *Originally published on [{post["source"].upper()}]({post["url"]})*
 """
 
-        filepath.write_text(content, encoding="utf-8")
+        filepath.write_text(markdown, encoding="utf-8")
         print(f"  ✓ {filename}")
 
     print(f"\nGenerated {len(posts)} markdown files")
@@ -409,6 +468,12 @@ def main():
         "-o",
         default="./content/posts/external",
         help="Output directory for markdown files",
+    )
+    parser.add_argument(
+        "--images",
+        "-i",
+        default="./static/images/posts",
+        help="Output directory for images",
     )
     parser.add_argument(
         "--medium-only", action="store_true", help="Only fetch Medium posts"
@@ -429,7 +494,7 @@ def main():
 
     if all_posts:
         all_posts.sort(key=lambda x: x["date"], reverse=True)
-        generate_markdown(all_posts, args.output)
+        generate_markdown(all_posts, args.output, args.images)
     else:
         print("\nNo posts found!")
         sys.exit(1)

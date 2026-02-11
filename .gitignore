@@ -7,6 +7,7 @@ __pycache__/
 
 # Zola build output
 public/
+static/
 
 # Generated data files (fetched during CI/CD build)
 data/github-profile.json
