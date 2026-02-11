@@ -1,0 +1,32 @@
+name: Build CV PDF
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - content/cv.md
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Pandoc
+        run: sudo apt-get install -y pandoc
+
+      - name: Build CV PDF
+        run: |
+          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d'; } > /tmp/cv-temp.md
+          pandoc /tmp/cv-temp.md -o public/gabrielkoerich-cv.pdf \
+            --from markdown+hard_line_breaks \
+            --pdf-engine=xelatex \
+            -V geometry:top=1.25in \
+            -V geometry:bottom=0.75in
+
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Update CV PDF"

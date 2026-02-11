@@ -5,12 +5,9 @@ on:
     branches:
       - main
   pull_request:
-  # workflow_dispatch allows manual triggering
   workflow_dispatch:
-  # Uncomment below to enable automatic daily builds
-  # schedule:
-  #   # Run daily to keep GitHub data and blog posts fresh
-  #   - cron: '0 0 * * *'
+  schedule:
+    - cron: '0 20 * * *'
 
 jobs:
   build:

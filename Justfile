@@ -8,7 +8,7 @@ fetch-github:
 
 # Fetch GitHub data with token (for higher API limits)
 fetch-github-auth TOKEN:
-    python3 scripts/fetch-github.py {{TOKEN}}
+    python3 scripts/fetch-github.py {{ TOKEN }}
 
 # Fetch blog posts from Medium and wtf.gabrielkoerich.com
 fetch-posts:
@@ -32,7 +32,7 @@ serve:
 
 # Serve on specific port
 serve-port PORT="1111":
-    zola serve --port {{PORT}}
+    zola serve --port {{ PORT }}
 
 # Clean build artifacts
 clean:
@@ -53,11 +53,11 @@ deploy:
 new-post TITLE:
     #!/usr/bin/env bash
     DATE=$(date +%Y-%m-%d)
-    SLUG=$(echo "{{TITLE}}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+    SLUG=$(echo "{{ TITLE }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
     mkdir -p content/posts
     cat > "content/posts/${DATE}-${SLUG}.md" << EOF
     +++
-    title = "{{TITLE}}"
+    title = "{{ TITLE }}"
     date = ${DATE}
     [taxonomies]
     tags = []
@@ -78,3 +78,15 @@ update-zola:
 preview:
     just build-prod
     cd public && python3 -m http.server 8000
+
+md-to-pdf file:
+    pandoc {{ file }}.md -o {{ file }}.pdf
+
+# Build CV PDF from content/cv.md
+build-cv:
+    { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d'; } > /tmp/cv-temp.md
+    pandoc /tmp/cv-temp.md -o public/gabrielkoerich-cv.pdf \
+      --from markdown+hard_line_breaks \
+      --pdf-engine=xelatex \
+      -V geometry:top=1.25in \
+      -V geometry:bottom=0.75in
