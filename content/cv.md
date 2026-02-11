@@ -170,7 +170,7 @@ Self-taught web development during university years. Built websites and web appl
 
 - **+100M TVL Protocol:** Architected DeFi protocol at Lulo with innovative dual-pool security mechanism
 - **Marketing Automation at Scale:** Built Bulldesk to handle millions of leads and complex automation workflows
-- **Solana Ecosystem:** Multiple production smart contracts including NFT marketplaces and DeFi integrations
+- **Solana Ecosystem:** Multiple production smart contracts including marketplaces and DeFi integrations
 - **Open Source:** Active contributor to various PHP and Rust projects (github.com/gabrielkoerich)
 
 ---
