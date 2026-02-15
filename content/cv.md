@@ -3,7 +3,7 @@ title = ""
 description = "Senior Software Engineer with 17+ years experience"
 +++
 
-## Summary
+## Summary <a href="/gabrielkoerich-cv.pdf" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
 A technical, productivity-focused software engineer and entrepreneur with over 17 years of professional experience building scalable systems (2008–Present). I started programming at age 13 out of pure curiosity about how things work, an early passion that evolved into a career building everything from marketing automation platforms to DeFi protocols. 
 
