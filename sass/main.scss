@@ -351,6 +351,13 @@ article h1 {
     vertical-align: middle;
 }
 
+/* Print */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
 /* Responsive */
 @media (max-width: 600px) {
     #container {
