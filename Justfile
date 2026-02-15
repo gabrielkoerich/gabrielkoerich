@@ -85,8 +85,8 @@ md-to-pdf file:
 # Build CV PDF from content/cv.md
 build-cv:
     { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d'; } > /tmp/cv-temp.md
-    pandoc /tmp/cv-temp.md -o public/gabrielkoerich-cv.pdf \
+    pandoc /tmp/cv-temp.md -o static/gabrielkoerich-cv.pdf \
       --from markdown+hard_line_breaks \
-      --pdf-engine=wkhtmltopdf \
+      --pdf-engine=xelatex \
       -V geometry:top=1.25in \
       -V geometry:bottom=0.75in
