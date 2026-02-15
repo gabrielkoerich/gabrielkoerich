@@ -12,4 +12,4 @@ Currently architecting Solana smart contracts at <a href="https://lulo.fi" targe
 
 Previously founded Bulldesk (marketing automation SaaS, acquired 2021).
 
-You can know more about me on https://gabrielkoerich.com
+You can know more about me at https://gabrielkoerich.com
