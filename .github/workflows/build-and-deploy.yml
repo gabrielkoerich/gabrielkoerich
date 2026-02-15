@@ -65,3 +65,11 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Purge Cloudflare Cache
+        continue-on-error: true
+        run: |
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/b4f279fbdc18c1d62d60751dcefbc03e/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'

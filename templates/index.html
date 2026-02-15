@@ -61,7 +61,7 @@ own_repos = own_repos | concat(with=repo) %} {% else %} {% set_global
 contributed_repos = contributed_repos | concat(with=repo) %} {% endif %} {%
 endfor %}
 
-<h2>Open Source Contributions</h2>
+<h2>Projects & Contributions</h2>
 <p>Featured projects I've built or contributed to:</p>
 
 <ul id="repos">
@@ -112,6 +112,8 @@ endfor %}
 </ul>
 
 <p>
+    <a href="https://projects.gabrielkoerich.com" target="_blank">View all my projects →</a>
+    <br>
     <a href="{{config.extra.github}}?tab=repositories" target="_blank"
         >View all repositories on GitHub →</a
     >
