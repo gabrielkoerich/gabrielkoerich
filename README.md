@@ -11,3 +11,5 @@ I started coding at 13 out of curiosity. 17+ years later, I'm building DeFi prot
 Currently architecting Solana smart contracts at <a href="https://lulo.fi" target="_blank">Lulo</a> (+$100M TVL).
 
 Previously founded Bulldesk (marketing automation SaaS, acquired 2021).
+
+You can know more about me at https://gabrielkoerich.com
