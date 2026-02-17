@@ -42,8 +42,7 @@ jobs:
             --source-lang pt \
             --target-lang en \
             --provider command \
-            --translator-cmd "trans -b -s {source_lang} -t {target_lang}" \
-            --make-target-default
+            --translator-cmd "trans -b -s {source_lang} -t {target_lang}"
           STATUS=$?
           set -e
 
@@ -54,8 +53,7 @@ jobs:
                 --input-dir content/posts/external \
                 --source-lang pt \
                 --target-lang en \
-                --provider openai \
-                --make-target-default
+                --provider openai
             else
               echo "No OPENAI_API_KEY available; continuing without translation fallback."
             fi

@@ -18,6 +18,17 @@ fetch-posts:
 fetch-posts-medium:
     uv run python scripts/fetch-blog-posts.py --medium-only --output content/posts/external
 
+# Translate external posts to English using Google Translate (translate-shell).
+# Overwrites posts in place (English-only).
+# OpenAI is available as optional fallback via --provider openai.
+translate-posts-en:
+    uv run python scripts/translate-blog-posts.py \
+      --input-dir content/posts/external \
+      --source-lang pt \
+      --target-lang en \
+      --provider command \
+      --translator-cmd "trans -b -s {source_lang} -t {target_lang}"
+
 # Build the site locally (with GitHub data and blog posts)
 build: fetch-github fetch-posts-medium
     zola build
@@ -26,8 +37,16 @@ build: fetch-github fetch-posts-medium
 build-fast:
     zola build
 
+# Direct Zola build (no fetch steps)
+zola-build:
+    zola build
+
 # Serve the site locally for development
 serve:
+    zola serve
+
+# Direct Zola watch/serve
+zola-serve:
     zola serve
 
 # Serve on specific port
