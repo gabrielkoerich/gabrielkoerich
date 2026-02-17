@@ -6,8 +6,7 @@ or OpenAI API as optional fallback.
 Default behavior:
 - Reads unsuffixed markdown files from content/posts/external
 - Translates title + body from pt -> en
-- Keeps Portuguese as <slug>.pt.md
-- Writes English as default file <slug>.md
+- Overwrites files in place as English content
 """
 
 from __future__ import annotations
@@ -144,27 +143,11 @@ def candidate_files(input_dir: Path) -> list[Path]:
     return files
 
 
-def target_paths(path: Path, source_lang: str, target_lang: str, make_target_default: bool) -> tuple[Path, Path]:
-    stem = path.stem
-    parent = path.parent
-
-    if make_target_default:
-        source_path = parent / f"{stem}.{source_lang}.md"
-        target_path = path
-    else:
-        source_path = path
-        target_path = parent / f"{stem}.{target_lang}.md"
-
-    return source_path, target_path
-
-
 def process_file(
     path: Path,
     source_lang: str,
     target_lang: str,
     translate_fn,
-    make_target_default: bool,
-    overwrite: bool,
     dry_run: bool,
 ) -> None:
     raw = path.read_text(encoding="utf-8")
@@ -177,29 +160,15 @@ def process_file(
     translated_front_matter = replace_title(front_matter, translated_title)
     translated_raw = f"{FRONT_MATTER_DELIM}\n{translated_front_matter}\n{FRONT_MATTER_DELIM}\n\n{translated_body.rstrip()}\n"
 
-    source_path, target_path = target_paths(path, source_lang, target_lang, make_target_default)
-
-    if target_path.exists() and not overwrite and target_path.resolve() != path.resolve():
-        raise FileExistsError(f"target file exists: {target_path}")
-
     print(f"Translating: {path}")
     print(f"  source title: {source_title}")
     print(f"  target title: {translated_title}")
-    print(f"  write target: {target_path}")
+    print(f"  write target: {path}")
 
     if dry_run:
         return
 
-    if make_target_default and path.resolve() == target_path.resolve():
-        if source_path.exists() and target_path.exists() and not overwrite:
-            print(f"  skip: already migrated ({source_path.name} exists)")
-            return
-        if source_path.exists() and not overwrite:
-            raise FileExistsError(f"source language file already exists: {source_path}")
-        path.rename(source_path)
-        target_path.write_text(translated_raw, encoding="utf-8")
-    else:
-        target_path.write_text(translated_raw, encoding="utf-8")
+    path.write_text(translated_raw, encoding="utf-8")
 
 
 def main() -> int:
@@ -219,12 +188,6 @@ def main() -> int:
         help="Command template. Reads text from stdin and writes translated text to stdout",
     )
     parser.add_argument("--openai-model", default="gpt-4.1-mini", help="OpenAI model for translation")
-    parser.add_argument(
-        "--make-target-default",
-        action="store_true",
-        help="Move unsuffixed source file to .<source-lang>.md and write translation to unsuffixed .md",
-    )
-    parser.add_argument("--overwrite", action="store_true", help="Overwrite existing output files")
     parser.add_argument("--dry-run", action="store_true", help="Preview operations without writing files")
     args = parser.parse_args()
 
@@ -263,8 +226,6 @@ def main() -> int:
                 source_lang=args.source_lang,
                 target_lang=args.target_lang,
                 translate_fn=translate_fn,
-                make_target_default=args.make_target_default,
-                overwrite=args.overwrite,
                 dry_run=args.dry_run,
             )
         except Exception as exc:
