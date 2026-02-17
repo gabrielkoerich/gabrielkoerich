@@ -61,7 +61,12 @@ own_repos = own_repos | concat(with=repo) %} {% else %} {% set_global
 contributed_repos = contributed_repos | concat(with=repo) %} {% endif %} {%
 endfor %}
 
-<h2>Projects & Contributions</h2>
+<div class="section-heading-inline">
+    <h2>Projects & Contributions</h2>
+    <a class="section-heading-link" href="https://projects.gabrielkoerich.com" target="_blank"
+        >View all my projects →</a
+    >
+</div>
 <p>Featured projects I've built or contributed to:</p>
 
 <ul id="repos">
@@ -111,13 +116,6 @@ endfor %}
     {% endfor %}
 </ul>
 
-<p>
-    <a href="https://projects.gabrielkoerich.com" target="_blank">View all my projects →</a>
-    <br>
-    <a href="{{config.extra.github}}?tab=repositories" target="_blank"
-        >View all repositories on GitHub →</a
-    >
-</p>
 {% endif %} {# Blog Posts #} {% set posts_section =
 get_section(path="posts/_index.md") %} {% set external_section =
 get_section(path="posts/external/_index.md") %} {% set all_posts = [] %} {% if
