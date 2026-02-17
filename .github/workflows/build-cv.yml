@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - content/cv.md
+      - content/cv-summary.md
 
 jobs:
   build:
@@ -20,6 +21,15 @@ jobs:
         run: |
           { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
           pandoc /tmp/cv-temp.md -o static/gabrielkoerich-cv.pdf \
+            --from markdown+hard_line_breaks \
+            --pdf-engine=wkhtmltopdf \
+            -V geometry:top=1.25in \
+            -V geometry:bottom=0.75in
+
+      - name: Build CV Summary PDF
+        run: |
+          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv-summary.md | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
+          pandoc /tmp/cv-temp.md -o static/gabrielkoerich-cv-summary.pdf \
             --from markdown+hard_line_breaks \
             --pdf-engine=wkhtmltopdf \
             -V geometry:top=1.25in \
