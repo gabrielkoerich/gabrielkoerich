@@ -25,10 +25,41 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests feedparser
+          sudo apt-get update
+          sudo apt-get install -y translate-shell
 
       - name: Fetch blog posts
         run: |
           python3 scripts/fetch-blog-posts.py --medium-only  --output content/posts/external || echo "Blog fetch failed, continuing..."
+
+      - name: Translate blog posts to English
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set +e
+          python3 scripts/translate-blog-posts.py \
+            --input-dir content/posts/external \
+            --source-lang pt \
+            --target-lang en \
+            --provider command \
+            --translator-cmd "trans -b -s {source_lang} -t {target_lang}" \
+            --make-target-default
+          STATUS=$?
+          set -e
+
+          if [ "$STATUS" -ne 0 ]; then
+            echo "translate-shell failed; trying OpenAI fallback..."
+            if [ -n "$OPENAI_API_KEY" ]; then
+              python3 scripts/translate-blog-posts.py \
+                --input-dir content/posts/external \
+                --source-lang pt \
+                --target-lang en \
+                --provider openai \
+                --make-target-default
+            else
+              echo "No OPENAI_API_KEY available; continuing without translation fallback."
+            fi
+          fi
 
       - name: Install Zola
         run: |
