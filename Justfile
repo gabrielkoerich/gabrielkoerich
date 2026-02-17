@@ -37,21 +37,47 @@ translate-posts-en:
 
 # Create a new blog post
 [group('posts')]
-new-post TITLE:
+new-post:
     #!/usr/bin/env bash
+    set -euo pipefail
+
+    printf "Post title: "
+    IFS= read -r TITLE_INPUT
+    if [ -z "$TITLE_INPUT" ]; then
+      echo "Title cannot be empty" >&2
+      exit 1
+    fi
+
+    echo "Post body (finish with Ctrl-D):"
+    BODY_INPUT=$(cat)
+
     DATE=$(date +%Y-%m-%d)
-    SLUG=$(echo "{{ TITLE }}" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+    TITLE_TOML=$(printf '%s' "$TITLE_INPUT" | sed 's/\\/\\\\/g; s/"/\\"/g')
+    SLUG=$(printf '%s' "$TITLE_INPUT" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+|-+$//g')
+    if [ -z "$SLUG" ]; then
+      echo "Could not generate a valid slug from title" >&2
+      exit 1
+    fi
+
     mkdir -p content/posts
-    cat > "content/posts/${DATE}-${SLUG}.md" << EOF
+    FILE="content/posts/${DATE}-${SLUG}.md"
+    if [ -e "$FILE" ]; then
+      echo "File already exists: $FILE" >&2
+      exit 1
+    fi
+
+    cat > "$FILE" << EOF
     +++
-    title = "{{ TITLE }}"
+    title = "$TITLE_TOML"
     date = ${DATE}
     [taxonomies]
     tags = []
     +++
 
+    ${BODY_INPUT}
+
     EOF
-    echo "Created content/posts/${DATE}-${SLUG}.md"
+    echo "Created $FILE"
 
 # Build the site locally (with GitHub data and blog posts)
 [group('website')]
