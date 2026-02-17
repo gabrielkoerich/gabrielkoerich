@@ -1,10 +1,12 @@
-# Gabriel Koerich | Software Engineer
++++
+title = ""
++++
 
-## Summary
+## Summary <a href="/gabrielkoerich-cv-summary.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
 Software engineer and entrepreneur with 17+ years of experience building scalable systems. Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently focused on blockchain engineering, building DeFi protocols on Solana (Rust/Anchor) and EVM (Solidity). BBA in Finance.
 
-gabrielmk@gmail.com | github.com/gabrielkoerich | linkedin.com/in/gabrielkoerich
+[gabrielmk@gmail.com](mailto:gabrielmk@gmail.com) | [github.com/gabrielkoerich](https://github.com/gabrielkoerich) | [linkedin.com/in/gabrielkoerich](https://linkedin.com/in/gabrielkoerich)
 
 ## Core Competencies
 
