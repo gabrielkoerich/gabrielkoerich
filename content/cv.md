@@ -85,7 +85,7 @@ All projects featured:
 - Comprehensive unit and integration testing
 - Modular, composable architecture
 - Security-first design patterns
-- JavaScript SDKs for client integration
+- Typescript/Rust SDKs for client integration
 - CLI tools with GitHub Actions automation
 
 **Stack:** Rust, Solana, Anchor, TypeScript, GitHub Actions
@@ -129,7 +129,7 @@ Technical highlights:
 
 Founded a digital agency and software house serving clients with custom web applications and marketing solutions. I was responsible for all the software development & business administration/finance. 
 
-**Stack:** Laravel, Node, JavaScript, Python, MySQL, Vue.js
+**Stack:** Laravel, Node, Typescript, Python, MySQL, Vue.js
 
 ---
 
@@ -138,7 +138,7 @@ Founded a digital agency and software house serving clients with custom web appl
 
 Self-taught web development during university years. Built websites and web applications for small businesses and local clients while completing BBA degree.
 
-**Stack:** PHP, JavaScript, HTML/CSS, MySQL
+**Stack:** PHP, Typescript, HTML/CSS, MySQL
 
 ## Notable Projects & Achievements
 
