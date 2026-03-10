@@ -119,26 +119,4 @@ endfor %}
     {% endfor %}
 </ul>
 
-{% endif %} {# Blog Posts #} {% set posts_section =
-get_section(path="posts/_index.md") %} {% set external_section =
-get_section(path="posts/external/_index.md") %} {% set all_posts = [] %} {% if
-posts_section.pages %} {% for page in posts_section.pages %} {% set_global
-all_posts = all_posts | concat(with=page) %} {% endfor %} {% endif %} {% if
-external_section.pages %} {% for page in external_section.pages %} {% set_global
-all_posts = all_posts | concat(with=page) %} {% endfor %} {% endif %} {% if
-all_posts | length > 0 %} {% set sorted_posts = all_posts |
-sort(attribute="date") | reverse %}
-
-<h2>Posts</h2>
-<ul id="posts">
-    {% for page in sorted_posts | slice(end=10) %}
-    <li>
-        <h3><a href="{{page.permalink}}">{{page.title}}</a></h3>
-        <span class="post-date">{{page.date | date(format="%b %d, %Y")}}</span>
-    </li>
-    {% endfor %}
-</ul>
-
-{% if sorted_posts | length > 10 %}
-<p><a href="/posts/">View all posts →</a></p>
-{% endif %} {% endif %} {% endblock content %}
+{% endif %} {% endblock content %}
