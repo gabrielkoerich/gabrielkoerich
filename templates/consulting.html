@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set booking_url = "https://calendar.app.google/REPLACE_ME" %}
+<div id="consulting">
+    <section class="consulting-hero">
+        <p class="hero-eyebrow">AI consulting</p>
+        <h1>What's the most annoying thing in your company that we can automate?</h1>
+        <p class="consulting-lede">
+            I help companies ship AI systems that actually work in production —
+            Claude Code &amp; Codex workflows, agent orchestration, and
+            AI-powered automations, built by an engineer with 17+ years running
+            real systems at scale.
+        </p>
+        <a class="cta-button" href="{{ booking_url }}" target="_blank" rel="noopener">
+            Book a 30-min intro call →
+        </a>
+        <p class="cta-meta">Free · Google Meet · 30 minutes</p>
+    </section>
+
+    <section class="consulting-section">
+        <h2>Who I work with</h2>
+        <ul class="consulting-list">
+            <li><strong>Engineering teams</strong> adopting Claude Code, Codex, and other coding agents — getting from "we played with it" to a daily, trusted workflow.</li>
+            <li><strong>Startups and founders</strong> building AI-powered products and MVPs — picking the right model, prompts, architecture, and what to ignore.</li>
+            <li><strong>Established companies</strong> automating sales, marketing, support, and internal ops — leveraging 6 years running Bulldesk (acquired 2021) at 80M+ requests/mo.</li>
+            <li><strong>Web3 / DeFi teams</strong> adding AI to trading, monitoring, and agent-based systems — combining Solana/EVM experience with AI integration.</li>
+        </ul>
+    </section>
+
+    <section class="consulting-section">
+        <h2>How I help</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <h3>Strategy &amp; advisory</h3>
+                <p class="service-tag">Hourly or short retainer</p>
+                <p>Discovery calls, AI audits, technical roadmaps, build-vs-buy decisions, model selection, cost analysis. Best for teams that need a senior second opinion before committing.</p>
+            </div>
+            <div class="service-card">
+                <h3>Hands-on implementation</h3>
+                <p class="service-tag">Project-based</p>
+                <p>I build the system end-to-end: agent orchestration, RAG pipelines, internal tools, evals, and the boring infrastructure that makes it production-ready. I write the code, ship it, and document it.</p>
+            </div>
+            <div class="service-card">
+                <h3>Team training &amp; workshops</h3>
+                <p class="service-tag">½-day to 2-day</p>
+                <p>Hands-on sessions to get your engineers productive with coding agents (Claude Code, Codex, OpenCode), agent design patterns, prompt engineering, and workflow integration.</p>
+            </div>
+            <div class="service-card">
+                <h3>Fractional AI engineer</h3>
+                <p class="service-tag">Ongoing, part-time</p>
+                <p>Embed with one company a few days a week. Own the AI roadmap, mentor the team, ship features. For companies that need senior AI capacity without a full-time hire.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="consulting-section">
+        <h2>Why work with me</h2>
+        <ul class="consulting-list">
+            <li><strong>17+ years</strong> building production software — not an AI tourist.</li>
+            <li><strong>Founder track record</strong> — built and sold Bulldesk (Marketing Automation SaaS, 80M+ req/mo, 500M+ background jobs/mo).</li>
+            <li><strong>Currently architecting</strong> Solana DeFi at <a href="https://lulo.fi" target="_blank" rel="noopener">Lulo</a> (+$100M TVL).</li>
+            <li><strong>Daily AI practitioner</strong> — I orchestrate Claude, Codex, and OpenCode in my own workflow (<a href="https://github.com/gabrielkoerich/orch" target="_blank" rel="noopener">orch</a>) and built this site with AI assistance.</li>
+            <li><strong>Finance background (BBA)</strong> — I understand business outcomes, not just code.</li>
+        </ul>
+    </section>
+
+    <section class="consulting-section">
+        <h2>How a typical engagement starts</h2>
+        <ol class="consulting-steps">
+            <li><strong>Book a 30-min intro call</strong> (free, Google Meet). We discuss your problem.</li>
+            <li><strong>Proposal within 48h</strong> — scope, timeline, price. No surprises.</li>
+            <li><strong>Start within 1–2 weeks</strong>, with weekly written updates.</li>
+        </ol>
+    </section>
+
+    <section class="consulting-cta">
+        <h2>Ready to talk?</h2>
+        <a class="cta-button" href="{{ booking_url }}" target="_blank" rel="noopener">
+            Book a 30-min intro call →
+        </a>
+        <p class="cta-meta">
+            Prefer email? <a href="mailto:{{ config.extra.email }}">{{ config.extra.email }}</a>
+        </p>
+    </section>
+</div>
+{% endblock content %}

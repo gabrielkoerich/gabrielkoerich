@@ -27,6 +27,14 @@ I combine deep expertise in both traditional backend development and blockchain 
 
 ## Core Competencies
 
+**AI & Agent Orchestration**
+- Daily user and integrator of Claude Code, Codex, and OpenCode for production engineering
+- Multi-agent orchestration — running coding agents in parallel for planning, implementation, and review ([orch](https://github.com/gabrielkoerich/orch))
+- Automating engineering workflows: code generation, refactoring, reviews, documentation, and ops
+- AI consulting for companies — agent workflows, RAG pipelines, internal tooling, evals
+- Prompt engineering, model selection, and cost/latency trade-offs
+- [AI Consulting available](https://gabrielkoerich.com/consulting) — strategy, hands-on implementation, team training, fractional engineering
+
 **Blockchain Engineering**
 - Solana Smart Contracts (Rust, Anchor Framework)
 - EVM Smart Contracts (Solidity, Hardhat, Foundry)
@@ -51,7 +59,7 @@ I combine deep expertise in both traditional backend development and blockchain 
 - Code review & mentoring
 - Agile methodologies
 - System design & architecture
-- [Coding Agents orchestration](https://github.com/gabrielkoerich/orchestrator) - Testing Claude, Codex and OpenCode on my daily workflow.
+- AI-augmented development — Claude Code, Codex, and OpenCode integrated into daily workflow via my own [orch](https://github.com/gabrielkoerich/orch)
 
 ## Professional Experience
 
@@ -145,6 +153,7 @@ Self-taught web development during university years. Built websites and web appl
 - **+100M TVL Protocol:** Architected DeFi protocol at Lulo with innovative dual-pool security mechanism
 - **Marketing Automation at Scale:** Built Bulldesk to handle millions of leads and complex automation workflows
 - **Solana Ecosystem:** Multiple production smart contracts including marketplaces and DeFi integrations
+- **AI Orchestration:** Built [orch](https://github.com/gabrielkoerich/orch) to run Claude Code, Codex, and OpenCode in parallel for engineering workflows. Now offering [AI consulting](https://gabrielkoerich.com/consulting) for companies.
 - **Open Source:** Active contributor to various PHP and Rust projects (github.com/gabrielkoerich)
 
 ## Interests & Values

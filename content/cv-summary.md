@@ -4,11 +4,13 @@ title = ""
 
 ## Summary <a href="/gabrielkoerich-cv-summary.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
-Software engineer and entrepreneur with 17+ years of experience building scalable systems. Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently focused on blockchain engineering, building DeFi protocols on Solana (Rust/Anchor) and EVM (Solidity). BBA in Finance.
+Software engineer and entrepreneur with 17+ years of experience building scalable systems. Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently focused on blockchain engineering (Solana/Rust, EVM/Solidity) and AI/agent orchestration — running Claude Code, Codex, and OpenCode in production workflows. Available for [AI consulting](https://gabrielkoerich.com/consulting). BBA in Finance.
 
 [gabrielmk@gmail.com](mailto:gabrielmk@gmail.com) | [github.com/gabrielkoerich](https://github.com/gabrielkoerich) | [linkedin.com/in/gabrielkoerich](https://linkedin.com/in/gabrielkoerich)
 
 ## Core Competencies
+
+**AI & Agent Orchestration:** Claude Code, Codex, OpenCode in daily production use. Multi-agent orchestration ([orch](https://github.com/gabrielkoerich/orch)), automating engineering workflows, RAG, evals, prompt engineering. Available for [consulting](https://gabrielkoerich.com/consulting).
 
 **Blockchain:** Solana (Rust, Anchor), EVM (Solidity, Foundry, Hardhat), DeFi integrations, security-first design, onchain/off-chain indexing, comprehensive testing (unit, fuzz, integration)
 

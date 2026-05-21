@@ -145,6 +145,19 @@ header h1 a:hover {
     text-decoration: none;
 }
 
+.header-nav-link {
+    font-size: 0.9rem;
+    color: var(--text-color) !important;
+    padding-right: 0.5rem;
+    border-right: 1px solid var(--border-color);
+    margin-right: 0.25rem;
+}
+
+.header-nav-link:hover {
+    color: var(--accent-color) !important;
+    opacity: 1;
+}
+
 /* Intro section */
 #intro {
     margin: 2rem 0 3rem;
@@ -517,4 +530,165 @@ article h1 {
     content: "/";
     margin-right: 0.3rem;
     opacity: 0.5;
+}
+
+/* Consulting page */
+#consulting {
+    margin: 2rem 0;
+}
+
+.consulting-hero {
+    padding: 2.5rem 0 3rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.consulting-hero h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin: 0 0 1.25rem;
+    font-weight: 700;
+}
+
+.hero-eyebrow {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 0.75rem;
+}
+
+.consulting-lede {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin: 0 0 2rem;
+    max-width: 38em;
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--accent-color);
+    color: var(--bg-color) !important;
+    padding: 0.85rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none !important;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.cta-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    text-decoration: none !important;
+}
+
+.cta-meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0.75rem 0 0;
+    font-family: var(--font-mono);
+}
+
+.consulting-section {
+    margin: 3rem 0;
+}
+
+.consulting-section h2 {
+    font-size: 1.35rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.consulting-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.consulting-list li {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+}
+
+.consulting-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.consulting-steps {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.consulting-steps li {
+    margin: 1rem 0;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.service-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.service-card:hover {
+    border-color: var(--accent-color);
+}
+
+.service-card h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+}
+
+.service-card .service-tag {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.service-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.consulting-cta {
+    margin: 4rem 0 2rem;
+    padding: 2.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.consulting-cta h2 {
+    border: 0;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    font-size: 1.5rem;
 }
