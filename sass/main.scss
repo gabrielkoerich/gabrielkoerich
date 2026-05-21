@@ -596,6 +596,20 @@ article h1 {
     vertical-align: middle;
 }
 
+#page-footer .footer-extra {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+}
+
+#page-footer .footer-extra a {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+#page-footer .footer-extra a:hover {
+    color: var(--accent-color);
+}
+
 /* Print */
 @media print {
     .no-print {

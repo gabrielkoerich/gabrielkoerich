@@ -7,6 +7,7 @@ Scrapes the public GitHub profile page to get pinned repos dynamically.
 import json
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 import urllib.request
 import urllib.error
@@ -186,17 +187,67 @@ def fetch_events(token=None):
     return []
 
 
+def humanize_delta(iso_ts):
+    """Convert an ISO timestamp to a relative human string."""
+    if not iso_ts:
+        return ""
+    try:
+        ts = datetime.fromisoformat(iso_ts.replace("Z", "+00:00"))
+    except (ValueError, AttributeError):
+        return ""
+    delta = datetime.now(timezone.utc) - ts
+    days = delta.days
+    if days < 0:
+        return "in the future"
+    if days == 0:
+        hours = delta.seconds // 3600
+        if hours == 0:
+            return "just now"
+        return f"{hours}h ago"
+    if days == 1:
+        return "yesterday"
+    if days < 7:
+        return f"{days} days ago"
+    if days < 14:
+        return "last week"
+    if days < 30:
+        return f"{days // 7} weeks ago"
+    if days < 60:
+        return "last month"
+    if days < 365:
+        return f"{days // 30} months ago"
+    years = days // 365
+    return f"{years} year{'s' if years > 1 else ''} ago"
+
+
 def fetch_repos(token=None):
     """Fetch user repositories"""
     headers = {}
     if token:
         headers["Authorization"] = f"token {token}"
 
-    url = f"https://api.github.com/users/{USERNAME}/repos?sort=updated&per_page=100"
+    url = f"https://api.github.com/users/{USERNAME}/repos?sort=pushed&per_page=100"
     html = fetch_url(url, headers)
-    if html:
-        return json.loads(html)
-    return []
+    if not html:
+        return []
+    repos = json.loads(html)
+
+    # Enrich with relative-time strings and a days_since_push integer for filtering
+    now = datetime.now(timezone.utc)
+    for r in repos:
+        pushed = r.get("pushed_at")
+        if pushed:
+            try:
+                ts = datetime.fromisoformat(pushed.replace("Z", "+00:00"))
+                r["days_since_push"] = (now - ts).days
+                r["pushed_relative"] = humanize_delta(pushed)
+            except (ValueError, AttributeError):
+                r["days_since_push"] = 9999
+                r["pushed_relative"] = ""
+        else:
+            r["days_since_push"] = 9999
+            r["pushed_relative"] = ""
+    return repos
 
 
 def main():

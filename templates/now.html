@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set repos = load_data(path="data/github-repos.json", required=false) %}
+{% set hidden_repos = config.extra.hidden_repos | default(value=[]) %}
+{% set skip_names = ["gabrielkoerich", "gabrielkoerich.github.io"] %}
+
+<article>
+    <h1>{{ page.title }}</h1>
+
+    <div class="content">
+        {{ page.content | safe }}
+    </div>
+
+    {% if repos %}
+    <h2>Recent work</h2>
+    <p class="now-meta">
+        Auto-updated daily from GitHub. Public repos I've pushed to in the last ~3 months.
+    </p>
+
+    <ul id="repos" class="now-repos">
+        {% set count = 0 %}
+        {% for repo in repos %}
+            {% if count < 8
+                and not repo.fork
+                and not repo.private
+                and repo.days_since_push is defined
+                and repo.days_since_push < 90
+                and repo.name not in hidden_repos
+                and repo.name not in skip_names %}
+                {% set count = count + 1 %}
+        <li class="repo-item">
+            <h3>
+                <a href="{{ repo.html_url }}" target="_blank" rel="noopener">{{ repo.name }}</a>
+            </h3>
+            {% if repo.description %}
+            <p class="repo-description">{{ repo.description }}</p>
+            {% endif %}
+            <div class="repo-meta">
+                {% if repo.language %}
+                <span class="repo-lang">{{ repo.language }}</span>
+                {% endif %}
+                <span class="repo-pushed">Pushed {{ repo.pushed_relative }}</span>
+                {% if repo.stargazers_count and repo.stargazers_count > 0 %}
+                <span class="repo-stars"><span class="star-icon">★</span> {{ repo.stargazers_count }}</span>
+                {% endif %}
+            </div>
+        </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <p class="now-footer">
+        <em>Inspired by <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now pages</a>.
+        The "Recent work" section is regenerated daily from my GitHub activity.
+        The rest is updated whenever something meaningful changes.</em>
+    </p>
+</article>
+{% endblock content %}
