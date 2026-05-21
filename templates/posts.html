@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>All Posts</h1>
+<h1>Posts</h1>
+<p class="posts-intro">
+    Notes from the workbench — Solana, Rust, AI coding agents, and shipping software at scale.
+    <a href="/rss.xml">RSS →</a>
+</p>
 
 {% set posts_section = get_section(path="posts/_index.md") %}
 {% set external_section = get_section(path="posts/external/_index.md") %}
@@ -26,6 +30,11 @@
     <li>
         <h3><a href="{{page.permalink}}">{{page.title}}</a></h3>
         <span class="post-date">{{page.date | date(format="%b %d, %Y")}}</span>
+        {% if page.description %}
+        <p class="post-excerpt">{{page.description}}</p>
+        {% elif page.summary %}
+        <p class="post-excerpt">{{page.summary | striptags | truncate(length=180) | safe}}</p>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>

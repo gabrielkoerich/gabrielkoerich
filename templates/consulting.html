@@ -1,30 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% set booking_url = "https://calendar.app.google/REPLACE_ME" %}
+{% set booking_url = config.extra.booking_url %}
 <div id="consulting">
     <section class="consulting-hero">
-        <p class="hero-eyebrow">AI consulting</p>
+        <p class="hero-eyebrow">AI · Solana · EVM · DeFi consulting</p>
         <h1>What's the most annoying thing in your company that we can automate?</h1>
         <p class="consulting-lede">
-            I help companies ship AI systems that actually work in production —
-            Claude Code &amp; Codex workflows, agent orchestration, and
-            AI-powered automations, built by an engineer with 17+ years running
-            real systems at scale.
+            I help companies ship two kinds of systems that actually work in
+            production: <strong>AI workflows</strong> (Claude Code, Codex,
+            agent orchestration, automations) and <strong>blockchain
+            engineering</strong> (Solana smart contracts, EVM, DeFi
+            integrations, audits). 17+ years building real systems at scale.
         </p>
         <a class="cta-button" href="{{ booking_url }}" target="_blank" rel="noopener">
             Book a 30-min intro call →
         </a>
-        <p class="cta-meta">Free · Google Meet · 30 minutes</p>
+        <p class="cta-meta">
+            Free · Google Meet · 30 minutes ·
+            <strong>What you'll get:</strong> an honest assessment of your AI
+            workflow maturity, 2–3 specific automations worth pursuing, and a
+            straight answer on whether I'm the right fit. No pitch.
+        </p>
+    </section>
+
+    <section class="consulting-section">
+        <h2>Areas I work in</h2>
+        <div class="domain-grid">
+            <div class="domain-card">
+                <p class="domain-label">Track 1</p>
+                <h3>AI &amp; agent workflows</h3>
+                <ul>
+                    <li>Claude Code, Codex, OpenCode in production</li>
+                    <li>Multi-agent orchestration &amp; coding workflows</li>
+                    <li>Automating engineering, sales, support, ops</li>
+                    <li>RAG pipelines, evals, internal AI tooling</li>
+                    <li>Model selection, cost &amp; latency trade-offs</li>
+                </ul>
+            </div>
+            <div class="domain-card">
+                <p class="domain-label">Track 2</p>
+                <h3>Solana · EVM · DeFi</h3>
+                <ul>
+                    <li>Solana smart contracts (Rust, Anchor)</li>
+                    <li>EVM contracts (Solidity, Foundry, Hardhat)</li>
+                    <li>DeFi protocol architecture &amp; integrations</li>
+                    <li>Security reviews &amp; testing (unit, fuzz, integration)</li>
+                    <li>On-chain / off-chain indexing &amp; SDKs</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
     <section class="consulting-section">
         <h2>Who I work with</h2>
         <ul class="consulting-list">
             <li><strong>Engineering teams</strong> adopting Claude Code, Codex, and other coding agents — getting from "we played with it" to a daily, trusted workflow.</li>
-            <li><strong>Startups and founders</strong> building AI-powered products and MVPs — picking the right model, prompts, architecture, and what to ignore.</li>
+            <li><strong>Startups and founders</strong> building AI-powered or DeFi products and MVPs — picking the right model, architecture, and what to ignore.</li>
             <li><strong>Established companies</strong> automating sales, marketing, support, and internal ops — leveraging 6 years running Bulldesk (acquired 2021) at 80M+ requests/mo.</li>
-            <li><strong>Web3 / DeFi teams</strong> adding AI to trading, monitoring, and agent-based systems — combining Solana/EVM experience with AI integration.</li>
+            <li><strong>Web3 / DeFi teams</strong> shipping new protocols, integrations, audits, or adding AI to trading and monitoring systems.</li>
         </ul>
     </section>
 
@@ -34,22 +68,22 @@
             <div class="service-card">
                 <h3>Strategy &amp; advisory</h3>
                 <p class="service-tag">Hourly or short retainer</p>
-                <p>Discovery calls, AI audits, technical roadmaps, build-vs-buy decisions, model selection, cost analysis. Best for teams that need a senior second opinion before committing.</p>
+                <p>Discovery calls, AI or protocol audits, technical roadmaps, build-vs-buy decisions, model/stack selection, cost analysis. Best for teams that need a senior second opinion before committing.</p>
             </div>
             <div class="service-card">
                 <h3>Hands-on implementation</h3>
                 <p class="service-tag">Project-based</p>
-                <p>I build the system end-to-end: agent orchestration, RAG pipelines, internal tools, evals, and the boring infrastructure that makes it production-ready. I write the code, ship it, and document it.</p>
+                <p>I build the system end-to-end — AI agent orchestration, RAG, internal tools, or Solana/EVM smart contracts, SDKs, and integrations. I write the code, ship it, document it.</p>
             </div>
             <div class="service-card">
                 <h3>Team training &amp; workshops</h3>
                 <p class="service-tag">½-day to 2-day</p>
-                <p>Hands-on sessions to get your engineers productive with coding agents (Claude Code, Codex, OpenCode), agent design patterns, prompt engineering, and workflow integration.</p>
+                <p>Hands-on sessions to get your engineers productive with coding agents (Claude Code, Codex, OpenCode), or get up to speed on Solana/Anchor or EVM smart contract development.</p>
             </div>
             <div class="service-card">
-                <h3>Fractional AI engineer</h3>
+                <h3>Fractional senior engineer</h3>
                 <p class="service-tag">Ongoing, part-time</p>
-                <p>Embed with one company a few days a week. Own the AI roadmap, mentor the team, ship features. For companies that need senior AI capacity without a full-time hire.</p>
+                <p>Embed with one company a few days a week. Own the AI or protocol roadmap, mentor the team, ship features. For companies that need senior capacity without a full-time hire.</p>
             </div>
         </div>
     </section>
@@ -72,6 +106,50 @@
             <li><strong>Proposal within 48h</strong> — scope, timeline, price. No surprises.</li>
             <li><strong>Start within 1–2 weeks</strong>, with weekly written updates.</li>
         </ol>
+    </section>
+
+    <section class="consulting-section">
+        <h2>What I don't do</h2>
+        <ul class="consulting-list dont-list">
+            <li>One-off "ChatGPT integration" projects with no clear outcome.</li>
+            <li>Pure prompt-tweaking work — I'm an engineer, not a prompt copywriter.</li>
+            <li>Hype-driven AI experiments without a path to production.</li>
+            <li>Work I don't believe in. I'll tell you if I think you don't need me.</li>
+        </ul>
+    </section>
+
+    <section class="consulting-section">
+        <h2>FAQ</h2>
+        <div class="faq">
+            <details>
+                <summary>Where are you based? Do you work remote?</summary>
+                <p>Santa Catarina, Brazil (UTC-3). 100% remote. I overlap comfortably with US, EU, and LATAM business hours.</p>
+            </details>
+            <details>
+                <summary>What languages do you work in?</summary>
+                <p>English and Portuguese, fluent in both for written and spoken work.</p>
+            </details>
+            <details>
+                <summary>What does it cost?</summary>
+                <p>Engagements typically start at a 1-week paid discovery sprint, with hourly or fixed-fee options after that. We'll discuss specifics on the call.</p>
+            </details>
+            <details>
+                <summary>Do you sign NDAs?</summary>
+                <p>Yes. Standard mutual NDA is fine before any technical discussion.</p>
+            </details>
+            <details>
+                <summary>Who owns the IP?</summary>
+                <p>You do. All code, prompts, and configs I write for your engagement are yours.</p>
+            </details>
+            <details>
+                <summary>Can you embed with our team full-time?</summary>
+                <p>Not currently — I'm focused on a primary role at Lulo. I'm available for fractional / part-time work and project-based engagements.</p>
+            </details>
+            <details>
+                <summary>What stacks do you work with?</summary>
+                <p><strong>AI:</strong> Anthropic (Claude / Claude Code), OpenAI (Codex / GPT), open-source agents (OpenCode), Python, TypeScript.<br><strong>Blockchain:</strong> Solana (Rust, Anchor), EVM (Solidity, Foundry, Hardhat), TypeScript SDKs.<br>I'm tool-agnostic and pick what fits the problem.</p>
+            </details>
+        </div>
     </section>
 
     <section class="consulting-cta">

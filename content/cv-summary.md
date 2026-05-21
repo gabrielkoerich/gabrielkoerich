@@ -4,13 +4,13 @@ title = ""
 
 ## Summary <a href="/gabrielkoerich-cv-summary.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
-Software engineer and entrepreneur with 17+ years of experience building scalable systems. Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently focused on blockchain engineering (Solana/Rust, EVM/Solidity) and AI/agent orchestration — running Claude Code, Codex, and OpenCode in production workflows. Available for [AI consulting](https://gabrielkoerich.com/consulting). BBA in Finance.
+Senior software engineer and entrepreneur with 13+ years of professional experience (17+ including self-taught freelance since age 13). Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently architecting Solana DeFi at Lulo (+$100M TVL); also focused on AI / agent orchestration (Claude Code, Codex, OpenCode in production workflows). BBA in Finance. **Open to:** Senior/Staff AI, DeFi, or fintech roles. Available for [AI consulting](/consulting/).
 
 [gabrielmk@gmail.com](mailto:gabrielmk@gmail.com) | [github.com/gabrielkoerich](https://github.com/gabrielkoerich) | [linkedin.com/in/gabrielkoerich](https://linkedin.com/in/gabrielkoerich)
 
 ## Core Competencies
 
-**AI & Agent Orchestration:** Claude Code, Codex, OpenCode in daily production use. Multi-agent orchestration ([orch](https://github.com/gabrielkoerich/orch)), automating engineering workflows, RAG, evals, prompt engineering. Available for [consulting](https://gabrielkoerich.com/consulting).
+**AI & Agent Orchestration:** Claude Code, Codex, OpenCode in daily production use. Multi-agent orchestration ([orch](https://github.com/gabrielkoerich/orch)), automating engineering workflows, RAG, evals, prompt engineering. Available for [consulting](/consulting/).
 
 **Blockchain:** Solana (Rust, Anchor), EVM (Solidity, Foundry, Hardhat), DeFi integrations, security-first design, onchain/off-chain indexing, comprehensive testing (unit, fuzz, integration)
 
@@ -66,5 +66,3 @@ Self-taught web development during university. Built websites and web applicatio
 - **English Language Studies** — LSI, London (2010)
 
 **Languages:** Portuguese (native), English (fluent)
-
-*Last updated: February 2026*

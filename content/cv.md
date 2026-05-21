@@ -5,25 +5,15 @@ description = "Senior Software Engineer with 17+ years experience"
 
 ## Summary <a href="/gabrielkoerich-cv.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
-A technical, productivity-focused software engineer and entrepreneur with over 17 years of professional experience building scalable systems (2008–Present). I started programming at age 13 out of pure curiosity about how things work, an early passion that evolved into a career building everything from marketing automation platforms to DeFi protocols. 
+Senior software engineer and entrepreneur with 13+ years of professional experience building production systems (17+ including self-taught freelance work since age 13). Currently architecting Solana DeFi at Lulo (+$100M TVL). Previously founded and sold Bulldesk (marketing automation SaaS, acquired 2021). Background in Business Administration / Finance (BBA).
 
-As founder of Bulldesk (acquired 2021), I developed strong product intuition and business skills that complements my technical skills. My background in Business Administration/Finance (BBA) gives me unique insight when building fintech and DeFi solutions. 
+Equally comfortable in traditional backend, blockchain engineering (Rust/Solana, EVM/Solidity), and modern AI tooling. I run Claude Code, Codex, and OpenCode in parallel as part of my daily workflow ([orch](https://github.com/gabrielkoerich/orch)) and help companies adopt the same.
 
-I combine deep expertise in both traditional backend development and blockchain engineering (Rust/Solana or EVM/Solidity) to create secure, high-performance applications. Passionate about clean code, rigorous testing, and solving real-world problems.
+**Open to:** Senior/Staff roles in AI infrastructure, DeFi, or fintech. Also available for [AI consulting](/consulting/) (strategy, implementation, training, fractional).
 
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg> [gabrielmk@gmail.com](mailto:gabrielmk@gmail.com)  
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg> [github.com/gabrielkoerich](https://github.com/gabrielkoerich)  
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg> [linkedin.com/in/gabrielkoerich](https://linkedin.com/in/gabrielkoerich) 
-
-## Education
-
-- **BBA Finance** Universidade do Sul de Santa Catarina (2008 – 2012)
-- **English Language Studies** LSI (London) (2010)
-
-## Languages
-
-- **Portuguese:** Native
-- **English:** Fluent (professional working proficiency)
 
 ## Core Competencies
 
@@ -33,7 +23,7 @@ I combine deep expertise in both traditional backend development and blockchain 
 - Automating engineering workflows: code generation, refactoring, reviews, documentation, and ops
 - AI consulting for companies — agent workflows, RAG pipelines, internal tooling, evals
 - Prompt engineering, model selection, and cost/latency trade-offs
-- [AI Consulting available](https://gabrielkoerich.com/consulting) — strategy, hands-on implementation, team training, fractional engineering
+- [AI Consulting available](/consulting/) — strategy, hands-on implementation, team training, fractional engineering
 
 **Blockchain Engineering**
 - Solana Smart Contracts (Rust, Anchor Framework)
@@ -62,8 +52,6 @@ I combine deep expertise in both traditional backend development and blockchain 
 - AI-augmented development — Claude Code, Codex, and OpenCode integrated into daily workflow via my own [orch](https://github.com/gabrielkoerich/orch)
 
 ## Professional Experience
-
-**Career Timeline:** 12+ years documented (2013–Present) - 17+ years total including pre-2013 freelance work
 
 ### Senior Software Engineer — Lulo  
 **November 2022 – Present**   
@@ -153,8 +141,18 @@ Self-taught web development during university years. Built websites and web appl
 - **+100M TVL Protocol:** Architected DeFi protocol at Lulo with innovative dual-pool security mechanism
 - **Marketing Automation at Scale:** Built Bulldesk to handle millions of leads and complex automation workflows
 - **Solana Ecosystem:** Multiple production smart contracts including marketplaces and DeFi integrations
-- **AI Orchestration:** Built [orch](https://github.com/gabrielkoerich/orch) to run Claude Code, Codex, and OpenCode in parallel for engineering workflows. Now offering [AI consulting](https://gabrielkoerich.com/consulting) for companies.
+- **AI Orchestration:** Built [orch](https://github.com/gabrielkoerich/orch) to run Claude Code, Codex, and OpenCode in parallel for engineering workflows. Now offering [AI consulting](/consulting/) for companies.
 - **Open Source:** Active contributor to various PHP and Rust projects (github.com/gabrielkoerich)
+
+## Education
+
+- **BBA Finance** — Universidade do Sul de Santa Catarina (2008 – 2012)
+- **English Language Studies** — LSI (London) (2010)
+
+## Languages
+
+- **Portuguese:** Native
+- **English:** Fluent (professional working proficiency)
 
 ## Interests & Values
 
@@ -164,6 +162,4 @@ Self-taught web development during university years. Built websites and web appl
 - **Continuous Learning:** Always exploring new technologies and paradigms. At this point in life I know I can learn anything I want.
 - **Philosophy:** Free markets, individual liberty, building things that matter. Prove your worth through action and results. Always deliver value.
 
-I bridge finance and technology, building secure, scalable systems that solve real problems. From systems, automations to DeFi protocols, I bring 17+ years of engineering experience, an entrepreneurial mindset, and a passion for clean, tested code.
-
-*Last updated: February 2026*
+I bridge finance and technology, building secure, scalable systems that solve real problems. From systems and automations to DeFi protocols and AI-powered workflows, I bring 17+ years of engineering experience, an entrepreneurial mindset, and a passion for clean, tested code.

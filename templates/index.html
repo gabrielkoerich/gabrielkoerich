@@ -1,58 +1,51 @@
-{% extends "base.html" %} {% block content %} {# Load GitHub data #} {% set
-github_profile = load_data(path="data/github-profile.json", required=false) %}
-{% set github_pinned = load_data(path="data/github-pinned.json", required=false)
-%}
+{% extends "base.html" %}
+
+{% block content %}
+{# Load GitHub data #}
+{% set github_profile = load_data(path="data/github-profile.json", required=false) %}
+{% set github_pinned = load_data(path="data/github-pinned.json", required=false) %}
+{% set hidden_repos = config.extra.hidden_repos | default(value=[]) %}
+
+<section id="hero">
+    <p class="hero-eyebrow">Senior Software Engineer · 17 years</p>
+    <h2 class="hero-title">
+        I build production software — DeFi protocols, AI agent workflows, and the engineering that scales them.
+    </h2>
+    <p class="hero-sub">
+        Currently architecting Solana DeFi at
+        <a href="https://lulo.fi" target="_blank" rel="noopener">Lulo</a>
+        (+$100M TVL). Previously founded
+        <strong>Bulldesk</strong> (marketing automation SaaS, acquired 2021,
+        80M+ req/mo). These days, also helping companies ship AI agent
+        workflows, Solana/EVM smart contracts, and the automations in between.
+    </p>
+    <div class="hero-cta-row">
+        <a class="cta-button" href="{{get_url(path='@/consulting.md')}}">
+            Book a consulting call →
+        </a>
+        <a class="cta-secondary" href="{{get_url(path='@/cv.md')}}">View CV</a>
+    </div>
+</section>
 
 <div id="intro">
-    {% if github_profile %}
-    <p>
-        <em
-            >{{github_profile.bio}} Started coding at 13 out of curiosity. 17+
-            years later, I'm building DeFi protocols and scalable systems.</em
-        >
-    </p>
-    {% else %}
-    <p>
-        <em
-            >I started coding at 13 out of curiosity. 17+ years later, I'm
-            building DeFi protocols and scalable systems.</em
-        >
-    </p>
-    {% endif %}
-
-    <p>
-        Currently architecting Solana smart contracts at
-        <a href="https://lulo.fi" target="_blank">Lulo</a>. Previously founded
-        Bulldesk (marketing automation SaaS, acquired 2021).
-    </p>
-
-    <p>
-        These days I spend a lot of time on
-        <strong>AI &amp; agent orchestration</strong> — running Claude Code,
-        Codex, and OpenCode side-by-side to ship faster, and helping companies
-        do the same.
-        <a href="{{get_url(path='@/consulting.md')}}">I take on AI consulting work →</a>
-    </p>
-
     <h3>Key highlights</h3>
 
-    <ul>
+    <ul class="highlight-list">
         <li>
             <strong>AI &amp; Agent Orchestration</strong> — Daily user of
             Claude Code, Codex, and OpenCode. Built
             <a href="https://github.com/gabrielkoerich/orch" target="_blank" rel="noopener">orch</a>
-            to run multiple coding agents in parallel, automate engineering
-            workflows, and ship production code faster.
+            to run multiple coding agents in parallel and automate engineering workflows.
         </li>
         <li>
             <strong>AI Consulting</strong> — Helping engineering teams,
-            startups, and established companies automate workflows with AI
-            agents and coding assistants.
+            startups, and operators automate workflows with AI agents and
+            coding assistants.
             <a href="{{get_url(path='@/consulting.md')}}">Book a call →</a>
         </li>
         <li>
             <strong>Blockchain Engineering</strong> — Solana Smart Contracts
-            (Rust, Anchor), EVM protocols, DeFi integrations, Security &amp; Audits.
+            (Rust, Anchor), EVM protocols, DeFi integrations, security &amp; audits.
         </li>
         <li>
             <strong>Lulo</strong> — DeFi protocol with dual-pool security
@@ -63,40 +56,37 @@ github_profile = load_data(path="data/github-profile.json", required=false) %}
             80M+ requests/mo, 500M+ background jobs/mo, acquired 2021.
         </li>
         <li>
-            <strong>Full-Stack Engineering</strong> — 17+ years software
-            engineering experience, security focused, high-scale infrastructure.
+            <strong>Full-Stack Engineering</strong> — 17+ years experience,
+            security focused, high-scale infrastructure.
         </li>
     </ul>
-
-    <p>Have a look at my <a href="{{get_url(path='@/cv.md')}}">CV</a>.</p>
 </div>
 
-{# Pinned GitHub Repositories #} {% if github_pinned and github_pinned | length
-> 0 %} {% set own_repos = [] %} {% set contributed_repos = [] %} {% for repo in
-github_pinned %} {% if repo.owner.login == "gabrielkoerich" %} {% set_global
-own_repos = own_repos | concat(with=repo) %} {% else %} {% set_global
-contributed_repos = contributed_repos | concat(with=repo) %} {% endif %} {%
-endfor %}
+{# Pinned GitHub Repositories #}
+{% if github_pinned and github_pinned | length > 0 %}
+    {% set own_repos = [] %}
+    {% set contributed_repos = [] %}
+    {% for repo in github_pinned %}
+        {% if repo.name in hidden_repos %}
+            {# skip hidden repos #}
+        {% elif repo.owner.login == "gabrielkoerich" %}
+            {% set_global own_repos = own_repos | concat(with=repo) %}
+        {% else %}
+            {% set_global contributed_repos = contributed_repos | concat(with=repo) %}
+        {% endif %}
+    {% endfor %}
 
 <div class="section-heading-inline">
-    <h2>Projects & Contributions</h2>
-    <a
-        class="section-heading-link"
-        href="https://projects.gabrielkoerich.com"
-        target="_blank"
-        >View all my projects →</a
-    >
+    <h2>Featured projects</h2>
+    <a class="section-heading-link" href="https://projects.gabrielkoerich.com" target="_blank">View all 40+ projects →</a>
 </div>
-<p>Featured projects I've built or contributed to:</p>
+<p>Selected work I've built or contributed to:</p>
 
 <ul id="repos">
-    {# My repos first #} {% for repo in own_repos |
-    sort(attribute="stargazers.totalCount") | reverse %}
+    {% for repo in own_repos | sort(attribute="stargazers.totalCount") | reverse %}
     <li class="repo-item">
         <h3>
-            <a href="{{repo.html_url}}" target="_blank" rel="noopener"
-                >{{repo.name}}</a
-            >
+            <a href="{{repo.html_url}}" target="_blank" rel="noopener">{{repo.name}}</a>
         </h3>
         {% if repo.description %}
         <p class="repo-description">{{repo.description}}</p>
@@ -105,35 +95,35 @@ endfor %}
             {% if repo.language.name %}
             <span class="repo-lang">{{repo.language.name}}</span>
             {% endif %}
-            <span class="repo-stars"
-                ><span class="star-icon">★</span>
-                {{repo.stargazers.totalCount}}</span
-            >
+            <span class="repo-stars"><span class="star-icon">★</span> {{repo.stargazers.totalCount}}</span>
         </div>
     </li>
-    {% endfor %} {# Contributed repos at the end #} {% for repo in
-    contributed_repos | sort(attribute="stargazers.totalCount") | reverse %}
+    {% endfor %}
+
+    {% for repo in contributed_repos | sort(attribute="stargazers.totalCount") | reverse %}
     <li class="repo-item">
         <h3>
-            <a href="{{repo.html_url}}" target="_blank" rel="noopener"
-                >{{repo.name}}</a
-            >
+            <a href="{{repo.html_url}}" target="_blank" rel="noopener">{{repo.name}}</a>
             <span class="repo-owner">by {{repo.owner.login}}</span>
         </h3>
         {% if repo.description %}
         <p class="repo-description">{{repo.description}}</p>
+        {% else %}
+        <p class="repo-description">Open-source contributor.</p>
         {% endif %}
         <div class="repo-meta">
             {% if repo.language.name %}
             <span class="repo-lang">{{repo.language.name}}</span>
             {% endif %}
-            <span class="repo-stars"
-                ><span class="star-icon">★</span>
-                {{repo.stargazers.totalCount}}</span
-            >
+            <span class="repo-stars"><span class="star-icon">★</span> {{repo.stargazers.totalCount}}</span>
         </div>
     </li>
     {% endfor %}
 </ul>
+{% endif %}
 
-{% endif %} {% endblock content %}
+<h2>What I'm working on now</h2>
+<p>
+    <a href="{{get_url(path='@/now.md')}}">My /now page →</a> — what's on my plate this month.
+</p>
+{% endblock content %}

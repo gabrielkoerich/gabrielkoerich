@@ -9,7 +9,7 @@ build_search_index = true
 
 # The site title and description
 title = "Gabriel Koerich"
-description = "Senior Software Engineer | Rust • Solana • PHP • Laravel"
+description = "Senior software engineer (17+ years). Solana/Rust DeFi, AI agent orchestration, and engineering workflow automation. Available for AI consulting."
 
 # The default language; used in feeds
 default_language = "en"
@@ -27,6 +27,12 @@ taxonomies = [{ name = "tags", feed = true }]
 [extra]
 # Put all your custom variables here
 author = "Gabriel Koerich"
+tagline = "Senior Engineer · AI Workflows · Solana / DeFi"
 linkedin = "https://linkedin.com/in/gabrielkoerich"
 github = "https://github.com/gabrielkoerich"
 email = "gabrielmk@gmail.com"
+og_image = "/og-image.png"
+booking_url = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0XOx4YybKnmnkqQXsaLp7zPI_C2fkaxfrYY29KgNYPJpiK1LDbXF_zY7BIHJK02bGOdA3YJb7p?gv=true"
+available_for_consulting = true
+# Repos to hide from the homepage pinned list (e.g. archived/superseded projects)
+hidden_repos = ["orchestrator"]
