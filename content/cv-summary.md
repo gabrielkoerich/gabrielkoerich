@@ -6,7 +6,7 @@ title = ""
 
 Senior software engineer and entrepreneur with 13+ years of professional experience (17+ including self-taught freelance since age 13). Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently architecting Solana DeFi at Lulo (+$100M TVL); also focused on AI / agent orchestration (Claude Code, Codex, OpenCode in production workflows). BBA in Finance. **Open to:** Senior/Staff AI, DeFi, or fintech roles. Available for [AI consulting](/consulting/).
 
-[gabrielmk@gmail.com](mailto:gabrielmk@gmail.com) | [github.com/gabrielkoerich](https://github.com/gabrielkoerich) | [linkedin.com/in/gabrielkoerich](https://linkedin.com/in/gabrielkoerich)
+[gabriel@gabrielkoerich.com](mailto:gabriel@gabrielkoerich.com) | [github.com/gabrielkoerich](https://github.com/gabrielkoerich) | [linkedin.com/in/gabrielkoerich](https://linkedin.com/in/gabrielkoerich)
 
 ## Core Competencies
 

@@ -30,9 +30,9 @@ author = "Gabriel Koerich"
 tagline = "Senior Engineer · AI Workflows · Solana / DeFi"
 linkedin = "https://linkedin.com/in/gabrielkoerich"
 github = "https://github.com/gabrielkoerich"
-email = "gabrielmk@gmail.com"
+email = "gabriel@gabrielkoerich.com"
 og_image = "/og-image.png"
 booking_url = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0XOx4YybKnmnkqQXsaLp7zPI_C2fkaxfrYY29KgNYPJpiK1LDbXF_zY7BIHJK02bGOdA3YJb7p?gv=true"
 available_for_consulting = true
 # Repos to hide from the homepage pinned list (e.g. archived/superseded projects)
-hidden_repos = ["orchestrator"]
+hidden_repos = []

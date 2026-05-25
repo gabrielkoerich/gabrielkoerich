@@ -11,7 +11,7 @@ A technical, productivity-focused entrepreneur and software engineer with more t
 #### Languages: Portugues, English
 
 ## Contact
-- [gabrielmk@gmail.com](mailto:gabrielmk@gmail.com)
+- [gabriel@gabrielkoerich.com](mailto:gabriel@gabrielkoerich.com)
 - [linkedin.com/in/gabrielkoerich](https://www.linkedin.com/in/gabrielkoerich)
 - [github.com/gabrielkoerich](https://github.com/gabrielkoerich)
 

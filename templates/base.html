@@ -26,7 +26,6 @@
     {% endif %}
 
     <link rel="canonical" href="{{current_url | safe}}">
-    <link rel="icon" type="image/svg+xml" href="{{get_url(path='favicon.svg')}}">
     {% if config.generate_feeds %}
     <link rel="alternate" type="application/rss+xml" title="{{config.title}}" href="{{get_url(path='rss.xml')}}">
     {% endif %}
@@ -34,7 +33,7 @@
     <link rel="stylesheet" href="{{get_url(path='main.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="container">
@@ -92,9 +91,9 @@
                 </a>
                 {% endif %}
             </p>
-            <p class="footer-extra">
+            {# <p class="footer-extra">
                 <a href="https://app.hyperliquid.xyz/join/NAKED" target="_blank" rel="noopener">Trade Perps</a>
-            </p>
+            </p> #}
         </footer>
     </div>
 </body>

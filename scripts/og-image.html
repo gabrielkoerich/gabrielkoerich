@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1200px; height:630px; }
+  body {
+    font-family:'Inter',sans-serif;
+    background:
+      radial-gradient(900px 500px at 88% 8%, rgba(88,166,255,.16), transparent 60%),
+      linear-gradient(135deg,#0d1117 0%,#161b22 100%);
+    color:#e6edf3;
+    position:relative;
+    overflow:hidden;
+  }
+  /* dot grid */
+  .grid {
+    position:absolute; inset:0;
+    background-image:radial-gradient(rgba(139,148,158,.10) 1.5px, transparent 1.5px);
+    background-size:34px 34px;
+    mask-image:linear-gradient(to bottom right, black, transparent 70%);
+    -webkit-mask-image:linear-gradient(to bottom right, black, transparent 70%);
+  }
+  .accent { position:absolute; left:0; top:0; bottom:0; width:8px; background:#58a6ff; }
+  .wrap { position:absolute; inset:0; padding:86px 88px; display:flex; flex-direction:column; }
+  .eyebrow {
+    font-family:'JetBrains Mono',monospace; font-weight:500; font-size:21px;
+    letter-spacing:3px; color:#58a6ff; text-transform:uppercase;
+  }
+  .name { font-weight:700; font-size:58px; letter-spacing:-1px; margin-top:18px; }
+  .sub { font-weight:400; font-size:27px; color:#8b949e; margin-top:8px; }
+  .headline {
+    font-weight:700; font-size:52px; line-height:1.16; letter-spacing:-1.2px;
+    margin-top:54px; max-width:1010px;
+  }
+  .headline .hl { color:#58a6ff; }
+  .spacer { flex:1; }
+  .bottom { display:flex; align-items:center; justify-content:space-between; }
+  .badge { display:flex; align-items:center; gap:14px; font-size:22px; font-weight:500; color:#c9d1d9; }
+  .dot { width:15px; height:15px; border-radius:50%; background:#3fb950; box-shadow:0 0 16px rgba(63,185,80,.7); }
+  .prompt {
+    font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:500; color:#6e7681;
+  }
+  .prompt .chev { color:#58a6ff; font-weight:700; }
+  .cursor { display:inline-block; width:11px; height:24px; background:#58a6ff; vertical-align:-4px; margin-left:4px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="accent"></div>
+  <div class="wrap">
+    <div class="eyebrow">gabrielkoerich.com</div>
+    <div class="name">Gabriel Koerich</div>
+    <div class="sub">Senior Software Engineer · Solana / DeFi</div>
+    <div class="headline">I build production software &mdash; <span class="hl">DeFi protocols</span>, <span class="hl">AI agent workflows</span>, and the engineering that scales them.</div>
+    <div class="spacer"></div>
+    <div class="bottom">
+      <div class="badge"><span class="dot"></span> Available for AI consulting</div>
+      <div class="prompt"><span class="chev">~ &rsaquo;</span> solana · agents · automation<span class="cursor"></span></div>
+    </div>
+  </div>
+</body>
+</html>
