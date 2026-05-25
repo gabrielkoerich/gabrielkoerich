@@ -69,6 +69,12 @@ jobs:
         run: |
           python3 scripts/fetch-github.py
 
+      - name: Generate US economic events calendar
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          python3 scripts/fetch-econ-events.py || echo "Econ events generation failed, continuing..."
+
       - name: Build site
         run: zola build
 

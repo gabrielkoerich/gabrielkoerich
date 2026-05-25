@@ -1,0 +1,371 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//gabrielkoerich//us-econ-events//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:US Economic Events
+X-WR-CALDESC:CPI, PPI, Jobs & FOMC rate decisions (official BLS/Fed schedules)
+X-WR-TIMEZONE:America/New_York
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VTIMEZONE
+TZID:America/New_York
+X-LIC-LOCATION:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:fred-10-20260512@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260512T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-10-20260610@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260610T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-10-20260714@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260714T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-10-20260812@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260812T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-10-20260911@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260911T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-10-20261014@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20261014T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-10-20261110@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20261110T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-10-20261210@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20261210T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:CPI — Consumer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:CPI — Consumer Price Index release. Source: FRED release 10. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20260513@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260513T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20260611@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260611T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20260715@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260715T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20260813@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260813T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20260910@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20260910T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20261015@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20261015T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20261113@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20261113T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-46-20261215@gabrielkoerich.com
+DTSTAMP:20260525T144937Z
+DTSTART;TZID=America/New_York:20261215T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:PPI — Producer Price Index
+CATEGORIES:Inflation
+DESCRIPTION:PPI — Producer Price Index release. Source: FRED release 46. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20260508@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260508T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20260605@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260605T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20260702@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260702T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20260807@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260807T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20260904@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260904T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20261002@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20261002T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20261106@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20261106T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fred-50-20261204@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20261204T083000
+DTEND;TZID=America/New_York:093000
+SUMMARY:Employment Situation (NFP)
+CATEGORIES:Jobs
+DESCRIPTION:Employment Situation (NFP) release. Source: FRED release 50. Time approximate (ET).
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20260429@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260429T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20260617@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260617T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20260729@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260729T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20260916@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20260916T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20261028@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20261028T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20261209@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20261209T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20270127@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20270127T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20270317@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20270317T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20270428@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20270428T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20270609@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20270609T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20270728@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20270728T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20270915@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20270915T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20271027@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20271027T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+BEGIN:VEVENT
+UID:fomc-20271208@gabrielkoerich.com
+DTSTAMP:20260525T144938Z
+DTSTART;TZID=America/New_York:20271208T140000
+DTEND;TZID=America/New_York:150000
+SUMMARY:FOMC Rate Decision
+CATEGORIES:Rates
+DESCRIPTION:FOMC policy statement & rate decision (2:00 PM ET), press conference follows.
+END:VEVENT
+END:VCALENDAR
