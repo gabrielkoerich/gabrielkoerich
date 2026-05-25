@@ -238,7 +238,7 @@ header h1 a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.75rem;
     flex-wrap: wrap;
 }
 
@@ -588,7 +588,7 @@ article h1 {
 /* Footer */
 #page-footer {
     margin-top: 3rem;
-    padding-top: 1rem;
+    padding-top: 0;
     border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
     color: var(--text-secondary);
@@ -775,9 +775,8 @@ article h1 {
 }
 
 .consulting-hero {
-    padding: 2.5rem 0 3rem;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 2rem;
+    padding: 1rem 0 3rem;
+    margin-bottom: 1rem;
 }
 
 .consulting-hero h1 {
@@ -836,8 +835,6 @@ article h1 {
     font-size: 1.35rem;
     margin-top: 0;
     margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border-color);
 }
 
 .consulting-list {
