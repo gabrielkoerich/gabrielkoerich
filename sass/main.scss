@@ -165,6 +165,9 @@ header h1 a:hover {
 }
 
 .header-nav-link {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
     font-size: 0.9rem;
     color: var(--text-color) !important;
     text-decoration: none !important;
