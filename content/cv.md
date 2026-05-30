@@ -45,11 +45,13 @@ Equally comfortable in traditional backend, blockchain engineering (Rust/Solana,
 - Cloud: AWS, GCP, Digital Ocean, Fly.io
 - Monitoring: Cloudflare, New Relic, Datadog, Sentry, Bugsnag
 
+<!-- pdf:hide -->
 **Development Practices/Workflows**
 - Code review & mentoring
 - Agile methodologies
 - System design & architecture
 - AI-augmented development — Claude Code, Codex, and OpenCode integrated into daily workflow via my own [orch](https://github.com/gabrielkoerich/orch)
+<!-- /pdf:hide -->
 
 ## Professional Experience
 
@@ -111,10 +113,12 @@ Responsibilities:
 Technical highlights:
 - Scale: 80M+ user requests monthly, 500M+ background jobs processed monthly
 - Infrastructure: Multi-server architecture with load balancers, separate worker servers, and real-time processing
+<!-- pdf:hide -->
 - Queue Systems: Optimized Beanstalkd and Redis queues with Laravel Horizon for monitoring and scaling
 - Database: MySQL master-slave replication with read replicas, query optimization, and strategic indexing for high-throughput operations
 - Workflows: Complex automation engine processing 1M+ leads through campaigns with 5-10 concurrent actions per lead
 - Real-time: Live updates and notifications using Laravel Echo, WebSockets, and Redis pub/sub
+<!-- /pdf:hide -->
 
 **Stack:** Laravel, Node, MySQL, Vue.js, Beanstalkd, Redis, Stripe, AWS
 
@@ -127,6 +131,7 @@ Founded a digital agency and software house serving clients with custom web appl
 
 **Stack:** Laravel, Node, Typescript, Python, MySQL, Vue.js
 
+<!-- pdf:hide -->
 ---
 
 ### Freelance Web Developer  
@@ -135,6 +140,7 @@ Founded a digital agency and software house serving clients with custom web appl
 Self-taught web development during university years. Built websites and web applications for small businesses and local clients while completing BBA degree.
 
 **Stack:** PHP, Typescript, HTML/CSS, MySQL
+<!-- /pdf:hide -->
 
 ## Notable Projects & Achievements
 
@@ -153,13 +159,5 @@ Self-taught web development during university years. Built websites and web appl
 
 - **Portuguese:** Native
 - **English:** Fluent (professional working proficiency)
-
-## Interests & Values
-
-- **Finance & Investing:** Value investing principles (Graham, Buffett), DeFi protocol analysis, yield protocols & strategies
-- **Productivity Systems:** Markdown for Everything, Things 3, automations, + agents workflows
-- **Personal Finance:** Beancount for double-entry accounting
-- **Continuous Learning:** Always exploring new technologies and paradigms. At this point in life I know I can learn anything I want.
-- **Philosophy:** Free markets, individual liberty, building things that matter. Prove your worth through action and results. Always deliver value.
 
 I bridge finance and technology, building secure, scalable systems that solve real problems. From systems and automations to DeFi protocols and AI-powered workflows, I bring 17+ years of engineering experience, an entrepreneurial mindset, and a passion for clean, tested code.
