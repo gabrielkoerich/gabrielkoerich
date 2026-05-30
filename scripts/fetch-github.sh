@@ -37,7 +37,7 @@ PINNED_REPOS=(
     "gabrielkoerich/dotfiles"
     "gabrielkoerich/lulo-cpi-example"
     "gabrielkoerich/skills"
-    "gabrielkoerich/orchestrator"
+    "gabrielkoerich/orch"
     "laravel/framework"
     "Kamino-Finance/klend"
 )
@@ -49,12 +49,12 @@ FIRST=true
 for repo_path in "${PINNED_REPOS[@]}"; do
     OWNER=$(echo "$repo_path" | cut -d'/' -f1)
     REPO=$(echo "$repo_path" | cut -d'/' -f2)
-    
+
     echo "  Fetching $OWNER/$REPO..."
-    
+
     # Fetch repo details
     REPO_DATA=$(curl -s $AUTH_HEADER "https://api.github.com/repos/$OWNER/$REPO")
-    
+
     # Check if repo exists
     if echo "$REPO_DATA" | grep -q '"name"' && ! echo "$REPO_DATA" | grep -q '"message".*"Not Found"'; then
         if [ "$FIRST" = true ]; then
@@ -62,7 +62,7 @@ for repo_path in "${PINNED_REPOS[@]}"; do
         else
             echo ',' >> "$OUTPUT_DIR/github-pinned.json"
         fi
-        
+
         # Use Python for reliable JSON parsing
         python3 << PYEOF >> "$OUTPUT_DIR/github-pinned.json"
 import json
@@ -71,7 +71,7 @@ import sys
 try:
     data = '''$REPO_DATA'''
     repo = json.loads(data)
-    
+
     result = {
         "name": repo.get("name", "$REPO"),
         "description": repo.get("description") or "",
@@ -80,7 +80,7 @@ try:
         "stargazers": {"totalCount": repo.get("stargazers_count", 0)},
         "owner": {"login": repo.get("owner", {}).get("login", "$OWNER")}
     }
-    
+
     json.dump(result, sys.stdout)
 except:
     # Fallback if parsing fails
