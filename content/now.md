@@ -15,7 +15,7 @@ A [/now page](https://nownownow.com/about) — what I'm focused on this month.
 ## Building & learning
 
 - **Quant stack** — Building a personal systematic-trading system: backtesting, factor models, risk &amp; portfolio construction, and live execution on Hyperliquid perps (Nautilus).
-- Writing more — see [posts](/posts/) for what's coming.
+<!-- - Writing more — see [posts](/posts/) for what's coming. -->
 - Sharpening Rust async / Tokio patterns for high-throughput indexers.
 - Experimenting with eval frameworks for AI agent reliability.
 
@@ -25,6 +25,13 @@ A [/now page](https://nownownow.com/about) — what I'm focused on this month.
 - Reading: value investing classics (Graham, Buffett letters).
 - Finance discipline: Beancount + automated reports for personal accounting.
 - Slowing down on Twitter, more long-form thinking.
+
+## Interests & values
+
+- **Finance & investing** — Value investing principles (Graham, Buffett), DeFi protocol analysis, yield strategies.
+- **Productivity** — Markdown for everything, Things 3, automations, and agent workflows.
+- **Continuous learning** — Always exploring new tech and paradigms. At this point I know I can learn anything I set my mind to.
+- **Philosophy** — Free markets, individual liberty, building things that matter. Prove your worth through action and results; always deliver value.
 
 ---
 

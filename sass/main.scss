@@ -774,12 +774,12 @@ article h1 {
 
 /* Consulting page */
 #consulting {
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
 
 .consulting-hero {
-    padding: 1rem 0 3rem;
-    margin-bottom: 1rem;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 .consulting-hero h1 {
@@ -801,7 +801,7 @@ article h1 {
 .consulting-lede {
     font-size: 1.15rem;
     color: var(--text-secondary);
-    margin: 0 0 2rem;
+    margin: 0 auto 2rem;
     max-width: 38em;
 }
 
@@ -828,10 +828,26 @@ article h1 {
     color: var(--text-secondary);
     margin: 0.75rem 0 0;
     font-family: var(--font-mono);
+    text-align: center;
+}
+
+.cta-meta-detail {
+    margin-top: 1rem;
+    text-align: left;
 }
 
 .consulting-section {
     margin: 3rem 0;
+}
+
+.consulting-hero + .consulting-section {
+    margin-top: 1.75rem;
+}
+
+.consulting-hero .cta-button {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .consulting-section h2 {
@@ -899,7 +915,9 @@ article h1 {
 
 .domain-card h3 {
     margin: 0 0 1rem;
-    font-size: 1.15rem;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    letter-spacing: -0.01em;
     color: var(--text-color);
 }
 
@@ -951,7 +969,9 @@ article h1 {
 
 .service-card h3 {
     margin: 0 0 0.25rem;
-    font-size: 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
     color: var(--accent-color);
 }
 
