@@ -4,13 +4,13 @@ title = ""
 
 ## Summary <a href="/gabrielkoerich-cv-summary.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
-Senior software engineer and entrepreneur with 13+ years of professional experience (17+ including self-taught freelance since age 13). Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently architecting Solana DeFi at Lulo (+$100M TVL); also focused on AI / agent orchestration (Claude Code, Codex, OpenCode in production workflows). BBA in Finance. **Open to:** Senior/Staff AI, DeFi, or fintech roles. Available for [AI consulting](/consulting/).
+Senior software engineer and entrepreneur with 15+ years of professional experience, coding since age 13. Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently architecting Solana DeFi at Lulo (+$100M TVL); also focused on AI / agent orchestration (Claude Code, Codex, OpenCode in production workflows). BBA in Finance. **Open to:** Senior/Staff AI, DeFi, or fintech roles. Available for [AI consulting](/consulting/).
 
 [gabriel@gabrielkoerich.com](mailto:gabriel@gabrielkoerich.com) | [github.com/gabrielkoerich](https://github.com/gabrielkoerich) | [linkedin.com/in/gabrielkoerich](https://linkedin.com/in/gabrielkoerich)
 
 ## Core Competencies
 
-**AI & Agent Orchestration:** Claude Code, Codex, OpenCode in daily production use. Multi-agent orchestration ([orch](https://github.com/gabrielkoerich/orch)), automating engineering workflows, RAG, evals, prompt engineering. Available for [consulting](/consulting/).
+**AI & Agent Orchestration:** Claude Code, Codex, OpenCode in daily production use. Multi-agent orchestration ([orch](https://github.com/gabrielkoerich/orch)), automating engineering workflows, prompt engineering. Available for [consulting](/consulting/).
 
 **Blockchain:** Solana (Rust, Anchor), EVM (Solidity, Foundry, Hardhat), DeFi integrations, security-first design, onchain/off-chain indexing, comprehensive testing (unit, fuzz, integration)
 
@@ -44,7 +44,7 @@ Built integrations with insurance companies, processing high-volume policy data 
 
 ### Founder — Bulldesk (Sep 2015 – May 2021)
 
-Founded and scaled Brazil's first combined Marketing Automation + CRM platform. Built core architecture, managed infrastructure, and led product development. Acquired in 2021.
+Founded and scaled Brazil's first combined Marketing Automation + CRM platform. Built core architecture, led a team of 4 developers, managed infrastructure, and ran product development and company finances. Acquired in 2021.
 
 - Scale: 80M+ monthly user requests, 500M+ monthly background jobs
 - Multi-server architecture with load balancers, MySQL replication, Redis queues

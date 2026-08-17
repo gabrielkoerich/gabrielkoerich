@@ -1,11 +1,11 @@
 +++
 title = ""
-description = "Senior Software Engineer with 17+ years experience"
+description = "Senior Software Engineer with 15+ years experience"
 +++
 
 ## Summary <a href="/gabrielkoerich-cv.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
-Senior software engineer and entrepreneur with 13+ years of professional experience building production systems (17+ including self-taught freelance work since age 13). Currently architecting Solana DeFi at Lulo (+$100M TVL). Previously founded and sold Bulldesk (marketing automation SaaS, acquired 2021). Background in Business Administration / Finance (BBA).
+Senior software engineer and entrepreneur with 15+ years of professional experience building production systems, coding since age 13. Currently architecting Solana DeFi at Lulo (+$100M TVL). Previously founded and sold Bulldesk (marketing automation SaaS, acquired 2021). Background in Business Administration / Finance (BBA).
 
 Equally comfortable in traditional backend, blockchain engineering (Rust/Solana, EVM/Solidity), and modern AI tooling. I run Claude Code, Codex, and OpenCode in parallel as part of my daily workflow ([orch](https://github.com/gabrielkoerich/orch)) and help companies adopt the same.
 
@@ -21,7 +21,7 @@ Equally comfortable in traditional backend, blockchain engineering (Rust/Solana,
 - Daily user and integrator of Claude Code, Codex, and OpenCode for production engineering
 - Multi-agent orchestration — running coding agents in parallel for planning, implementation, and review ([orch](https://github.com/gabrielkoerich/orch))
 - Automating engineering workflows: code generation, refactoring, reviews, documentation, and ops
-- AI consulting for companies — agent workflows, RAG pipelines, internal tooling, evals
+- AI consulting for companies — agent workflows, internal tooling, developer automation
 - Prompt engineering, model selection, and cost/latency trade-offs
 - [AI Consulting available](/consulting/) — strategy, hands-on implementation, team training, fractional engineering
 
@@ -106,6 +106,7 @@ Founded and scaled a Marketing Automation and CRM platform — the first Brazili
 
 Responsibilities:
 - Built core architecture and 90% of application features from initial concept
+- Led a team of 4 developers
 - Managed infrastructure, DevOps, and cloud architecture
 - Handled product development, business administration, and finance
 - Successfully exited via acquisition in 2021
@@ -160,4 +161,4 @@ Self-taught web development during university years. Built websites and web appl
 - **Portuguese:** Native
 - **English:** Fluent (professional working proficiency)
 
-I bridge finance and technology, building secure, scalable systems that solve real problems. From systems and automations to DeFi protocols and AI-powered workflows, I bring 17+ years of engineering experience, an entrepreneurial mindset, and a passion for clean, tested code.
+I bridge finance and technology, building secure, scalable systems that solve real problems. From systems and automations to DeFi protocols and AI-powered workflows, I bring 15+ years of engineering experience, an entrepreneurial mindset, and a passion for clean, tested code.
