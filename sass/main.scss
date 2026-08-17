@@ -1,14 +1,16 @@
 /* CSS Variables for dark theme */
 :root {
-    --bg-color: #0d1117;
-    --bg-secondary: #161b22;
-    --text-color: #c9d1d9;
-    --text-secondary: #8b949e;
-    --accent-color: #58a6ff;
-    --border-color: #30363d;
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-display: 'Fraunces', 'Source Serif Pro', Georgia, serif;
-    --font-serif: 'Source Serif Pro', Georgia, Cambria, "Times New Roman", Times, serif;
+    --bg-color: #0a1424;
+    --bg-secondary: #111d31;
+    --heading-color: #eef3f9;
+    --body-color: #cdd5e0;
+    --text-color: #c3cddb;
+    --text-secondary: #8d9bb1;
+    --accent-color: #6cb2ff;
+    --border-color: #22324b;
+    --font-main: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: Charter, 'Bitstream Charter', 'Charis SIL', Georgia, Cambria, "Times New Roman", Times, serif;
     --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
@@ -26,7 +28,7 @@ html {
 
 body {
     font-family: var(--font-main);
-    font-size: 1rem;
+    font-size: 1.0625rem;
     line-height: 1.7;
     color: var(--text-color);
     background-color: var(--bg-color);
@@ -42,7 +44,7 @@ body::before {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(800px 420px at 80% -8%, rgba(88, 166, 255, 0.10), transparent 60%),
+        radial-gradient(800px 420px at 80% -8%, rgba(108, 178, 255, 0.10), transparent 60%),
         radial-gradient(rgba(139, 148, 158, 0.06) 1px, transparent 1px);
     background-size: auto, 32px 32px;
 }
@@ -57,11 +59,11 @@ body::before {
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
     margin: 2rem 0 1rem;
-    color: var(--text-color);
+    color: var(--heading-color);
 }
 
 h1 {
@@ -237,63 +239,12 @@ header h1 a:hover {
     color: var(--text-color);
 }
 
-.hero-cta-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.75rem;
-    flex-wrap: wrap;
-}
-
-.cta-secondary {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-
-.cta-secondary:hover {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
-.highlight-list {
-    list-style: none;
-    margin: 1rem 0;
-    padding: 0;
-}
-
-.highlight-list li {
-    margin: 0.85rem 0;
-    padding-left: 1.25rem;
-    position: relative;
-}
-
-.highlight-list li::before {
-    content: "·";
-    position: absolute;
-    left: 0;
-    color: var(--accent-color);
-    font-weight: 700;
-    font-size: 1.4em;
-    line-height: 1;
-    top: -0.05em;
-}
-
-/* Intro section */
-#intro {
-    margin: 0 0 3rem;
-}
-
-#intro em {
-    color: var(--text-secondary);
-    font-style: italic;
-}
-
 /* Available-for-consulting footer CTA */
 .footer-cta {
     margin: 3rem 0 0;
     padding: 1.1rem 1.5rem;
-    background: linear-gradient(90deg, rgba(88, 166, 255, 0.07), rgba(88, 166, 255, 0.02));
-    border: 1px solid rgba(88, 166, 255, 0.25);
+    background: linear-gradient(90deg, rgba(108, 178, 255, 0.07), rgba(108, 178, 255, 0.02));
+    border: 1px solid rgba(108, 178, 255, 0.25);
     border-radius: 8px;
 }
 
@@ -325,17 +276,11 @@ header h1 a:hover {
     100% { box-shadow: 0 0 0 0 rgba(63, 185, 80, 0); }
 }
 
-/* Post excerpts */
+/* Posts page intro */
 .posts-intro {
     color: var(--text-secondary);
-    margin: 1rem 0 2rem;
-}
-
-.post-excerpt {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.55;
-    margin: 0.5rem 0 0;
+    font-size: 1.125rem;
+    margin: 1rem 0 2.5rem;
 }
 
 /* Consulting: FAQ + "what I don't do" */
@@ -408,19 +353,35 @@ li {
 }
 
 #posts li {
-    margin: 1.25rem 0;
-    padding: 0;
+    margin: 0;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border-color);
+}
+
+#posts li:first-child {
+    border-top: 0;
+    padding-top: 0;
 }
 
 #posts h3 {
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
     margin: 0;
-    display: inline;
 }
 
 #posts h3 a {
-    color: var(--text-color);
+    color: var(--heading-color);
+}
+
+/* Home list sits under a section heading, so its titles stay smaller than it */
+.section-heading-inline + #posts h3 {
+    font-size: 1.125rem;
+}
+
+.section-heading-inline + #posts li:not(:first-child) {
+    padding: 1rem 0;
 }
 
 #posts h3 a:hover {
@@ -429,10 +390,9 @@ li {
 
 .post-date {
     color: var(--text-secondary);
-    font-size: 0.85rem;
-    font-family: var(--font-mono);
+    font-size: 0.9rem;
     display: block;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
 }
 
 /* Tags */
@@ -451,39 +411,52 @@ li {
     margin-right: 0.5rem;
 }
 
+#posts .tags {
+    margin: 0.6rem 0 0;
+}
+
+a.tag:hover {
+    color: var(--accent-color);
+    text-decoration: none;
+    opacity: 1;
+}
+
 /* Content - Serif font for articles */
 .content {
     margin: 2.5rem 0;
-    font-size: 1.125rem;
-    line-height: 1.8;
+    font-size: 1.25rem;
+    line-height: 1.6;
     font-family: var(--font-serif);
-    color: #e6edf3;
+    color: var(--body-color);
 }
 
 .content h2 {
-    margin-top: 3rem;
-    margin-bottom: 1.5rem;
+    margin-top: 3.5rem;
+    margin-bottom: 1rem;
     font-size: 1.75rem;
-    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 .content h3 {
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
-    font-weight: 600;
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.375rem;
 }
 
 .content h4 {
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-    font-size: 1.2rem;
-    font-weight: 600;
+    margin-top: 2.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
 }
 
 .content p {
-    margin: 1.75rem 0;
+    margin: 1.5rem 0;
     font-weight: 400;
+}
+
+.content strong {
+    font-weight: 700;
+    color: var(--heading-color);
 }
 
 .content pre {
@@ -541,13 +514,13 @@ li {
     margin: 1rem 0;
 }
 
-/* "Originally published" footer */
-.content em {
-    font-size: 0.75rem;
-    font-family: var(--font-main);
-    color: var(--text-secondary);
+/* An all-italic paragraph is a caption or the "Originally published" footer */
+.content p > em:only-child {
     display: block;
-    margin: 1.5rem 0;
+    font-size: 0.95rem;
+    font-family: var(--font-main);
+    font-style: normal;
+    color: var(--text-secondary);
 }
 
 /* Article header */
@@ -556,18 +529,16 @@ article {
 }
 
 article .post-date {
-    display: block;
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin: 0 0 1rem;
 }
 
 article h1 {
-    font-size: 2.25rem;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
+    font-size: clamp(2.25rem, 6vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
 }
 
 /* Post navigation */
@@ -1004,4 +975,156 @@ article h1 {
     margin: 0 0 1.5rem;
     padding: 0;
     font-size: 1.5rem;
+}
+
+/* Only zola serve renders drafts and scheduled posts, this marks them */
+.post-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 0.05rem 0.4rem;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+/* Giscus comments under a post */
+.comments {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.comments h2 {
+    margin-top: 0;
+}
+
+/* Code blocks, same palette as the zola-docs theme */
+:root {
+    --code-bg: #060c17;
+    --syntax-comment: #6b7a90;
+    --syntax-string: #9ece6a;
+    --syntax-constant: #ff9e64;
+    --syntax-keyword: #bb9af7;
+    --syntax-entity: #7aa2f7;
+    --syntax-support: #7dcfff;
+    --syntax-variable: #c0caf5;
+}
+
+.content pre,
+.docs-content pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.1rem 1.35rem;
+    color: var(--body-color, var(--text-color));
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+.content pre::-webkit-scrollbar,
+.docs-content pre::-webkit-scrollbar {
+    height: 6px;
+}
+
+.content pre::-webkit-scrollbar-thumb,
+.docs-content pre::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.content pre::-webkit-scrollbar-track,
+.docs-content pre::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.content pre .z-comment,
+.docs-content pre .z-comment {
+    color: var(--syntax-comment);
+    font-style: italic;
+}
+
+.content pre .z-string,
+.docs-content pre .z-string {
+    color: var(--syntax-string);
+}
+
+.content pre .z-constant,
+.docs-content pre .z-constant {
+    color: var(--syntax-constant);
+}
+
+.content pre .z-keyword,
+.content pre .z-storage,
+.docs-content pre .z-keyword,
+.docs-content pre .z-storage {
+    color: var(--syntax-keyword);
+}
+
+.content pre .z-entity,
+.content pre .z-function,
+.docs-content pre .z-entity,
+.docs-content pre .z-function {
+    color: var(--syntax-entity);
+}
+
+.content pre .z-support,
+.docs-content pre .z-support {
+    color: var(--syntax-support);
+}
+
+.content pre .z-variable,
+.docs-content pre .z-variable {
+    color: var(--syntax-variable);
+}
+
+/* Zola 0.18 tags a command as both variable and function, show it as a function */
+.content pre .z-variable.z-function,
+.docs-content pre .z-variable.z-function {
+    color: var(--syntax-entity);
+}
+
+.content pre .z-variable.z-parameter,
+.docs-content pre .z-variable.z-parameter {
+    color: var(--syntax-constant);
+}
+
+/* Tables in posts, sans and smaller than the body so they read as reference */
+.content table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.content th,
+.content td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.65rem 1rem 0.65rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.content th {
+    color: var(--heading-color);
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+/* The first column names the row, keep it whole */
+.content td:first-child {
+    white-space: nowrap;
+    color: var(--heading-color);
+    font-weight: 600;
+}
+
+/* A page title followed by text, like About, sits as close as the Posts intro */
+h1 + .content {
+    margin-top: 1.25rem;
 }

@@ -12,29 +12,6 @@ fetch-github:
 fetch-github-auth TOKEN:
     python3 scripts/fetch-github.py {{ TOKEN }}
 
-# Fetch blog posts from Medium and wtf.gabrielkoerich.com
-[group('posts')]
-fetch-posts:
-    uv run python scripts/fetch-blog-posts.py --output content/posts/external
-
-# Fetch only Medium posts
-[group('posts')]
-fetch-posts-medium:
-    uv run python scripts/fetch-blog-posts.py --medium-only --output content/posts/external
-
-# Translate external posts to English using Google Translate (translate-shell).
-# Overwrites posts in place (English-only).
-
-# OpenAI is available as optional fallback via --provider openai.
-[group('posts')]
-translate-posts-en:
-    uv run python scripts/translate-blog-posts.py \
-      --input-dir content/posts/external \
-      --source-lang pt \
-      --target-lang en \
-      --provider command \
-      --translator-cmd "trans -b -s {source_lang} -t {target_lang}"
-
 # Create a new blog post
 [group('posts')]
 new-post:
@@ -79,15 +56,53 @@ new-post:
     EOF
     echo "Created $FILE"
 
+# The version CI deploys with. Newer zola dropped the `concat` filter the templates use, so
+# a local build on whatever Homebrew installed fails while the deploy is fine. Keep in step
+# with .github/workflows/build-and-deploy.yml.
+zola_version := "0.18.0"
+
+# A pinned zola under .tools, fetched once. `just zola-which` says what is being used.
+[group('website')]
+_zola:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    bin=".tools/zola-{{ zola_version }}"
+    [ -x "$bin" ] && exit 0
+    mkdir -p .tools
+    case "$(uname -s)-$(uname -m)" in
+        Darwin-*)  asset="zola-v{{ zola_version }}-x86_64-apple-darwin.tar.gz" ;;
+        Linux-*)   asset="zola-v{{ zola_version }}-x86_64-unknown-linux-gnu.tar.gz" ;;
+        *) echo "no pinned zola for this platform, falling back to PATH"; exit 0 ;;
+    esac
+    echo "fetching zola {{ zola_version }}"
+    curl -sSfL "https://github.com/getzola/zola/releases/download/v{{ zola_version }}/$asset" \
+        | tar -xzf - -C .tools zola
+    mv .tools/zola "$bin"
+    chmod +x "$bin"
+
+# Which zola a build will use, and whether it matches CI
+[group('website')]
+zola-which: _zola
+    #!/usr/bin/env bash
+    bin=".tools/zola-{{ zola_version }}"
+    if [ -x "$bin" ]; then echo "pinned: $($bin --version)"; else echo "PATH: $(zola --version)"; fi
+
 # Build the site locally (with GitHub data and blog posts)
 [group('website')]
-build: fetch-github fetch-posts-medium
-    zola build && zola check
+build: fetch-github _zola
+    #!/usr/bin/env bash
+    set -euo pipefail
+    bin=".tools/zola-{{ zola_version }}"
+    [ -x "$bin" ] || bin="zola"
+    "$bin" build && "$bin" check
 
 # Serve the site locally for development
 [group('website')]
-serve *args:
-    zola serve {{ args }}
+serve *args: _zola
+    #!/usr/bin/env bash
+    bin=".tools/zola-{{ zola_version }}"
+    [ -x "$bin" ] || bin="zola"
+    "$bin" serve --drafts {{ args }}
 
 # Clean build artifacts
 [group('website')]

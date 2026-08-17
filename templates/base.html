@@ -11,8 +11,9 @@
     <meta property="og:title" content="{% if page.title %}{{page.title}}{% else %}{{config.title}}{% endif %}">
     <meta property="og:description" content="{% if page.description %}{{page.description}}{% else %}{{config.description}}{% endif %}">
     <meta property="og:url" content="{{current_url | safe}}">
+    {% block head_extra %}{% endblock %}
     {% if config.extra.og_image %}
-    <meta property="og:image" content="{{get_url(path=config.extra.og_image)}}">
+    <meta property="og:image" content="{{get_url(path=config.extra.og_image, cachebust=true)}}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     {% endif %}
@@ -22,18 +23,15 @@
     <meta name="twitter:title" content="{% if page.title %}{{page.title}}{% else %}{{config.title}}{% endif %}">
     <meta name="twitter:description" content="{% if page.description %}{{page.description}}{% else %}{{config.description}}{% endif %}">
     {% if config.extra.og_image %}
-    <meta name="twitter:image" content="{{get_url(path=config.extra.og_image)}}">
+    <meta name="twitter:image" content="{{get_url(path=config.extra.og_image, cachebust=true)}}">
     {% endif %}
 
     <link rel="canonical" href="{{current_url | safe}}">
-    {% if config.generate_feeds %}
-    <link rel="alternate" type="application/rss+xml" title="{{config.title}}" href="{{get_url(path='rss.xml')}}">
-    {% endif %}
 
-    <link rel="stylesheet" href="{{get_url(path='main.css')}}">
+    <link rel="stylesheet" href="{{get_url(path='main.css', cachebust=true)}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="container">
@@ -45,8 +43,9 @@
                 {% endif %}
             </div>
             <nav class="header-nav">
+                <a class="header-nav-link" href="{{get_url(path='@/about.md')}}">About</a>
+                <a class="header-nav-link" href="{{get_url(path='@/posts/_index.md')}}">Posts</a>
                 <a class="header-nav-link" href="{{get_url(path='@/consulting.md')}}">Consulting</a>
-                <a class="header-nav-link" href="{{get_url(path='@/cv.md')}}">CV</a>
                 <a class="header-nav-link header-nav-icon" href="{{config.extra.github}}" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
                 </a>
@@ -63,11 +62,15 @@
             {% block content %}{% endblock %}
         </main>
 
-        {% if config.extra.available_for_consulting %}
+        {# The consulting nudge is for new readers, on the home page and under posts #}
+        {% set_global show_cta = false %}
+        {% set path = current_path | default(value="") %}
+        {% if path == "/" %}{% set_global show_cta = true %}{% elif path is starting_with("/posts/") %}{% set_global show_cta = true %}{% endif %}
+        {% if config.extra.available_for_consulting and show_cta %}
         <aside class="footer-cta">
             <p>
                 <span class="status-dot"></span>
-                <strong>Available for AI consulting</strong> — coding agents, workflow automation, AI strategy.
+                <strong>Available for AI consulting</strong>: coding agents, workflow automation, AI strategy.
                 <a href="{{get_url(path='@/consulting.md')}}">Book a 30-min call →</a>
             </p>
         </aside>
@@ -85,16 +88,25 @@
                 <a href="mailto:{{config.extra.email}}" title="Email" aria-label="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </a>
-                {% if config.generate_feeds %}
-                <a href="{{get_url(path='rss.xml')}}" title="RSS Feed" aria-label="RSS Feed">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
-                </a>
-                {% endif %}
             </p>
             {# <p class="footer-extra">
                 <a href="https://app.hyperliquid.xyz/join/NAKED" target="_blank" rel="noopener">Trade Perps</a>
             </p> #}
         </footer>
     </div>
+    {% if page.extra.mermaid %}
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+        // Zola emits fenced blocks as <pre><code class="language-mermaid">, which mermaid does
+        // not pick up, so hand it a div with the raw text instead.
+        for (const block of document.querySelectorAll("pre > code.language-mermaid")) {
+            const holder = document.createElement("div");
+            holder.className = "mermaid";
+            holder.textContent = block.textContent;
+            block.parentElement.replaceWith(holder);
+        }
+        mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+    </script>
+    {% endif %}
 </body>
 </html>

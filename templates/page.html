@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 
+{% block head_extra %}
+{% set today = now() | date(format="%Y%m%d") | int %}
+{% set_global day = 0 %}{% if page.date %}{% set_global day = page.date | date(format="%Y%m%d") | int %}{% endif %}
+{% if day > today and config.mode != "serve" %}<meta name="robots" content="noindex">{% endif %}
+{% endblock head_extra %}
+
 {% block content %}
+{% set today = now() | date(format="%Y%m%d") | int %}
+{% set_global day = 0 %}{% if page.date %}{% set_global day = page.date | date(format="%Y%m%d") | int %}{% endif %}
+{% if day > today and config.mode != "serve" %}
+{# Scheduled post, the daily deploy renders it once its date arrives #}
+<h1>Not found</h1>
+<p><a href="/">← Back to home</a></p>
+{% else %}
 <article>
     {% if page.date %}
-    <span class="post-date">{{page.date | date(format="%B %d, %Y")}}</span>
+    <span class="post-date">{{page.date | date(format="%B %d, %Y")}}{% if page.draft %} <span class="post-badge">Draft</span>{% elif day > today %} <span class="post-badge">Scheduled</span>{% endif %}</span>
     {% endif %}
     
     <h1>{{page.title}}</h1>
@@ -11,24 +24,32 @@
     {% if page.taxonomies.tags %}
     <div class="tags">
         {% for tag in page.taxonomies.tags %}
-        <span class="tag">{{tag}}</span>
+        <a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{tag}}</a>
         {% endfor %}
     </div>
     {% endif %}
     
     <div class="content">
-        {{page.content | safe}}
+        {# Every link in a post opens in a new tab, external ones already carry target from config, anchors stay on the page #}
+        {{ page.content | replace(from='<a href="#', to='<a data-anchor href="#') | replace(from='<a href="', to='<a target="_blank" rel="noopener" href="') | replace(from='<a data-anchor href="#', to='<a href="#') | safe }}
     </div>
 </article>
 
-{% if page.lower or page.higher %}
+{# Comments belong under posts, not under the CV or other pages #}
+{% if not page.draft and page.path is starting_with("/posts/") %}{% include "partials/comments.html" %}{% endif %}
+
+{# In Zola 0.18 higher is the older post and lower the newer one #}
+{% set newer = false %}
+{% if page.lower %}{% set newer_day = page.lower.date | date(format="%Y%m%d") | int %}{% if newer_day <= today or config.mode == "serve" %}{% set newer = page.lower %}{% endif %}{% endif %}
+{% if page.higher or newer %}
 <nav class="post-nav">
-    {% if page.lower %}
-    <a href="{{page.lower.permalink | safe}}" class="prev">← {{page.lower.title}}</a>
-    {% endif %}
     {% if page.higher %}
-    <a href="{{page.higher.permalink | safe}}" class="next">{{page.higher.title}} →</a>
+    <a href="{{page.higher.permalink | safe}}" class="prev">← {{page.higher.title}}</a>
+    {% endif %}
+    {% if newer %}
+    <a href="{{newer.permalink | safe}}" class="next">{{newer.title}} →</a>
     {% endif %}
 </nav>
+{% endif %}
 {% endif %}
 {% endblock content %}

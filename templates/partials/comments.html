@@ -1,0 +1,23 @@
+{# Giscus comments, stored in GitHub Discussions, hidden until extra.giscus.category_id is set
+   zola serve uses the built-in dark theme, browsers block giscus.app from loading CSS off localhost #}
+{% if config.extra.giscus and config.extra.giscus.category_id %}
+<section class="comments" id="comments">
+    <h2>Comments</h2>
+    <script src="https://giscus.app/client.js"
+        data-repo="{{ config.extra.giscus.repo }}"
+        data-repo-id="{{ config.extra.giscus.repo_id }}"
+        data-category="{{ config.extra.giscus.category }}"
+        data-category-id="{{ config.extra.giscus.category_id }}"
+        data-mapping="pathname"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="{% if config.mode == "serve" %}dark{% else %}{{ get_url(path='giscus.css', cachebust=true) }}{% endif %}"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+    </script>
+</section>
+{% endif %}

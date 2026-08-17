@@ -19,21 +19,25 @@ jobs:
 
       - name: Build CV PDF
         run: |
-          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
+          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d' | sed '/<!-- pdf:hide -->/,/<!-- \/pdf:hide -->/d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
           pandoc /tmp/cv-temp.md -o static/gabrielkoerich-cv.pdf \
             --from markdown+hard_line_breaks \
             --pdf-engine=wkhtmltopdf \
-            -V geometry:top=1.25in \
-            -V geometry:bottom=0.75in
+            -V margin-top=15mm \
+            -V margin-bottom=15mm \
+            -V margin-left=18mm \
+            -V margin-right=18mm
 
       - name: Build CV Summary PDF
         run: |
-          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv-summary.md | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
+          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv-summary.md | sed '/<!-- pdf:hide -->/,/<!-- \/pdf:hide -->/d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
           pandoc /tmp/cv-temp.md -o static/gabrielkoerich-cv-summary.pdf \
             --from markdown+hard_line_breaks \
             --pdf-engine=wkhtmltopdf \
-            -V geometry:top=1.25in \
-            -V geometry:bottom=0.75in
+            -V margin-top=15mm \
+            -V margin-bottom=15mm \
+            -V margin-left=18mm \
+            -V margin-right=18mm
 
       - name: Commit & Push changes
         uses: actions-js/push@master

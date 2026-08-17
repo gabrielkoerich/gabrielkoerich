@@ -1,0 +1,32 @@
+/* Giscus theme matching the site palette, giscus loads this into its iframe */
+@import url("https://giscus.app/themes/dark.css");
+
+main {
+  --color-canvas-default: #0a1424;
+  --color-canvas-overlay: #111d31;
+  --color-canvas-inset: #0a1424;
+  --color-canvas-subtle: #111d31;
+  --color-fg-default: #cdd5e0;
+  --color-fg-muted: #8d9bb1;
+  --color-fg-subtle: #8d9bb1;
+  --color-border-default: #22324b;
+  --color-border-muted: #22324b;
+  --color-neutral-muted: rgba(108, 178, 255, 0.12);
+  --color-accent-fg: #6cb2ff;
+  --color-accent-emphasis: #6cb2ff;
+  --color-accent-muted: rgba(108, 178, 255, 0.4);
+  --color-accent-subtle: rgba(108, 178, 255, 0.12);
+  --color-btn-primary-bg: #6cb2ff;
+  --color-btn-primary-text: #0a1424;
+  --color-btn-primary-hover-bg: #8cc2ff;
+  --color-btn-bg: #111d31;
+  --color-btn-hover-bg: #17263d;
+  --color-btn-border: #22324b;
+  --color-btn-text: #cdd5e0;
+  font-family: "Schibsted Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+main .gsc-comment-box,
+main .gsc-comment {
+  background-color: #0a1424;
+}

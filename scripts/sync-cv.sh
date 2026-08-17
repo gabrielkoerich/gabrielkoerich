@@ -28,7 +28,7 @@ echo "Converting CV to Zola format..."
 cat > "$REPO_ROOT/content/cv.md" << 'FRONTMATTER'
 +++
 title = "CV"
-description = "Senior Software Engineer with 17+ years experience in Rust, Solana, PHP, and Laravel"
+description = "Senior Software Engineer with 15+ years experience in Rust, Solana, PHP, and Laravel"
 +++
 
 FRONTMATTER

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/posts.html" as posts_macros %}
 
 {% block content %}
 {# Load GitHub data #}
@@ -7,65 +8,19 @@
 {% set hidden_repos = config.extra.hidden_repos | default(value=[]) %}
 
 <section id="hero">
-    <p class="hero-eyebrow">Senior Software Engineer</p>
+    <p class="hero-eyebrow">Software Engineer</p>
     <h2 class="hero-title">
-        I build production software — DeFi protocols, AI agent workflows, and the engineering that scales them.
+        I build production software: DeFi protocols, AI agent workflows, and the engineering that scales them.
     </h2>
     <p class="hero-sub">
         Currently architecting Solana DeFi at
-        <a href="https://lulo.fi" target="_blank" rel="noopener">Lulo</a>
-        (+$100M TVL). Previously founded
-        <strong>Bulldesk</strong> (marketing automation SaaS, acquired 2021,
-        80M+ req/mo). These days, also helping companies ship AI agent
-        workflows, Solana/EVM smart contracts, and the automations in between.
+        <a href="https://lulo.fi" target="_blank" rel="noopener">Lulo</a>.
+        Previously founded <strong>Bulldesk</strong>, a marketing automation SaaS I exited in 2021.
+        These days I also run coding agents in parallel with
+        <a href="{{ get_url(path='@/posts/2026-07-05-orchestrating-agents-for-humans.md') }}">orch</a>,
+        build a quant stack on Hyperliquid, and help companies ship AI agent workflows.
     </p>
-    <div class="hero-cta-row">
-        <a class="cta-button" href="{{get_url(path='@/consulting.md')}}">
-            Book a consulting call →
-        </a>
-        <a class="cta-secondary" href="{{get_url(path='@/cv.md')}}">View CV</a>
-    </div>
 </section>
-
-<div id="intro">
-    <h3>Key highlights</h3>
-
-    <ul class="highlight-list">
-        <li>
-            <strong>AI &amp; Agent Orchestration</strong> — Daily user of
-            Claude Code, Codex, and OpenCode. Built
-            <a href="https://github.com/gabrielkoerich/orch" target="_blank" rel="noopener">orch</a>
-            to run multiple coding agents in parallel and automate engineering workflows.
-        </li>
-        <li>
-            <strong>AI Consulting</strong> — Helping engineering teams,
-            startups, and operators automate workflows with AI agents and
-            coding assistants.
-            <a href="{{get_url(path='@/consulting.md')}}">Book a call →</a>
-        </li>
-        <li>
-            <strong>Blockchain Engineering</strong> — Solana Smart Contracts
-            (Rust, Anchor), EVM protocols, DeFi integrations, security &amp; audits.
-        </li>
-        <li>
-            <strong>Quant &amp; Systematic Trading</strong> — Building a personal
-            quant stack: backtesting, factor models, risk &amp; portfolio
-            construction, and live execution on Hyperliquid perps (Nautilus).
-        </li>
-        <li>
-            <strong>Lulo</strong> — DeFi protocol with dual-pool security
-            system, protecting +$100M in user funds.
-        </li>
-        <li>
-            <strong>Bulldesk</strong> — Marketing automation SaaS processing
-            80M+ requests/mo, 500M+ background jobs/mo, acquired 2021.
-        </li>
-        <li>
-            <strong>Full-Stack Engineering</strong> — 17+ years experience,
-            security focused, high-scale infrastructure.
-        </li>
-    </ul>
-</div>
 
 {# Pinned GitHub Repositories #}
 {% if github_pinned and github_pinned | length > 0 %}
@@ -127,8 +82,13 @@
 </ul>
 {% endif %}
 
-<h2>What I'm working on now</h2>
-<p>
-    <a href="{{get_url(path='@/now.md')}}">My /now page</a> — what's on my plate this month.
-</p>
+{% set posts_section = get_section(path="posts/_index.md") %}
+{% if posts_section.pages | length > 0 %}
+<div class="section-heading-inline">
+    <h2>Latest posts</h2>
+    <a class="section-heading-link" href="{{ get_url(path='@/posts/_index.md') }}">All posts →</a>
+</div>
+{{ posts_macros::list(pages=posts_section.pages, mode=config.mode, limit=5) }}
+{% endif %}
+
 {% endblock content %}

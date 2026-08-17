@@ -119,16 +119,16 @@ def fetch_pinned_repos(token=None):
         if "?" in match or "&" in match or "#" in match:
             continue
 
-        # Skip GitHub system paths
-        if any(skip in match.lower() for skip in skip_patterns):
-            continue
-
         # Must have exactly one slash (owner/repo format)
         parts = match.split("/")
         if len(parts) != 2:
             continue
 
         owner, repo = parts
+
+        # Skip GitHub system paths, whole segments only so a repo like vlm-security survives
+        if owner.lower() in skip_patterns or repo.lower() in skip_patterns:
+            continue
 
         # Skip profile repo (owner/repo where owner == repo == username)
         if owner == USERNAME and repo == USERNAME:

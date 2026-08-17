@@ -6,8 +6,13 @@ on:
       - main
   pull_request:
   workflow_dispatch:
+  # Pushes made with GITHUB_TOKEN do not trigger workflows, so redeploy after the CV PDF commit
+  workflow_run:
+    workflows: ["Build CV PDF"]
+    types: [completed]
   schedule:
-    - cron: '0 20 * * 1'
+    # Daily so scheduled posts go live on their date
+    - cron: '7 9 * * *'
 
 jobs:
   build:
@@ -24,40 +29,41 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests feedparser
-          sudo apt-get update
-          sudo apt-get install -y translate-shell
+          pip install requests
+          # pip install feedparser
+          # sudo apt-get update
+          # sudo apt-get install -y translate-shell
 
-      - name: Fetch blog posts
-        run: |
-          python3 scripts/fetch-blog-posts.py --medium-only  --output content/posts/external || echo "Blog fetch failed, continuing..."
+      # - name: Fetch blog posts
+      #   run: |
+      #     python3 scripts/fetch-blog-posts.py --medium-only  --output content/posts/external || echo "Blog fetch failed, continuing..."
 
-      - name: Translate blog posts to English
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          set +e
-          python3 scripts/translate-blog-posts.py \
-            --input-dir content/posts/external \
-            --source-lang pt \
-            --target-lang en \
-            --provider command \
-            --translator-cmd "trans -b -s {source_lang} -t {target_lang}"
-          STATUS=$?
-          set -e
+      # - name: Translate blog posts to English
+      #   env:
+      #     OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      #   run: |
+      #     set +e
+      #     python3 scripts/translate-blog-posts.py \
+      #       --input-dir content/posts/external \
+      #       --source-lang pt \
+      #       --target-lang en \
+      #       --provider command \
+      #       --translator-cmd "trans -b -s {source_lang} -t {target_lang}"
+      #     STATUS=$?
+      #     set -e
 
-          if [ "$STATUS" -ne 0 ]; then
-            echo "translate-shell failed; trying OpenAI fallback..."
-            if [ -n "$OPENAI_API_KEY" ]; then
-              python3 scripts/translate-blog-posts.py \
-                --input-dir content/posts/external \
-                --source-lang pt \
-                --target-lang en \
-                --provider openai
-            else
-              echo "No OPENAI_API_KEY available; continuing without translation fallback."
-            fi
-          fi
+      #     if [ "$STATUS" -ne 0 ]; then
+      #       echo "translate-shell failed; trying OpenAI fallback..."
+      #       if [ -n "$OPENAI_API_KEY" ]; then
+      #         python3 scripts/translate-blog-posts.py \
+      #           --input-dir content/posts/external \
+      #           --source-lang pt \
+      #           --target-lang en \
+      #           --provider openai
+      #       else
+      #         echo "No OPENAI_API_KEY available; continuing without translation fallback."
+      #       fi
+      #     fi
 
       - name: Install Zola
         run: |
@@ -101,10 +107,17 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Purge Cloudflare Cache
-        continue-on-error: true
+      - name: Purge Cloudflare cache
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/b4f279fbdc18c1d62d60751dcefbc03e/purge_cache" \
-            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+          if [ -z "$CF_API_TOKEN" ]; then
+            echo "::warning::CF_API_TOKEN is not set, Cloudflare cache was not purged"
+            exit 0
+          fi
+          response=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/b4f279fbdc18c1d62d60751dcefbc03e/purge_cache" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
             -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}'
+            --data '{"purge_everything":true}')
+          echo "$response"
+          echo "$response" | grep -q '"success":true' || echo "::warning::Cloudflare cache purge failed"

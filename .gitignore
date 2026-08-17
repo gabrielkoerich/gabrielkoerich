@@ -15,9 +15,4 @@ data/github-repos.json
 data/github-pinned.json
 data/github-events.json
 
-# Generated blog posts (fetched during CI/CD build)
-content/posts/external/*.md
-
-# Keep the directory structure
-!content/posts/external/_index.md
-!content/posts/_index.md
+.tools/

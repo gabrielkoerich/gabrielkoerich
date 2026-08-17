@@ -1,14 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% set today = now() | date(format="%Y%m%d") | int %}
 <h1>Tags</h1>
 
 <ul id="tags">
     {% for term in terms %}
+    {% set_global count = 0 %}
+    {% for page in term.pages %}{% set day = page.date | date(format="%Y%m%d") | int %}{% if day <= today or config.mode == "serve" %}{% set_global count = count + 1 %}{% endif %}{% endfor %}
+    {% if count > 0 %}
     <li>
         <a href="{{term.permalink}}">{{term.name}}</a>
-        <span class="tag-count">({{term.pages | length}})</span>
+        <span class="tag-count">({{count}})</span>
     </li>
+    {% endif %}
     {% endfor %}
 </ul>
 {% endblock content %}
