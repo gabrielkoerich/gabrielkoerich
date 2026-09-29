@@ -26,14 +26,11 @@
     {% endif %}
 
     <link rel="canonical" href="{{current_url | safe}}">
-    {% if config.generate_feeds %}
-    <link rel="alternate" type="application/rss+xml" title="{{config.title}}" href="{{get_url(path='rss.xml')}}">
-    {% endif %}
 
     <link rel="stylesheet" href="{{get_url(path='main.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Source+Serif+Pro:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="container">
@@ -45,6 +42,7 @@
                 {% endif %}
             </div>
             <nav class="header-nav">
+                <a class="header-nav-link" href="{{get_url(path='@/posts/_index.md')}}">Posts</a>
                 <a class="header-nav-link" href="{{get_url(path='@/consulting.md')}}">Consulting</a>
                 <a class="header-nav-link" href="{{get_url(path='@/cv.md')}}">CV</a>
                 <a class="header-nav-link header-nav-icon" href="{{config.extra.github}}" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
@@ -67,7 +65,7 @@
         <aside class="footer-cta">
             <p>
                 <span class="status-dot"></span>
-                <strong>Available for AI consulting</strong> — coding agents, workflow automation, AI strategy.
+                <strong>Available for AI consulting</strong>: coding agents, workflow automation, AI strategy.
                 <a href="{{get_url(path='@/consulting.md')}}">Book a 30-min call →</a>
             </p>
         </aside>
@@ -85,16 +83,25 @@
                 <a href="mailto:{{config.extra.email}}" title="Email" aria-label="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </a>
-                {% if config.generate_feeds %}
-                <a href="{{get_url(path='rss.xml')}}" title="RSS Feed" aria-label="RSS Feed">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
-                </a>
-                {% endif %}
             </p>
             {# <p class="footer-extra">
                 <a href="https://app.hyperliquid.xyz/join/NAKED" target="_blank" rel="noopener">Trade Perps</a>
             </p> #}
         </footer>
     </div>
+    {% if page.extra.mermaid %}
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+        // Zola emits fenced blocks as <pre><code class="language-mermaid">, which mermaid does
+        // not pick up, so hand it a div with the raw text instead.
+        for (const block of document.querySelectorAll("pre > code.language-mermaid")) {
+            const holder = document.createElement("div");
+            holder.className = "mermaid";
+            holder.textContent = block.textContent;
+            block.parentElement.replaceWith(holder);
+        }
+        mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "strict" });
+    </script>
+    {% endif %}
 </body>
 </html>

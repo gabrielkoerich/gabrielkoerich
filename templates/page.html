@@ -23,11 +23,11 @@
 
 {% if page.lower or page.higher %}
 <nav class="post-nav">
-    {% if page.lower %}
-    <a href="{{page.lower.permalink | safe}}" class="prev">← {{page.lower.title}}</a>
-    {% endif %}
     {% if page.higher %}
-    <a href="{{page.higher.permalink | safe}}" class="next">{{page.higher.title}} →</a>
+    <a href="{{page.higher.permalink | safe}}" class="prev">← {{page.higher.title}}</a>
+    {% endif %}
+    {% if page.lower %}
+    <a href="{{page.lower.permalink | safe}}" class="next">{{page.lower.title}} →</a>
     {% endif %}
 </nav>
 {% endif %}

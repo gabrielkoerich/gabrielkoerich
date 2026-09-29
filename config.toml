@@ -9,20 +9,20 @@ build_search_index = true
 
 # The site title and description
 title = "Gabriel Koerich"
-description = "Senior software engineer (17+ years). Solana/Rust DeFi, AI agent orchestration, and engineering workflow automation. Available for AI consulting."
+description = "Senior software engineer (15+ years). Solana/Rust DeFi, AI agent orchestration, and engineering workflow automation. Available for AI consulting."
 
-# The default language; used in feeds
+# The default language
 default_language = "en"
 
 # When set to "true", the generated HTML files are minified
 minify_html = true
 
-# Whether to generate a RSS feed
-generate_feeds = true
-feed_filenames = ["rss.xml"]
-
 # The taxonomies to be rendered for the site
-taxonomies = [{ name = "tags", feed = true }]
+taxonomies = [{ name = "tags" }]
+
+[markdown]
+# Open external links in a new tab
+external_links_target_blank = true
 
 [extra]
 # Put all your custom variables here
