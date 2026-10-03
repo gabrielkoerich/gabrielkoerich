@@ -6,6 +6,10 @@ on:
       - main
   pull_request:
   workflow_dispatch:
+  # Pushes made with GITHUB_TOKEN do not trigger workflows, so redeploy after the CV PDF commit
+  workflow_run:
+    workflows: ["Build CV PDF"]
+    types: [completed]
   schedule:
     # Daily so scheduled posts go live on their date
     - cron: '7 9 * * *'
@@ -103,10 +107,17 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Purge Cloudflare Cache
-        continue-on-error: true
+      - name: Purge Cloudflare cache
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: |
-          curl -X POST "https://api.cloudflare.com/client/v4/zones/b4f279fbdc18c1d62d60751dcefbc03e/purge_cache" \
-            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+          if [ -z "$CF_API_TOKEN" ]; then
+            echo "::warning::CF_API_TOKEN is not set, Cloudflare cache was not purged"
+            exit 0
+          fi
+          response=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/b4f279fbdc18c1d62d60751dcefbc03e/purge_cache" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
             -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}'
+            --data '{"purge_everything":true}')
+          echo "$response"
+          echo "$response" | grep -q '"success":true' || echo "::warning::Cloudflare cache purge failed"
