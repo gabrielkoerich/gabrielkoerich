@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 
+{% block head_extra %}
+{% set today = now() | date(format="%Y%m%d") | int %}
+{% set_global day = 0 %}{% if page.date %}{% set_global day = page.date | date(format="%Y%m%d") | int %}{% endif %}
+{% if day > today %}<meta name="robots" content="noindex">{% endif %}
+{% endblock head_extra %}
+
 {% block content %}
+{% set today = now() | date(format="%Y%m%d") | int %}
+{% set_global day = 0 %}{% if page.date %}{% set_global day = page.date | date(format="%Y%m%d") | int %}{% endif %}
+{% if day > today %}
+{# Scheduled post, the daily deploy renders it once its date arrives #}
+<h1>Not found</h1>
+<p><a href="/">← Back to home</a></p>
+{% else %}
 <article>
     {% if page.date %}
     <span class="post-date">{{page.date | date(format="%B %d, %Y")}}</span>
@@ -21,14 +34,18 @@
     </div>
 </article>
 
-{% if page.lower or page.higher %}
+{# In Zola 0.18 higher is the older post and lower the newer one #}
+{% set newer = false %}
+{% if page.lower %}{% set newer_day = page.lower.date | date(format="%Y%m%d") | int %}{% if newer_day <= today %}{% set newer = page.lower %}{% endif %}{% endif %}
+{% if page.higher or newer %}
 <nav class="post-nav">
     {% if page.higher %}
     <a href="{{page.higher.permalink | safe}}" class="prev">← {{page.higher.title}}</a>
     {% endif %}
-    {% if page.lower %}
-    <a href="{{page.lower.permalink | safe}}" class="next">{{page.lower.title}} →</a>
+    {% if newer %}
+    <a href="{{newer.permalink | safe}}" class="next">{{newer.title}} →</a>
     {% endif %}
 </nav>
+{% endif %}
 {% endif %}
 {% endblock content %}

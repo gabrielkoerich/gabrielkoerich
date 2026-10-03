@@ -7,7 +7,8 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: '0 20 * * 1'
+    # Daily so scheduled posts go live on their date
+    - cron: '7 9 * * *'
 
 jobs:
   build:

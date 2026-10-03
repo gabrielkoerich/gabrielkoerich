@@ -4,8 +4,8 @@ base_url = "https://gabrielkoerich.com"
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
-# Whether to build a search index to be used later on by a JavaScript library
-build_search_index = true
+# No template uses a search index, and it would publish scheduled posts early
+build_search_index = false
 
 # The site title and description
 title = "Gabriel Koerich"

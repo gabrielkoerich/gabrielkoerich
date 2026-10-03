@@ -1,10 +1,17 @@
-{% macro list(pages) %}
+{# Posts dated after the build day stay hidden until a later build, the daily deploy publishes them #}
+{% macro list(pages, limit=0) %}
+{% set today = now() | date(format="%Y%m%d") | int %}
+{% set_global shown = 0 %}
 <ul id="posts">
     {% for page in pages %}
+    {% set day = page.date | date(format="%Y%m%d") | int %}
+    {% if day <= today %}{% if limit == 0 or shown < limit %}
+    {% set_global shown = shown + 1 %}
     <li>
         <h3><a href="{{page.permalink}}">{{page.title}}</a></h3>
         <span class="post-date">{{page.date | date(format="%b %d, %Y")}}</span>
     </li>
+    {% endif %}{% endif %}
     {% endfor %}
 </ul>
 {% endmacro list %}

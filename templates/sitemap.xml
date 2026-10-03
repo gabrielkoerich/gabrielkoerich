@@ -1,0 +1,16 @@
+{%- set today = now() | date(format="%Y%m%d") | int -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {%- for sitemap_entry in entries %}
+    {%- set show = true %}
+    {%- if sitemap_entry.updated %}{% set entry_day = sitemap_entry.updated | date(format="%Y%m%d") | int %}{% if entry_day > today %}{% set show = false %}{% endif %}{% endif %}
+    {%- if show %}
+    <url>
+        <loc>{{ sitemap_entry.permalink | escape_xml | safe }}</loc>
+        {%- if sitemap_entry.updated %}
+        <lastmod>{{ sitemap_entry.updated }}</lastmod>
+        {%- endif %}
+    </url>
+    {%- endif %}
+    {%- endfor %}
+</urlset>
