@@ -239,24 +239,6 @@ header h1 a:hover {
     color: var(--text-color);
 }
 
-.hero-cta-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.75rem;
-    flex-wrap: wrap;
-}
-
-.cta-secondary {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-
-.cta-secondary:hover {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-
 .highlight-list {
     list-style: none;
     margin: 1rem 0;
