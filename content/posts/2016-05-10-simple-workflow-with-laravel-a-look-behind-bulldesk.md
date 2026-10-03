@@ -9,7 +9,7 @@ source = "medium"
 original_url = "https://gabrielkoerich.medium.com/simples-workflow-com-laravel-uma-vis%C3%A3o-por-tr%C3%A1s-do-bulldesk-8a781e1a7684"
 +++
 
-![Bulldesk logo over an office](/images/posts/simple-workflow-with-laravel-a-look-behind-bulldesk.jpeg)
+<img src="{{ asset(path="images/posts/simple-workflow-with-laravel-a-look-behind-bulldesk.jpeg") }}" alt="Bulldesk logo over an office">
 
 This is one of those posts that I've been planning to do for a long time, but always ended up putting off.
 

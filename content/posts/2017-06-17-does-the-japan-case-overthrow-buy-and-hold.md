@@ -11,7 +11,7 @@ original_url = "https://gabrielkoerich.medium.com/o-caso-do-jap%C3%A3o-derruba-o
 
 Continuing on the subject of risk on the stock market and taking advantage of a comment made in the last post, let's talk about the case of the Japanese market. For 20 years, more precisely from 1989 to 2009, the Nikkei had a negative annualized return.
 
-![Nikkei 225 index from 1985 to 2012](/images/posts/does-the-japan-case-overthrow-buy-and-hold.jpeg)
+<img src="{{ asset(path="images/posts/does-the-japan-case-overthrow-buy-and-hold.jpeg") }}" alt="Nikkei 225 index from 1985 to 2012">
 
 *The Nikkei's Terrible 20s: Every Investor's Biggest Fear*
 

@@ -9,7 +9,7 @@ source = "medium"
 original_url = "https://gabrielkoerich.medium.com/risco-na-bolsa-de-valores-1-e1e7a355ca79"
 +++
 
-![Stock ticker board with prices and percentage changes](/images/posts/risk-on-the-stock-market-1.jpeg)
+<img src="{{ asset(path="images/posts/risk-on-the-stock-market-1.jpeg") }}" alt="Stock ticker board with prices and percentage changes">
 
 Whenever I told someone (I stopped for the reasons described in the next sentence) that I invest in the stock market, I heard impressed comments and observations that investing in shares is very risky. This is the first thought that people have when it comes to their own money, no one really wants to run the risk of losing what is theirs, but everyone wants to spend money on the latest fashion, right?
 

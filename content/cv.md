@@ -3,7 +3,7 @@ title = ""
 description = "Senior Software Engineer with 15+ years experience"
 +++
 
-## Summary <a href="/gabrielkoerich-cv.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
+## Summary <a href="{{ asset(path="gabrielkoerich-cv.pdf") }}" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
 Senior software engineer with 15+ years building production systems, coding since age 13. Currently architecting Solana DeFi at Lulo. Previously founded and sold Bulldesk, a marketing automation SaaS acquired in 2021. BBA in Finance.
 

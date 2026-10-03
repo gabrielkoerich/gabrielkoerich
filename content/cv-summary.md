@@ -2,7 +2,7 @@
 title = ""
 +++
 
-## Summary <a href="/gabrielkoerich-cv-summary.pdf" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
+## Summary <a href="{{ asset(path="gabrielkoerich-cv-summary.pdf") }}" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
 Senior software engineer and entrepreneur with 15+ years of professional experience, coding since age 13. Founded Bulldesk (acquired 2021), a Marketing Automation + CRM platform. Currently architecting Solana DeFi at Lulo; also focused on AI / agent orchestration (Claude Code, Codex, OpenCode in production workflows). BBA in Finance. **Open to:** Senior/Staff AI, DeFi, or fintech roles. Available for [AI consulting](/consulting/).
 
