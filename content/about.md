@@ -4,7 +4,7 @@ description = "Gabriel Koerich, software engineer. Solana DeFi at Lulo, founder 
 template = "about.html"
 +++
 
-I'm Gabriel Koerich, a software engineer from Brazil. I started coding at 13, and I have built production software for more than 15 years.
+I'm Gabriel Koerich, a software engineer from Brazil. I started coding at 13, and I have built production software for more than 15 years. I'm also the dad of a lovely daughter.
 
 I studied finance, not computer science. In 2013 I founded Algorit, a small software house that built custom web applications for clients. In 2015 I founded Bulldesk, a marketing automation and CRM platform, the first in Brazil to put both in one product. I built most of it myself, ran a team of developers, and handled the infrastructure, the product and the finances. I exited in 2021.
 
