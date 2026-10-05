@@ -9,7 +9,7 @@ source = "medium"
 original_url = "https://gabrielkoerich.medium.com/o-caso-do-jap%C3%A3o-derruba-o-buy-and-hold-7c73cbf5c4aa"
 +++
 
-Back to stock market risk, and to a comment on the last post: the Japanese market. For 20 years, from 1989 to 2009, the Nikkei had a negative annualized return.
+Back to stock market risk, this time because of a comment on the last post about the Japanese market. For 20 years, from 1989 to 2009, the Nikkei had a negative annualized return.
 
 <img src="{{ asset(path="images/posts/does-the-japan-case-overthrow-buy-and-hold.jpeg") }}" alt="Nikkei 225 index from 1985 to 2012">
 
@@ -23,7 +23,7 @@ The fact I consider most important, and the one that changes the results complet
 
 We also have to consider how different the two countries are. Brazil and Japan have completely different markets, economies and moments. In 1989, Japan was already a stable, mature economy. Brazil today is a different case: we still have a lot to develop in economic and financial terms.
 
-Above all, however bad buy and hold was in this period, any other stock market strategy would have done worse. Nobody is a magician at timing these tops and bottoms. It makes no sense to focus only on the exception of a strategy that wins over long periods.
+Above all, however bad buy and hold was in this period, any other stock market strategy would have done worse. Nobody is a magician at timing these tops and bottoms. It makes no sense to judge a strategy that wins over long periods by its one exception.
 
 So what can we take from this story?
 

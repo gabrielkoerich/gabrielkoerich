@@ -91,7 +91,7 @@ Most of these fixes are also a paragraph in the repo's `AGENTS.md`, under a sect
 
 ## Why bother
 
-Because that was the moment I saw that the world changed, or at least the part of it that involves my work. I still write code, decide the architecture and design the systems. What changed is everything around that: I write the issues, read the reviews and decide what merges, and the clerical part runs on its own, at night included.
+That was the moment I saw that the world changed, or at least the part of it that involves my work. I still write code, decide the architecture and design the systems. What changed is everything around that: I write the issues, read the reviews and decide what merges, and the clerical part runs on its own, at night included.
 
 Orch now fixes and builds itself. A daily job reads its own database, writes a review of the last 24 hours, and files issues for what broke. Those issues go through the same pipeline as any other: an agent picks one up, another agent reviews the PR, and it merges. Feature work goes the same way. I write the issue and orch implements it. Every PR merged into orch in the last two weeks came from orch.
 

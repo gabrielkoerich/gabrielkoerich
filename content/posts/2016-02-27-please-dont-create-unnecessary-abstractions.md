@@ -17,7 +17,7 @@ A repository for the model is a good idea. As the project grows, the model can g
 
 The problem starts when this turns into an abstraction nobody needs. What is a `PostRepositoryInterface` for, if all it does is hand you an instance of `PostEloquentRepository`? Will your implementation ever change? Almost nobody switches database type (relational or non-relational) or ORM in the middle of a project. And if you do, is changing one class all it takes? Of course not. I know it isn't.
 
-I always start from the idea that the first iteration should have as little code as possible. Don't add interfaces that will only ever have one implementation, or other classes you don't need. Later, it is much easier to take something simple and grow it into more robust logic than to maintain an absurd abstraction when you no longer remember what it was for or why you wrote it.
+I always start from the idea that the first iteration should have as little code as possible. Don't add interfaces that will only ever have one implementation, or other classes you don't need. Later, it is much easier to take something simple and grow it into something more complete than to maintain an absurd abstraction when you no longer remember what it was for or why you wrote it.
 
 I say this because I made this mistake many times. I had read many books on software design principles, and I thought everything had to be followed to the letter. That doesn't always make sense. I ended up creating lots of classes and interfaces just because it felt like the right thing to do.
 

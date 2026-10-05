@@ -12,7 +12,7 @@ Senior software engineer and entrepreneur with 15+ years of professional experie
 
 **AI & Agent Orchestration:** Claude Code, Codex, OpenCode in daily production use. Multi-agent orchestration ([orch](https://github.com/gabrielkoerich/orch)), automating engineering workflows, prompt engineering. Available for [consulting](/consulting/).
 
-**Blockchain:** Solana (Rust, Anchor), EVM (Solidity, Foundry, Hardhat), DeFi integrations, security-first design, onchain/off-chain indexing, comprehensive testing (unit, fuzz, integration)
+**Blockchain:** Solana (Rust, Anchor), EVM (Solidity, Foundry, Hardhat), DeFi integrations, security-first design, onchain/off-chain indexing, testing (unit, fuzz, integration)
 
 **Full-Stack:** Rust, Python, Node.js/TypeScript, Laravel, Vue.js, React
 
@@ -25,14 +25,14 @@ Senior software engineer and entrepreneur with 15+ years of professional experie
 Smart contract development for the DeFi protocol. Designed dual-pool architecture: a security pool protecting users against protocol hacks while generating yields, and a higher-yield pool with standard DeFi risk exposure.
 
 - Architected protocol + CPI integrations with major Solana protocols
-- Built SDKs, CLIs, and comprehensive test suites (Rust unit + Anchor integration)
+- Built SDKs, CLIs and test suites (Rust unit + Anchor integration)
 - Developed EVM protocol integrations using Solidity and Forge
 
 **Stack:** Rust, Solana, Anchor, TypeScript, GitHub Actions, GCP
 
 ### Solana Smart Contract Engineer, Freelance (Oct 2021 – Nov 2022)
 
-Built multiple Solana projects: NFT marketplace with custom auctions, price prediction game with on-chain oracles, and DeFi contracts using Orca Whirlpool. All with comprehensive testing, modular architecture, and JS SDKs.
+Built multiple Solana projects: NFT marketplace with custom auctions, price prediction game with on-chain oracles, and DeFi contracts using Orca Whirlpool. Each shipped with tests, a modular architecture and JS SDKs.
 
 **Stack:** Rust, Solana, Anchor, TypeScript
 
@@ -54,7 +54,7 @@ Founded and scaled Brazil's first combined Marketing Automation + CRM platform. 
 
 ### Founder / Full Stack Engineer, Algorit (Jun 2013 – Sep 2016)
 
-Digital agency and software house. Responsible for all software development and business operations.
+Digital agency and software house. Ran all software development and business operations.
 
 ## Education
 

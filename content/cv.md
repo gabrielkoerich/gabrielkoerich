@@ -5,7 +5,7 @@ description = "Senior Software Engineer with 15+ years experience"
 
 ## Summary <a href="{{ asset(path="gabrielkoerich-cv.pdf") }}" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
-Senior software engineer with 15+ years building production systems, coding since age 13. Currently architecting Solana DeFi at Lulo. Previously founded and sold Bulldesk, a marketing automation SaaS acquired in 2021. BBA in Finance.
+Senior software engineer with 15+ years building production systems, coding since age 13. Currently architecting Solana DeFi at Lulo. Previously founded Bulldesk, a marketing automation SaaS acquired in 2021. BBA in Finance.
 
 I work across backend, blockchain (Rust/Solana, EVM/Solidity) and AI tooling. I run Claude Code, Codex and OpenCode in parallel every day with [orch](https://github.com/gabrielkoerich/orch), and help companies do the same.
 
