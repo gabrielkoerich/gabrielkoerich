@@ -88,7 +88,7 @@
     <h2>Latest posts</h2>
     <a class="section-heading-link" href="{{ get_url(path='@/posts/_index.md') }}">All posts →</a>
 </div>
-{{ posts_macros::list(pages=posts_section.pages, mode=config.mode, limit=5) }}
+{{ posts_macros::list(pages=posts_section.pages, mode=config.mode, limit=5, tags=true) }}
 {% endif %}
 
 {% endblock content %}
