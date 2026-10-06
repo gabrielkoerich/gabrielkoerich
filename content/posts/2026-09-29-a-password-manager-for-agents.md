@@ -28,7 +28,7 @@ I also found hardcoded passwords in my own repo while looking into this, which i
 
 **A `.env` file** puts values on disk in the clear, which is why it is gitignored, and why it ends up being pasted into chat when a colleague needs it.
 
-**1Password's CLI** is good and I use it daily for SSH. It is built for a human at a keyboard. A CLI session is all-or-nothing: once `op signin` succeeds, everything is readable. There is no "this one secret, for this one process".
+**1Password's CLI** is good and I use it daily for SSH. It is built for a human at a keyboard. A signed-in session can read every item the account can see. [`op run`](https://www.1password.dev/cli/reference/commands/run/) can put secrets into one process, and a [service account](https://www.1password.dev/service-accounts/) can be limited to chosen vaults. What I wanted and did not find was a fingerprint for one secret, asked for by one named agent.
 
 **Vault** solves scoping properly and costs a server, a policy language, and an operator. For a laptop and a handful of scheduled jobs it is the wrong size. And you still end up with a token that, once leaked, opens what it was scoped to.
 
@@ -70,7 +70,7 @@ One approval at launch, the value in the process environment, every child inheri
 
 ## What it costs
 
-**A machine with no sensor cannot approve.** A Linux box can ask my Mac over Tailscale and the prompt appears here. I tested that from a Raspberry Pi and from a fly.io machine in another region. But the Mac has to be awake, unlocked, and lid open. A closed lid fails with `canEvaluatePolicy` false and nothing clearer.
+**A machine with no sensor cannot approve.** A Linux box can ask my Mac over Tailscale and the prompt appears here. I tested that from a Raspberry Pi and from a fly.io machine in another region. But the Mac has to be awake, unlocked, and lid open. A closed lid fails. The error says so and suggests opening the lid or using the recovery passphrase.
 
 **Unattended means no human gate.** Injection and tokens both hand a value to something that runs without you. What you keep is that the value never enters the agent's context, every release is recorded, and a grant covers named secrets instead of the whole store.
 
@@ -91,3 +91,11 @@ If you run agents on your own machine, I would like to know whether this holds u
 If you want to understand it better, here is the [design](https://passbox.gabrielkoerich.com/design/) and here's the [roadmap and future ideas](https://passbox.gabrielkoerich.com/roadmap/).
 
 Source and docs: [passbox.gabrielkoerich.com](https://passbox.gabrielkoerich.com) · [github.com/gabrielkoerich/passbox](https://github.com/gabrielkoerich/passbox)
+
+---
+
+**Corrections, 2026-10-06.**
+
+- From [v0.13.12](https://github.com/gabrielkoerich/passbox/releases/tag/v0.13.12) to v0.13.42, passbox kept a plaintext list of entry names at `~/.passbox/names` so that `ls` needed no key. It never synced, but any process running as the user could read it, which broke the promise above that names live only inside the ciphertext. [v0.13.43](https://github.com/gabrielkoerich/passbox/releases/tag/v0.13.43) removed it ([72e46cd](https://github.com/gabrielkoerich/passbox/commit/72e46cd)), so listing now needs approval and is audited like a read.
+- [v0.13.44](https://github.com/gabrielkoerich/passbox/releases/tag/v0.13.44) also hardened the broker: decrypted secrets are wiped from memory after use, it refuses a debugger, and a crash writes no core dump ([ff0b994](https://github.com/gabrielkoerich/passbox/commit/ff0b994)).
+- The 1Password paragraph said there is no "this one secret, for this one process". `op run` does inject secrets into a single process, so I corrected it.
