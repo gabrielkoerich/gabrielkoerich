@@ -5,6 +5,7 @@ Scrapes the public GitHub profile page to get pinned repos dynamically.
 """
 
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -251,12 +252,7 @@ def fetch_repos(token=None):
 
 
 def main():
-    # Get token from environment or args
-    token = None
-    if len(sys.argv) > 1:
-        token = sys.argv[1]
-    else:
-        token = None  # Will use env var if needed
+    token = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("GITHUB_TOKEN")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
