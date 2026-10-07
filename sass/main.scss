@@ -394,6 +394,10 @@ li {
 }
 
 /* Home list sits under a section heading, so its titles stay smaller than it */
+.section-heading-inline + #posts {
+    margin-top: 1.75rem;
+}
+
 .section-heading-inline + #posts h3 {
     font-size: 1.125rem;
 }
