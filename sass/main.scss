@@ -191,6 +191,21 @@ header h1 a:hover {
     color: var(--accent-color) !important;
 }
 
+.header-nav-lang {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+}
+
+.header-nav-lang .header-nav-link {
+    display: inline;
+    font-size: inherit;
+}
+
+.header-nav-lang [aria-current] {
+    color: var(--accent-color);
+}
+
 @media (max-width: 600px) {
     header {
         flex-direction: column;
@@ -199,7 +214,10 @@ header h1 a:hover {
     }
     .header-nav {
         justify-content: flex-start;
-        gap: 0.9rem;
+        gap: 0.65rem;
+    }
+    .header-tagline {
+        font-size: 0.7rem;
     }
 }
 

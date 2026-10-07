@@ -1,19 +1,31 @@
 {% extends "base.html" %}
 {% import "macros/posts.html" as posts_macros %}
+{% import "macros/i18n.html" as i18n %}
 
 {% block content %}
-<h1>Posts</h1>
-<p class="posts-intro">
-    Notes from the real problem-solving work: Solana, Rust, AI coding agents, and shipping software at scale.
-</p>
+<h1>{{ section.title }}</h1>
+<p class="posts-intro">{{ section.extra.intro | markdown(inline=true) | safe }}</p>
 
-{% if section.pages | length > 0 %}
+{# Most posts exist only in English, so every language lists them all and the macro links translations #}
+{% set posts_section = get_section(path="posts/_index.md") %}{% set_global pages = posts_section.pages %}
+{# a post written only in this language has no English page to swap from, so add it #}
+{% if lang != config.default_language %}
+{% set lang_index = "posts/_index." ~ lang ~ ".md" %}
+{% set lang_section = get_section(path=lang_index) %}
+{% for p in lang_section.pages %}
+{% set_global has_default = false %}
+{% for t in p.translations %}{% if t.lang == config.default_language %}{% set_global has_default = true %}{% endif %}{% endfor %}
+{% if not has_default %}{% set_global pages = pages | concat(with=p) %}{% endif %}
+{% endfor %}
+{% set_global pages = pages | sort(attribute="date") | reverse %}
+{% endif %}
+{% if pages | length > 0 %}
 
-{{ posts_macros::list(pages=section.pages, mode=config.mode, tags=true) }}
+{{ posts_macros::list(pages=pages, mode=config.mode, tags=true, lang=lang) }}
 
 {% else %}
-<p>No posts found.</p>
+<p>{{ trans(key="no_posts", lang=lang) }}</p>
 {% endif %}
 
-<p><a href="/">← Back to home</a></p>
+<p><a href="{{ i18n::url(path='_index.md', lang=lang) }}">{{ trans(key="back_home", lang=lang) }}</a></p>
 {% endblock content %}

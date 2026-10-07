@@ -1,171 +1,70 @@
 {% extends "base.html" %}
 
+{# The copy lives in the page's front matter, so a translation is a content file #}
 {% block content %}
 {% set booking_url = config.extra.booking_url %}
+{% set c = page.extra %}
 <div id="consulting">
     <section class="consulting-hero">
-        <p class="hero-eyebrow">AI · Solana · EVM · DeFi consulting</p>
-        <h1>What's the most annoying thing in your company that we can automate?</h1>
-        <p class="consulting-lede">
-            I help companies ship two kinds of systems that run in
-            production: <strong>AI workflows</strong> (Claude Code, Codex,
-            agent orchestration, automations) and <strong>blockchain
-            engineering</strong> (Solana smart contracts, EVM, DeFi
-            integrations, audits). 15+ years building real systems at scale.
-        </p>
-        <a class="cta-button" href="{{ booking_url }}" target="_blank" rel="noopener">
-            Book a 30-min intro call →
-        </a>
-        <p class="cta-meta">Free · Google Meet · 30 minutes</p>
-        <p class="cta-meta cta-meta-detail">
-            <strong>What you'll get:</strong> an honest look at how your team uses AI
-            today, 2 or 3 specific automations worth pursuing, and a
-            straight answer on whether I'm the right fit. No pitch.
-        </p>
+        <p class="hero-eyebrow">{{ c.eyebrow }}</p>
+        <h1>{{ c.headline }}</h1>
+        <p class="consulting-lede">{{ c.lede | markdown(inline=true) | safe }}</p>
+        <a class="cta-button" href="{{ booking_url }}" target="_blank" rel="noopener">{{ c.cta }}</a>
+        <p class="cta-meta">{{ c.cta_meta }}</p>
+        <p class="cta-meta cta-meta-detail">{{ c.cta_detail | markdown(inline=true) | safe }}</p>
     </section>
 
+    {% for s in c.sections %}
     <section class="consulting-section">
-        <h2>Areas I work in</h2>
+        <h2>{{ s.title }}</h2>
+        {% if s.kind == "domains" %}
         <div class="domain-grid">
+            {% for card in s.cards %}
             <div class="domain-card">
-                <p class="domain-label">Track 1</p>
-                <h3>AI &amp; agent workflows</h3>
+                <p class="domain-label">{{ card.label }}</p>
+                <h3>{{ card.title }}</h3>
                 <ul>
-                    <li>Claude Code, Codex, OpenCode in production</li>
-                    <li>Multi-agent orchestration &amp; coding workflows</li>
-                    <li>Automating engineering, sales, support, ops</li>
-                    <li>Custom agent skills, slash commands &amp; internal AI tooling</li>
-                    <li>Model selection, cost &amp; latency trade-offs</li>
+                    {% for item in card.items %}<li>{{ item | markdown(inline=true) | safe }}</li>{% endfor %}
                 </ul>
             </div>
-            <div class="domain-card">
-                <p class="domain-label">Track 2</p>
-                <h3>Solana · EVM · DeFi</h3>
-                <ul>
-                    <li>Solana smart contracts (Rust, Anchor)</li>
-                    <li>EVM contracts (Solidity, Foundry, Hardhat)</li>
-                    <li>DeFi protocol architecture &amp; integrations</li>
-                    <li>Security reviews &amp; testing (unit, fuzz, integration)</li>
-                    <li>On-chain / off-chain indexing &amp; SDKs</li>
-                </ul>
-            </div>
+            {% endfor %}
         </div>
-    </section>
-
-    <section class="consulting-section">
-        <h2>Who I work with</h2>
-        <ul class="consulting-list">
-            <li><strong>Engineering teams</strong> adopting Claude Code, Codex, and other coding agents, getting from "we played with it" to a daily, trusted workflow.</li>
-            <li><strong>Startups and founders</strong> building AI-powered or DeFi products and MVPs: picking the right model, architecture, and what to ignore.</li>
-            <li><strong>Established companies</strong> automating sales, marketing, support, and internal ops, using 6 years running Bulldesk (acquired 2021) at 80M+ requests/mo.</li>
-            <li><strong>Web3 / DeFi teams</strong> shipping new protocols, integrations, audits, or adding AI to trading and monitoring systems.</li>
-        </ul>
-    </section>
-
-    <section class="consulting-section">
-        <h2>How I help</h2>
+        {% elif s.kind == "services" %}
         <div class="service-grid">
+            {% for card in s.cards %}
             <div class="service-card">
-                <h3>Strategy &amp; advisory</h3>
-                <p class="service-tag">Hourly or short retainer</p>
-                <p>Discovery calls, AI or protocol audits, technical roadmaps, build-vs-buy decisions, model/stack selection, cost analysis. Best for teams that need a senior second opinion before committing.</p>
+                <h3>{{ card.title }}</h3>
+                <p class="service-tag">{{ card.tag }}</p>
+                <p>{{ card.text | markdown(inline=true) | safe }}</p>
             </div>
-            <div class="service-card">
-                <h3>Hands-on implementation</h3>
-                <p class="service-tag">Project-based</p>
-                <p>I build the system end-to-end: agent skills, workflows &amp; automations, internal AI tooling, or Solana/EVM smart contracts, SDKs, and integrations. I write the code, ship it, document it.</p>
-            </div>
-            {#
-            <div class="service-card">
-                <h3>Team training &amp; workshops</h3>
-                <p class="service-tag">½-day to 2-day</p>
-                <p>Hands-on sessions to get your engineers productive with coding agents (Claude Code, Codex, OpenCode), or get up to speed on Solana/Anchor or EVM smart contract development.</p>
-            </div>
-            #}
-            <div class="service-card">
-                <h3>Fractional senior engineer</h3>
-                <p class="service-tag">Ongoing, part-time</p>
-                <p>Embed with one company a few days a week. Own the AI or protocol roadmap, mentor the team, ship features. For companies that need senior capacity without a full-time hire.</p>
-            </div>
-            <div class="service-card">
-                <h3>Smart contract audits</h3>
-                <p class="service-tag">Fixed-scope review</p>
-                <p>Security-focused review of Solana (Rust, Anchor) and EVM (Solidity) programs: common attack vectors, access control, arithmetic, and integration risks. Findings report with severity ratings and concrete fixes, plus unit/fuzz tests where useful.</p>
-            </div>
+            {% endfor %}
         </div>
-    </section>
-
-    <section class="consulting-section">
-        <h2>Why work with me</h2>
-        <ul class="consulting-list">
-            <li><strong>15+ years</strong> building production software.</li>
-            <li><strong>Founder track record</strong>: built and sold Bulldesk (Marketing Automation SaaS, 80M+ req/mo, 500M+ background jobs/mo).</li>
-            <li><strong>Currently architecting</strong> Solana DeFi at <a href="https://lulo.fi" target="_blank" rel="noopener">Lulo</a>.</li>
-            <li><strong>Daily AI practitioner</strong>: I orchestrate Claude, Codex, and OpenCode in my own workflow (<a href="https://github.com/gabrielkoerich/orch" target="_blank" rel="noopener">orch</a>) and built this site with AI assistance.</li>
-            <li><strong>Finance background (BBA)</strong>: I weigh business outcomes alongside the code.</li>
-        </ul>
-    </section>
-
-    <section class="consulting-section">
-        <h2>How a typical engagement starts</h2>
-        <ol class="consulting-steps">
-            <li><strong>Book a 30-min intro call</strong> (free, Google Meet). We discuss your problem.</li>
-            <li><strong>Proposal within 48h</strong>: scope, timeline and price.</li>
-            <li><strong>Start within 1 or 2 weeks</strong>, with weekly written updates.</li>
-        </ol>
-    </section>
-
-    <section class="consulting-section">
-        <h2>What I don't do</h2>
-        <ul class="consulting-list dont-list">
-            <li>One-off "ChatGPT integration" projects with no clear outcome.</li>
-            <li>Pure prompt-tweaking work. I build systems.</li>
-            <li>Hype-driven AI experiments without a path to production.</li>
-            <li>Work I don't believe in. I'll tell you if I think you don't need me.</li>
-        </ul>
-    </section>
-
-    <section class="consulting-section">
-        <h2>FAQ</h2>
+        {% elif s.kind == "faq" %}
         <div class="faq">
+            {% for item in s.items %}
             <details>
-                <summary>Where are you based? Do you work remote?</summary>
-                <p>Santa Catarina, Brazil (UTC-3). 100% remote. I overlap comfortably with US, EU, and LATAM business hours.</p>
+                <summary>{{ item.question }}</summary>
+                <p>{{ item.answer | markdown(inline=true) | safe }}</p>
             </details>
-            <details>
-                <summary>What languages do you work in?</summary>
-                <p>English and Portuguese, fluent in both for written and spoken work.</p>
-            </details>
-            <details>
-                <summary>What does it cost?</summary>
-                <p>Engagements typically start at a 1-week paid discovery sprint, with hourly or fixed-fee options after that. We'll discuss specifics on the call.</p>
-            </details>
-            <details>
-                <summary>Do you sign NDAs?</summary>
-                <p>Yes. Standard mutual NDA is fine before any technical discussion.</p>
-            </details>
-            <details>
-                <summary>Who owns the IP?</summary>
-                <p>You do. All code, prompts, and configs I write for your engagement are yours.</p>
-            </details>
-            <details>
-                <summary>Can you embed with our team full-time?</summary>
-                <p>Not currently. I'm focused on a primary role at Lulo. I'm available for fractional / part-time work and project-based engagements.</p>
-            </details>
-            <details>
-                <summary>What stacks do you work with?</summary>
-                <p><strong>AI:</strong> Anthropic (Claude / Claude Code), OpenAI (Codex / GPT), open-source agents (OpenCode), Python, TypeScript.<br><strong>Blockchain:</strong> Solana (Rust, Anchor), EVM (Solidity, Foundry, Hardhat), TypeScript SDKs.<br>I'm tool-agnostic and pick what fits the problem.</p>
-            </details>
+            {% endfor %}
         </div>
+        {% elif s.kind == "steps" %}
+        <ol class="consulting-steps">
+            {% for item in s.items %}<li>{{ item | markdown(inline=true) | safe }}</li>{% endfor %}
+        </ol>
+        {% else %}
+        <ul class="consulting-list{% if s.kind == 'dont' %} dont-list{% endif %}">
+            {% for item in s.items %}<li>{{ item | markdown(inline=true) | safe }}</li>{% endfor %}
+        </ul>
+        {% endif %}
     </section>
+    {% endfor %}
 
     <section class="consulting-cta">
-        <h2>Ready to talk?</h2>
-        <a class="cta-button" href="{{ booking_url }}" target="_blank" rel="noopener">
-            Book a 30-min intro call →
-        </a>
+        <h2>{{ c.closing }}</h2>
+        <a class="cta-button" href="{{ booking_url }}" target="_blank" rel="noopener">{{ c.cta }}</a>
         <p class="cta-meta">
-            Prefer email? <a href="mailto:{{ config.extra.email }}">{{ config.extra.email }}</a>
+            {{ c.email_prompt }} <a href="mailto:{{ config.extra.email }}">{{ config.extra.email }}</a>
         </p>
     </section>
 </div>

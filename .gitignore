@@ -16,3 +16,9 @@ data/github-pinned.json
 data/github-events.json
 
 .tools/
+
+# Draft examples and paused pages stay local
+drafts/examples/
+drafts/medium-pt/
+drafts/runbooks/
+drafts/pt/

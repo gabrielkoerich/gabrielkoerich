@@ -96,13 +96,58 @@ build: fetch-github _zola
     [ -x "$bin" ] || bin="zola"
     "$bin" build && "$bin" check
 
-# Serve the site locally for development
+# Serve the site locally for development, unpublished posts included
 [group('website')]
 serve *args: _zola
     #!/usr/bin/env bash
     bin=".tools/zola-{{ zola_version }}"
     [ -x "$bin" ] || bin="zola"
-    "$bin" serve --drafts {{ args }}
+    "$bin" serve {{ args }}
+
+# Publish one post: commit the untracked post and the examples it links, build and push
+[group('blog')]
+publish slug: _zola
+    #!/usr/bin/env bash
+    set -euo pipefail
+    post=$(git ls-files --others --exclude-standard 'content/posts/*-{{ slug }}.md' | head -1)
+    if [ -z "$post" ]; then
+        echo "no unpublished post named {{ slug }} in content/posts"
+        exit 1
+    fi
+
+    examples=()
+    for ex in $(grep -o 'examples/[a-z0-9-]*' "$post" | sort -u); do
+        if [ -d "drafts/$ex" ]; then
+            rsync -a --exclude target --exclude node_modules --exclude .venv "drafts/$ex/" "$ex/"
+            examples+=("$ex")
+        fi
+
+    done
+    bin=".tools/zola-{{ zola_version }}"
+    [ -x "$bin" ] || bin="zola"
+    "$bin" build -o "$(mktemp -d)/site" --force
+
+    title=$(grep -m1 '^title = ' "$post" | cut -d'"' -f2)
+    git add "$post" ${examples[@]+"${examples[@]}"}
+    git commit -m "Publish $title"
+    git push
+    for ex in ${examples[@]+"${examples[@]}"}; do
+        trash "drafts/$ex"
+    done
+
+# Publish every unpublished post dated today or earlier, for a daily schedule
+[group('blog')]
+publish-due:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    today=$(date +%Y-%m-%d)
+    for f in $(git ls-files --others --exclude-standard 'content/posts/*.md'); do
+        name=$(basename "$f" .md)
+        if [[ ! "${name:0:10}" > "$today" ]]; then
+            just publish "${name:11}"
+        fi
+
+    done
 
 # Clean build artifacts
 [group('website')]

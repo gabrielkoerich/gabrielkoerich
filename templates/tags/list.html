@@ -2,7 +2,7 @@
 
 {% block content %}
 {% set today = now() | date(format="%Y%m%d") | int %}
-<h1>Tags</h1>
+<h1>{{ trans(key="tags", lang=lang) }}</h1>
 
 <ul id="tags">
     {% for term in terms %}

@@ -1,0 +1,7 @@
+{# Permalink of a content file in `lang`, or of its default language version when it has no translation #}
+{% macro url(path, lang) -%}
+{%- if path is ending_with("_index.md") -%}{%- set c = get_section(path=path, metadata_only=true) -%}{%- else -%}{%- set c = get_page(path=path) -%}{%- endif -%}
+{%- set_global href = c.permalink -%}
+{%- for t in c.translations -%}{%- if t.lang == lang -%}{%- set_global href = t.permalink -%}{%- endif -%}{%- endfor -%}
+{{- href | safe -}}
+{%- endmacro url %}

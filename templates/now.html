@@ -13,10 +13,8 @@
     </div>
 
     {% if repos %}
-    <h2>Recent work</h2>
-    <p class="now-meta">
-        Auto-updated daily from GitHub. Public repos I've pushed to in the last ~3 months.
-    </p>
+    <h2>{{ trans(key="recent_work", lang=lang) }}</h2>
+    <p class="now-meta">{{ trans(key="recent_work_meta", lang=lang) }}</p>
 
     <ul id="repos" class="now-repos">
         {% set count = 0 %}
@@ -40,7 +38,8 @@
                 {% if repo.language %}
                 <span class="repo-lang">{{ repo.language }}</span>
                 {% endif %}
-                <span class="repo-pushed">Pushed {{ repo.pushed_relative }}</span>
+                {# pushed_relative comes in English from fetch-github.py, other languages build it from the day count #}
+                <span class="repo-pushed">{{ trans(key="pushed", lang=lang) }} {% if lang == config.default_language %}{{ repo.pushed_relative }}{% elif repo.days_since_push == 0 %}{{ trans(key="today", lang=lang) }}{% elif repo.days_since_push == 1 %}{{ trans(key="day_ago", lang=lang) }}{% else %}{{ trans(key="days_ago", lang=lang) | replace(from="N", to=repo.days_since_push ~ "") }}{% endif %}</span>
                 {% if repo.stargazers_count and repo.stargazers_count > 0 %}
                 <span class="repo-stars"><span class="star-icon">★</span> {{ repo.stargazers_count }}</span>
                 {% endif %}
@@ -51,10 +50,6 @@
     </ul>
     {% endif %}
 
-    <p class="now-footer">
-        <em>Inspired by <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now pages</a>.
-        The "Recent work" section is regenerated daily from my GitHub activity.
-        The rest is updated whenever something meaningful changes.</em>
-    </p>
+    <p class="now-footer"><em>{{ trans(key="now_footer", lang=lang) | safe }}</em></p>
 </article>
 {% endblock content %}

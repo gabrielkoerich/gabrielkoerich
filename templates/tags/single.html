@@ -4,5 +4,5 @@
 {% block content %}
 <h1>#{{term.name}}</h1>
 
-{{ posts_macros::list(pages=term.pages, mode=config.mode, tags=true) }}
+{{ posts_macros::list(pages=term.pages, mode=config.mode, tags=true, lang=lang) }}
 {% endblock content %}

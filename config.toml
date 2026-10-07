@@ -30,7 +30,6 @@ highlight_theme = "css"
 [extra]
 # Put all your custom variables here
 author = "Gabriel Koerich"
-tagline = "Senior Engineer · AI Workflows · Solana / DeFi"
 linkedin = "https://linkedin.com/in/gabrielkoerich"
 github = "https://github.com/gabrielkoerich"
 email = "gabriel@gabrielkoerich.com"
@@ -40,6 +39,41 @@ available_for_consulting = true
 # Repos to hide from the homepage pinned list (e.g. archived/superseded projects)
 hidden_repos = []
 
+# English strings, `trans(key=..., lang=lang)` reads them, Portuguese ones live under [languages.pt.translations]
+[translations]
+tagline = "Senior Engineer · AI Workflows · Solana / DeFi"
+nav_about = "About"
+nav_posts = "Posts"
+nav_consulting = "Consulting"
+lang_label = "Language"
+locale = "en_US"
+date_long = "%B %d, %Y"
+date_short = "%b %d, %Y"
+min_read = "min read"
+draft = "Draft"
+scheduled = "Scheduled"
+not_found = "Not found"
+back_home = "← Back to home"
+featured_projects = "Featured projects"
+all_projects = "View all 40+ projects →"
+projects_intro = "Selected work I've built or contributed to:"
+repo_by = "by"
+repo_contributor = "Open-source contributor."
+latest_posts = "Latest posts"
+all_posts = "All posts →"
+no_posts = "No posts found."
+tags = "Tags"
+comments = "Comments"
+cta_available = "Available for AI consulting"
+cta_topics = "coding agents, workflow automation, AI strategy."
+cta_book = "Book a 30-min call →"
+recent_work = "Recent work"
+recent_work_meta = "Auto-updated daily from GitHub. Public repos I've pushed to in the last ~3 months."
+pushed = "Pushed"
+today = "today"
+day_ago = "1 day ago"
+days_ago = "N days ago"
+now_footer = 'Inspired by <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now pages</a>. The "Recent work" section is regenerated daily from my GitHub activity. The rest is updated whenever something meaningful changes.'
 # Comments, the embed stays hidden until category_id is filled in
 [extra.giscus]
 repo = "gabrielkoerich/gabrielkoerich"

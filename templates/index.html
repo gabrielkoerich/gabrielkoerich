@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "macros/posts.html" as posts_macros %}
+{% import "macros/i18n.html" as i18n %}
 
 {% block content %}
 {# Load GitHub data #}
@@ -8,18 +9,9 @@
 {% set hidden_repos = config.extra.hidden_repos | default(value=[]) %}
 
 <section id="hero">
-    <p class="hero-eyebrow">Software Engineer</p>
-    <h2 class="hero-title">
-        I build production software: DeFi protocols, AI agent workflows, and the engineering that scales them.
-    </h2>
-    <p class="hero-sub">
-        Currently architecting Solana DeFi at
-        <a href="https://lulo.fi" target="_blank" rel="noopener">Lulo</a>.
-        Previously founded <strong>Bulldesk</strong>, a marketing automation SaaS I exited in 2021.
-        These days I also run coding agents in parallel with
-        <a href="{{ get_url(path='@/posts/2026-07-05-orchestrating-agents-for-humans.md') }}">orch</a>,
-        build a <a href="{{ get_url(path='@/posts/2026-10-05-running-a-quant-book-on-hyperliquid.md') }}">quant stack on Hyperliquid</a>, and help companies ship AI agent workflows.
-    </p>
+    <p class="hero-eyebrow">{{ section.extra.eyebrow }}</p>
+    <h2 class="hero-title">{{ section.extra.headline }}</h2>
+    <p class="hero-sub">{{ section.extra.intro | markdown(inline=true) | safe }}</p>
 </section>
 
 {# Pinned GitHub Repositories #}
@@ -37,10 +29,10 @@
     {% endfor %}
 
 <div class="section-heading-inline">
-    <h2>Featured projects</h2>
-    <a class="section-heading-link" href="https://projects.gabrielkoerich.com" target="_blank">View all 40+ projects →</a>
+    <h2>{{ trans(key="featured_projects", lang=lang) }}</h2>
+    <a class="section-heading-link" href="https://projects.gabrielkoerich.com" target="_blank">{{ trans(key="all_projects", lang=lang) }}</a>
 </div>
-<p>Selected work I've built or contributed to:</p>
+<p>{{ trans(key="projects_intro", lang=lang) }}</p>
 
 <ul id="repos">
     {% for repo in own_repos | sort(attribute="stargazers.totalCount") | reverse %}
@@ -64,12 +56,12 @@
     <li class="repo-item">
         <h3>
             <a href="{{repo.html_url}}" target="_blank" rel="noopener">{{repo.name}}</a>
-            <span class="repo-owner">by {{repo.owner.login}}</span>
+            <span class="repo-owner">{{ trans(key="repo_by", lang=lang) }} {{repo.owner.login}}</span>
         </h3>
         {% if repo.description %}
         <p class="repo-description">{{repo.description}}</p>
         {% else %}
-        <p class="repo-description">Open-source contributor.</p>
+        <p class="repo-description">{{ trans(key="repo_contributor", lang=lang) }}</p>
         {% endif %}
         <div class="repo-meta">
             {% if repo.language.name %}
@@ -82,13 +74,25 @@
 </ul>
 {% endif %}
 
-{% set posts_section = get_section(path="posts/_index.md") %}
-{% if posts_section.pages | length > 0 %}
+{# Most posts exist only in English, so every language lists them all and the macro links translations #}
+{% set posts_section = get_section(path="posts/_index.md") %}{% set_global pages = posts_section.pages %}
+{# a post written only in this language has no English page to swap from, so add it #}
+{% if lang != config.default_language %}
+{% set lang_index = "posts/_index." ~ lang ~ ".md" %}
+{% set lang_section = get_section(path=lang_index) %}
+{% for p in lang_section.pages %}
+{% set_global has_default = false %}
+{% for t in p.translations %}{% if t.lang == config.default_language %}{% set_global has_default = true %}{% endif %}{% endfor %}
+{% if not has_default %}{% set_global pages = pages | concat(with=p) %}{% endif %}
+{% endfor %}
+{% set_global pages = pages | sort(attribute="date") | reverse %}
+{% endif %}
+{% if pages | length > 0 %}
 <div class="section-heading-inline">
-    <h2>Latest posts</h2>
-    <a class="section-heading-link" href="{{ get_url(path='@/posts/_index.md') }}">All posts →</a>
+    <h2>{{ trans(key="latest_posts", lang=lang) }}</h2>
+    <a class="section-heading-link" href="{{ i18n::url(path='posts/_index.md', lang=lang) }}">{{ trans(key="all_posts", lang=lang) }}</a>
 </div>
-{{ posts_macros::list(pages=posts_section.pages, mode=config.mode, limit=5, tags=true) }}
+{{ posts_macros::list(pages=pages, mode=config.mode, limit=5, tags=true, lang=lang) }}
 {% endif %}
 
 {% endblock content %}

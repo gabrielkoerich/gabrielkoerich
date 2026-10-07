@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "macros/i18n.html" as i18n %}
 
 {% block head_extra %}
 {% set today = now() | date(format="%Y%m%d") | int %}
@@ -11,12 +12,12 @@
 {% set_global day = 0 %}{% if page.date %}{% set_global day = page.date | date(format="%Y%m%d") | int %}{% endif %}
 {% if day > today and config.mode != "serve" %}
 {# Scheduled post, the daily deploy renders it once its date arrives #}
-<h1>Not found</h1>
-<p><a href="/">← Back to home</a></p>
+<h1>{{ trans(key="not_found", lang=lang) }}</h1>
+<p><a href="{{ i18n::url(path='_index.md', lang=lang) }}">{{ trans(key="back_home", lang=lang) }}</a></p>
 {% else %}
 <article>
     {% if page.date %}
-    <span class="post-date">{{page.date | date(format="%B %d, %Y")}} <span class="post-badge read-time">{{page.reading_time}} min read</span>{% if page.draft %} <span class="post-badge">Draft</span>{% elif day > today %} <span class="post-badge">Scheduled</span>{% endif %}</span>
+    <span class="post-date">{{page.date | date(format=trans(key="date_long", lang=lang), locale=trans(key="locale", lang=lang))}} <span class="post-badge read-time">{{page.reading_time}} {{ trans(key="min_read", lang=lang) }}</span>{% if page.draft %} <span class="post-badge">{{ trans(key="draft", lang=lang) }}</span>{% elif day > today %} <span class="post-badge">{{ trans(key="scheduled", lang=lang) }}</span>{% endif %}</span>
     {% endif %}
     
     <h1>{{page.title}}</h1>
@@ -24,7 +25,7 @@
     {% if page.taxonomies.tags %}
     <div class="tags">
         {% for tag in page.taxonomies.tags %}
-        <a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{tag}}</a>
+        <a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag, lang=lang) }}">{{tag}}</a>
         {% endfor %}
     </div>
     {% endif %}
@@ -36,7 +37,7 @@
 </article>
 
 {# Comments belong under posts, not under the CV or other pages #}
-{% if not page.draft and page.path is starting_with("/posts/") %}{% include "partials/comments.html" %}{% endif %}
+{% if not page.draft and page.relative_path is starting_with("posts/") %}{% include "partials/comments.html" %}{% endif %}
 
 {# In Zola 0.18 higher is the older post and lower the newer one #}
 {% set newer = false %}
