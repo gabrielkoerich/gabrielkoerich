@@ -3,7 +3,7 @@ title = "Simple workflow with Laravel, a look behind Bulldesk"
 date = 2016-05-10
 aliases = ["/posts/external/simples-workflow-com-laravel-uma-visao-por-tras-do-bulldesk/"]
 [taxonomies]
-tags = ["bulldesk", "laravel", "php", "devops", "software-engineering", "medium"]
+tags = ["bulldesk", "laravel", "devops", "software-engineering", "medium"]
 [extra]
 source = "medium"
 original_url = "https://gabrielkoerich.medium.com/simples-workflow-com-laravel-uma-vis%C3%A3o-por-tr%C3%A1s-do-bulldesk-8a781e1a7684"

@@ -3,7 +3,7 @@ title = "Please don't create unnecessary abstractions"
 date = 2016-02-27
 aliases = ["/posts/external/por-favor-nao-crie-abstracoes-desnecessarias/"]
 [taxonomies]
-tags = ["software-engineering", "architecture", "laravel", "php", "medium"]
+tags = ["software-engineering", "architecture", "laravel", "medium"]
 [extra]
 source = "medium"
 original_url = "https://gabrielkoerich.medium.com/por-favor-n%C3%A3o-crie-abstra%C3%A7%C3%B5es-desnecess%C3%A1rias-96e97ad2a51b"
