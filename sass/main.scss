@@ -1227,3 +1227,23 @@ article h1 {
 h1 + .content {
     margin-top: 1.25rem;
 }
+
+/* Heading anchors from insert_anchor_links, shown on hover */
+.zola-anchor {
+    color: var(--text-secondary);
+    opacity: 0;
+    text-decoration: none;
+    margin-left: 0.25rem;
+    transition: opacity 0.15s;
+}
+
+.content :is(h2, h3, h4):hover .zola-anchor,
+.zola-anchor:focus {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .zola-anchor {
+        opacity: 0.5;
+    }
+}
