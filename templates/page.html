@@ -16,7 +16,7 @@
 {% else %}
 <article>
     {% if page.date %}
-    <span class="post-date">{{page.date | date(format="%B %d, %Y")}}{% if page.draft %} <span class="post-badge">Draft</span>{% elif day > today %} <span class="post-badge">Scheduled</span>{% endif %}</span>
+    <span class="post-date">{{page.date | date(format="%B %d, %Y")}} <span class="post-badge read-time">{{page.reading_time}} min read</span>{% if page.draft %} <span class="post-badge">Draft</span>{% elif day > today %} <span class="post-badge">Scheduled</span>{% endif %}</span>
     {% endif %}
     
     <h1>{{page.title}}</h1>

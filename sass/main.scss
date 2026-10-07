@@ -985,6 +985,12 @@ article h1 {
     vertical-align: middle;
 }
 
+.read-time {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
 /* Giscus comments under a post */
 .comments {
     margin-top: 3rem;
