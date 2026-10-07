@@ -1,6 +1,6 @@
 {# Posts dated after the build day stay hidden until a later build, the daily deploy publishes them, zola serve shows everything
    Outside the default language a post links its translation when it has one, otherwise the original with a language badge #}
-{% macro list(pages, mode="build", limit=0, tags=false, lang="en") %}
+{% macro list(pages, mode="build", limit=0, tags=false, lang="en", compact=false) %}
 {% set today = now() | date(format="%Y%m%d") | int %}
 {% set date_format = trans(key="date_short", lang=lang) %}
 {% set locale = trans(key="locale", lang=lang) %}
@@ -13,11 +13,18 @@
     {% set_global link = page %}
     {% for t in page.translations %}{% if t.lang == lang %}{% set_global link = t %}{% endif %}{% endfor %}
     <li>
+        {% if compact %}
+        <span class="post-date">{{page.date | date(format=date_format, locale=locale)}}</span>
+        <h3><a href="{{link.permalink}}"{% if link.lang != lang %} hreflang="{{ link.lang }}"{% endif %}>{{link.title}}</a></h3>
+        <span class="post-badge read-time">{{page.reading_time}} {{ trans(key="min_read", lang=lang) }}</span>
+        <span class="post-status">{% if link.lang != lang %} <span class="post-badge">{{ link.lang | upper }}</span>{% endif %}{% if page.draft %} <span class="post-badge">{{ trans(key="draft", lang=lang) }}</span>{% elif day > today %} <span class="post-badge">{{ trans(key="scheduled", lang=lang) }}</span>{% endif %}</span>
+        {% else %}
         <h3><a href="{{link.permalink}}"{% if link.lang != lang %} hreflang="{{ link.lang }}"{% endif %}>{{link.title}}</a></h3>
         <span class="post-date">{{page.date | date(format=date_format, locale=locale)}} <span class="post-badge read-time">{{page.reading_time}} {{ trans(key="min_read", lang=lang) }}</span>{% if link.lang != lang %} <span class="post-badge">{{ link.lang | upper }}</span>{% endif %}{% if page.draft %} <span class="post-badge">{{ trans(key="draft", lang=lang) }}</span>{% elif day > today %} <span class="post-badge">{{ trans(key="scheduled", lang=lang) }}</span>{% endif %}</span>
+        {% endif %}
         {% if tags and page.taxonomies.tags %}
         <div class="tags">
-            {% for tag in page.taxonomies.tags %}<a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag, lang=page.lang) }}">{{tag}}</a>{% endfor %}
+            {% for tag in page.taxonomies.tags %}{% if not compact or loop.index <= 3 %}<a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag, lang=page.lang) }}">{{tag}}</a>{% endif %}{% endfor %}
         </div>
         {% endif %}
     </li>

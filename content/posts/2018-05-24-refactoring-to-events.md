@@ -51,7 +51,7 @@ class WebhookController extends Controller
 
 *No, you would never in your entire life guess that I got this code from the [Cashier repository](https://raw.githubusercontent.com/laravel/cashier/7.0/src/Http/Controllers/WebhookController.php). Never.*
 
-That's fine, right? If we receive an event called *customer.subscription.deleted*, our method *handleCustomerSubscriptionDeleted* will handle it!
+That's fine, right? If we receive an event called `customer.subscription.deleted`, our method `handleCustomerSubscriptionDeleted` will handle it!
 
 But that's only fine while your application is starting and you don't need to handle much. What if we need to receive **all** Stripe methods? Should we take the same approach?
 

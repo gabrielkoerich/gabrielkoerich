@@ -14,6 +14,28 @@
     <p class="hero-sub">{{ section.extra.intro | markdown(inline=true) | safe }}</p>
 </section>
 
+{# Most posts exist only in English, so every language lists them all and the macro links translations #}
+{% set posts_section = get_section(path="posts/_index.md") %}{% set_global pages = posts_section.pages %}
+{# a post written only in this language has no English page to swap from, so add it #}
+{% if lang != config.default_language %}
+{% set lang_index = "posts/_index." ~ lang ~ ".md" %}
+{% set lang_section = get_section(path=lang_index) %}
+{% for p in lang_section.pages %}
+{% set_global has_default = false %}
+{% for t in p.translations %}{% if t.lang == config.default_language %}{% set_global has_default = true %}{% endif %}{% endfor %}
+{% if not has_default %}{% set_global pages = pages | concat(with=p) %}{% endif %}
+{% endfor %}
+{% set_global pages = pages | sort(attribute="date") | reverse %}
+{% endif %}
+{% if pages | length > 0 %}
+<div class="section-heading-inline">
+    <h2>{{ trans(key="latest_posts", lang=lang) }}</h2>
+    <a class="section-heading-link" href="{{ i18n::url(path='posts/_index.md', lang=lang) }}">{{ trans(key="all_posts", lang=lang) }}</a>
+</div>
+{{ posts_macros::list(pages=pages, mode=config.mode, limit=10, tags=true, lang=lang, compact=true) }}
+{% endif %}
+
+
 {# Pinned GitHub Repositories #}
 {% if github_pinned and github_pinned | length > 0 %}
     {% set own_repos = [] %}
@@ -72,27 +94,6 @@
     </li>
     {% endfor %}
 </ul>
-{% endif %}
-
-{# Most posts exist only in English, so every language lists them all and the macro links translations #}
-{% set posts_section = get_section(path="posts/_index.md") %}{% set_global pages = posts_section.pages %}
-{# a post written only in this language has no English page to swap from, so add it #}
-{% if lang != config.default_language %}
-{% set lang_index = "posts/_index." ~ lang ~ ".md" %}
-{% set lang_section = get_section(path=lang_index) %}
-{% for p in lang_section.pages %}
-{% set_global has_default = false %}
-{% for t in p.translations %}{% if t.lang == config.default_language %}{% set_global has_default = true %}{% endif %}{% endfor %}
-{% if not has_default %}{% set_global pages = pages | concat(with=p) %}{% endif %}
-{% endfor %}
-{% set_global pages = pages | sort(attribute="date") | reverse %}
-{% endif %}
-{% if pages | length > 0 %}
-<div class="section-heading-inline">
-    <h2>{{ trans(key="latest_posts", lang=lang) }}</h2>
-    <a class="section-heading-link" href="{{ i18n::url(path='posts/_index.md', lang=lang) }}">{{ trans(key="all_posts", lang=lang) }}</a>
-</div>
-{{ posts_macros::list(pages=pages, mode=config.mode, limit=5, tags=true, lang=lang) }}
 {% endif %}
 
 {% endblock content %}

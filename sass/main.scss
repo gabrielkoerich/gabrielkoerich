@@ -402,6 +402,81 @@ li {
     padding: 1rem 0;
 }
 
+/* Home list: date and title on one row, tags under the title */
+.section-heading-inline + #posts li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.5rem;
+}
+
+.section-heading-inline + #posts .post-date {
+    display: inline;
+    margin: 0;
+    width: 5.75rem;
+    white-space: nowrap;
+}
+
+.section-heading-inline + #posts h3 {
+    font-weight: 500;
+}
+
+.section-heading-inline + #posts .post-status {
+    margin-left: auto;
+}
+
+.section-heading-inline + #posts .tags {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    gap: 0.35rem;
+    margin: 0.15rem 0 0;
+    padding-left: 6.25rem;
+}
+
+.section-heading-inline + #posts .tag {
+    margin-right: 0;
+}
+
+/* Phones: date and status share the first row, the break pushes the title to the next */
+@media (max-width: 600px) {
+    .section-heading-inline + #posts li {
+        row-gap: 0;
+    }
+
+    .section-heading-inline + #posts .post-date {
+        order: 1;
+    }
+
+    .section-heading-inline + #posts .post-status {
+        order: 2;
+    }
+
+    .section-heading-inline + #posts li::before {
+        content: "";
+        flex-basis: 100%;
+        order: 3;
+    }
+
+    .section-heading-inline + #posts h3 {
+        order: 4;
+        margin-top: 0.15rem;
+    }
+
+    .section-heading-inline + #posts .read-time {
+        order: 5;
+    }
+
+    .section-heading-inline + #posts .tags {
+        order: 6;
+        margin-top: 0.4rem;
+    }
+
+    .section-heading-inline + #posts .tags {
+        padding-left: 0;
+    }
+}
+
 #posts h3 a:hover {
     color: var(--accent-color);
 }
