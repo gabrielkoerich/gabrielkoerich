@@ -8,7 +8,7 @@ source = "medium"
 original_url = "https://gabrielkoerich.medium.com/refactoring-to-events-72cba6873d9c"
 +++
 
-I know, we're all used to seeing that kind of messy code with a lot of ifs and elses, right?
+I know, we're all used to seeing that kind of messy code with a lot of `ifs` and `elses`, right?
 
 But today we're going to try to change this a little bit.
 
