@@ -1,5 +1,5 @@
 {# The quote and link render without X's script, widgets.js upgrades it to the live card when it loads #}
-<blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+<blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-align="center">
     <p>{{ body | markdown(inline=true) | safe }}</p>
     {{ author }} <a href="{{ url }}">{{ date }}</a>
 </blockquote>
