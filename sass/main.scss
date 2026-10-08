@@ -431,11 +431,22 @@ li {
 
 .section-heading-inline + #posts .tags {
     display: flex;
-    flex-wrap: wrap;
     flex-basis: 100%;
     gap: 0.35rem;
     margin: 0.15rem 0 0;
     padding-left: 6.25rem;
+    /* One row only, extra tags scroll sideways with no visible scrollbar */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.section-heading-inline + #posts .tags::-webkit-scrollbar {
+    display: none;
+}
+
+.section-heading-inline + #posts .tags .tag {
+    flex-shrink: 0;
 }
 
 .section-heading-inline + #posts .tag {
@@ -1246,4 +1257,10 @@ h1 + .content {
     .zola-anchor {
         opacity: 0.5;
     }
+}
+
+/* X sets inline margins on embedded posts, so these need important */
+.twitter-tweet,
+.twitter-tweet-rendered {
+    margin: 2rem auto !important;
 }

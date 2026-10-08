@@ -9,5 +9,5 @@ pokos-build:
     docker build -t pokos:54963bf pokos
 
 # Prove and verify knowledge of a seed three times
-pokos:
+pokos: pokos-build
     for i in 1 2 3; do docker run --rm pokos:54963bf ./target/release/examples/gen_verify_pokos | grep -E "proving|verification_time|proof_bytes"; done

@@ -4,4 +4,4 @@ RUN git clone https://github.com/anza-xyz/cryptography /src \
     && git -C /src checkout "$COMMIT"
 WORKDIR /src
 RUN cargo build --release -p ed25519-pokos --example gen_verify_pokos
-CMD ["cargo", "run", "--release", "-q", "-p", "ed25519-pokos", "--example", "gen_verify_pokos"]
+CMD ["./target/release/examples/gen_verify_pokos"]

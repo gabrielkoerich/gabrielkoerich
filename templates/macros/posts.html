@@ -24,7 +24,7 @@
         {% endif %}
         {% if tags and page.taxonomies.tags %}
         <div class="tags">
-            {% for tag in page.taxonomies.tags %}{% if not compact or loop.index <= 3 %}<a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag, lang=page.lang) }}">{{tag}}</a>{% endif %}{% endfor %}
+            {% for tag in page.taxonomies.tags %}<a class="tag" href="{{ get_taxonomy_url(kind="tags", name=tag, lang=page.lang) }}">{{tag}}</a>{% endfor %}
         </div>
         {% endif %}
     </li>
