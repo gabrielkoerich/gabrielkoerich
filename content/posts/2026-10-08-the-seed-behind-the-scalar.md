@@ -1,5 +1,5 @@
 +++
-title = "The seed behind the scalar"
+title = "Is Ed25519 quantum resistant? Checking Solana's seed claim"
 date = 2026-10-08
 [taxonomies]
 tags = ["solana", "ethereum", "bitcoin", "cryptography", "quantum", "security"]
