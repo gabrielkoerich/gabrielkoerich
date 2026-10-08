@@ -1,0 +1,6 @@
+{# The quote and link render without X's script, widgets.js upgrades it to the live card when it loads #}
+<blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+    <p>{{ body | markdown(inline=true) | safe }}</p>
+    {{ author }} <a href="{{ url }}">{{ date }}</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

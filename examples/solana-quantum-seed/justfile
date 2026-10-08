@@ -1,0 +1,13 @@
+# Every tool runs in a container, nothing is installed on the host
+
+# Sign with only the Ed25519 scalar, verify with the cryptography library
+forge:
+    docker run --rm -v $PWD/forge:/w -w /w ghcr.io/astral-sh/uv:python3.13-bookworm-slim uv run --quiet forge.py
+
+# Build Anza's proof of knowledge of seed at the pinned commit
+pokos-build:
+    docker build -t pokos:54963bf pokos
+
+# Prove and verify knowledge of a seed three times
+pokos:
+    for i in 1 2 3; do docker run --rm pokos:54963bf ./target/release/examples/gen_verify_pokos | grep -E "proving|verification_time|proof_bytes"; done
