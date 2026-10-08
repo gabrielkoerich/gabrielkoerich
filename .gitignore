@@ -17,8 +17,14 @@ data/github-events.json
 
 .tools/
 
-# Draft examples and paused pages stay local
-drafts/examples/
-drafts/medium-pt/
-drafts/runbooks/
-drafts/pt/
+
+# Build output inside examples
+examples/**/target/
+examples/**/node_modules/
+examples/**/.terraform/
+examples/**/.terraform.lock.hcl
+examples/**/.encore/
+examples/**/encore.gen/
+
+# Private runbooks, kept out of the public repo
+content/runbooks/

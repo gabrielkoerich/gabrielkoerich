@@ -1,5 +1,7 @@
 # The URL the site will be built for
 base_url = "https://gabrielkoerich.com"
+# Kept in content but not built: paused Portuguese pages and private runbooks
+ignored_content = ["*.pt.md", "**/runbooks/**"]
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
@@ -67,15 +69,8 @@ comments = "Comments"
 cta_available = "Available for AI consulting"
 cta_topics = "coding agents, workflow automation, AI strategy."
 cta_book = "Book a 30-min call →"
-recent_work = "Recent work"
-recent_work_meta = "Auto-updated daily from GitHub. Public repos I've pushed to in the last ~3 months."
-pushed = "Pushed"
-today = "today"
-day_ago = "1 day ago"
-days_ago = "N days ago"
-now_footer = 'Inspired by <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now pages</a>. The "Recent work" section is regenerated daily from my GitHub activity. The rest is updated whenever something meaningful changes.'
 
-# Portuguese is off until it is rewritten, pages wait in drafts/pt/
+# Portuguese is off until it is rewritten
 # [languages.pt]
 # title = "Gabriel Koerich"
 # description = "Engenheiro de software sênior (15+ anos). DeFi em Solana e Rust, orquestração de agentes de IA e automação de workflows de engenharia. Disponível para consultoria em IA."
@@ -108,13 +103,6 @@ now_footer = 'Inspired by <a href="https://nownownow.com/about" target="_blank" 
 # cta_available = "Disponível para consultoria em IA"
 # cta_topics = "agentes de código, automação de workflows, estratégia de IA."
 # cta_book = "Agende uma conversa de 30 min →"
-# recent_work = "Trabalho recente"
-# recent_work_meta = "Atualizado todo dia a partir do GitHub. Repositórios públicos em que fiz push nos últimos 3 meses, mais ou menos."
-# pushed = "Último push"
-# today = "hoje"
-# day_ago = "há 1 dia"
-# days_ago = "há N dias"
-# now_footer = 'Inspirado nas <a href="https://nownownow.com/about" target="_blank" rel="noopener">páginas /now</a>. A seção "Trabalho recente" é gerada todo dia a partir da minha atividade no GitHub. O resto eu atualizo quando algo importante muda.'
 
 # Comments, the embed stays hidden until category_id is filled in
 [extra.giscus]

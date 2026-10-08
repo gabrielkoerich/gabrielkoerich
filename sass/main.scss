@@ -425,7 +425,8 @@ li {
     font-weight: 500;
 }
 
-.section-heading-inline + #posts .post-status {
+/* Read time and status sit at the right end of the title row */
+.section-heading-inline + #posts .read-time {
     margin-left: auto;
 }
 
@@ -465,6 +466,7 @@ li {
 
     .section-heading-inline + #posts .post-status {
         order: 2;
+        margin-left: auto;
     }
 
     .section-heading-inline + #posts li::before {

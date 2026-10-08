@@ -84,6 +84,9 @@ jobs:
       - name: Build site
         run: zola build
 
+      - name: Generate llms.txt
+        run: python3 scripts/build-llms-txt.py
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

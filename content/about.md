@@ -2,6 +2,8 @@
 title = "About"
 description = "Gabriel Koerich, software engineer. Solana DeFi at Lulo, founder of Bulldesk, and a heavy user of coding agents."
 template = "about.html"
+# /now was dropped, old links land here
+aliases = ["/now/"]
 +++
 
 I'm Gabriel Koerich, a software engineer from Brazil. I started coding at 13, and I have built production software for more than 15 years. I'm also the dad of a lovely daughter.
