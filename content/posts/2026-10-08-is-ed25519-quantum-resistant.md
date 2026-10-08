@@ -1,9 +1,12 @@
 +++
 title = "Is Ed25519 quantum resistant? Checking Solana's seed claim"
+description = "Breaking Ed25519 exposes the signing key, not the seed. Solana's seed claim holds, but the exposed key still signs, so Solana still needs a network upgrade."
 date = 2026-10-08
 aliases = ["/posts/the-seed-behind-the-scalar/"]
 [taxonomies]
 tags = ["solana", "ethereum", "bitcoin", "cryptography", "quantum", "security"]
+[extra]
+image = "/images/posts/is-ed25519-quantum-resistant.png"
 +++
 
 I was scrolling Twitter today and found this post:
