@@ -18,6 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/gh-pages'
+    # Commits new post cards back to main
+    permissions:
+      contents: write
     steps:
       - name: Checkout website repo
         uses: actions/checkout@v4
@@ -29,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests
+          pip install requests pillow
           # pip install feedparser
           # sudo apt-get update
           # sudo apt-get install -y translate-shell
@@ -80,6 +83,20 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
           python3 scripts/fetch-econ-events.py || echo "Econ events generation failed, continuing..."
+
+      # Pushes made with GITHUB_TOKEN do not trigger workflows, so this commit cannot loop
+      - name: Draw and commit post cards
+        if: github.event_name != 'pull_request'
+        continue-on-error: true
+        run: |
+          python3 scripts/build-og-cards.py
+          git add static/images/og
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Draw post cards"
+            git push
+          fi
 
       - name: Build site
         run: zola build

@@ -1,6 +1,7 @@
-"""Draw a 1200x630 card per post into static/images/og, `just og-cards` runs it and the PNGs are committed"""
+"""Draw a 1200x630 card per post into static/images/og, only missing ones unless run with --all"""
 
 import re
+import sys
 import tomllib
 from pathlib import Path
 
@@ -99,6 +100,10 @@ def main():
             continue
 
         slug = re.sub(r"^\d{4}-\d{2}-\d{2}[-_]", "", path.stem)
+        # CI draws only missing cards, so a different Pillow build does not rewrite committed ones
+        if (OUT / f"{slug}.png").exists() and "--all" not in sys.argv:
+            continue
+
         card(front).save(OUT / f"{slug}.png", optimize=True)
         count += 1
 

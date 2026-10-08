@@ -56,10 +56,10 @@ new-post:
     EOF
     echo "Created $FILE"
 
-# Draw a card per post into static/images/og, run after adding or retitling a post and commit the PNGs
+# Redraw every post card, CI draws missing ones and commits them, run this after retitling a post
 [group('posts')]
 og-cards:
-    uv run --quiet --with pillow scripts/build-og-cards.py
+    uv run --quiet --with pillow scripts/build-og-cards.py --all
 
 # The version CI deploys with. Newer zola dropped the `concat` filter the templates use, so
 # a local build on whatever Homebrew installed fails while the deploy is fine. Keep in step
