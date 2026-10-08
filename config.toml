@@ -9,6 +9,10 @@ compile_sass = true
 # No template uses a search index, and it would publish scheduled posts early
 build_search_index = false
 
+# Atom feed at /atom.xml, templates/atom.xml keeps scheduled posts out
+generate_feed = true
+feed_filename = "atom.xml"
+
 # The site title and description
 title = "Gabriel Koerich"
 description = "Senior software engineer (15+ years). Solana/Rust DeFi, AI agent orchestration, and engineering workflow automation. Available for AI consulting."
@@ -34,6 +38,7 @@ highlight_theme = "css"
 author = "Gabriel Koerich"
 linkedin = "https://linkedin.com/in/gabrielkoerich"
 github = "https://github.com/gabrielkoerich"
+x = "https://x.com/gabrielmkoerich"
 email = "gabriel@gabrielkoerich.com"
 og_image = "/og-image.png"
 booking_url = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0XOx4YybKnmnkqQXsaLp7zPI_C2fkaxfrYY29KgNYPJpiK1LDbXF_zY7BIHJK02bGOdA3YJb7p?gv=true"

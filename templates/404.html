@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% import "macros/i18n.html" as i18n %}
+
+{% block content %}
+<article>
+    <h1>{{ trans(key="not_found", lang=lang) }}</h1>
+    <p><a href="{{ i18n::url(path='_index.md', lang=lang) }}">{{ trans(key="back_home", lang=lang) }}</a></p>
+</article>
+{% endblock content %}
