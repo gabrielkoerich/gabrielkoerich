@@ -89,7 +89,7 @@ So every card importer overrides the comparison and also requires the descriptio
 
 ## Running it every day
 
-All of this used to be a monthly evening with coffee. Now [orch](https://github.com/gabrielkoerich/orch), the tool I built to run coding agents on a schedule, does it every morning at 8.
+All of this used to be a monthly evening with coffee. Now [orch](@/posts/2026-07-05-orchestrating-agents-for-humans.md), the tool I built to run coding agents on a schedule, does it every morning at 8.
 
 The job is a markdown prompt. It tells an agent to read the config, download new statements for every automated account, run the close pipeline, run `bean-check`, archive the files, and send me a short Telegram message with what came in and what is behind. The agent follows a skill file that holds everything I learned about the importers, so it does not have to rediscover the date rules or the dedup bugs each time.
 
