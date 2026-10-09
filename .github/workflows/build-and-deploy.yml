@@ -141,3 +141,15 @@ jobs:
             --data '{"purge_everything":true}')
           echo "$response"
           echo "$response" | grep -q '"success":true' || echo "::warning::Cloudflare cache purge failed"
+
+      - name: Checkout for IndexNow
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            static
+            scripts
+
+      # Tells Bing and other IndexNow engines about pages changed today, Google does not use IndexNow
+      - name: Submit changed URLs to IndexNow
+        continue-on-error: true
+        run: python3 scripts/indexnow.py
