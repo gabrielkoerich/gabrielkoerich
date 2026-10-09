@@ -3,6 +3,7 @@
 import re
 import sys
 import tomllib
+from datetime import date
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -97,6 +98,10 @@ def main():
 
         front = tomllib.loads(path.read_text().split("+++", 2)[1])
         if front.get("draft") or not front.get("date") or front.get("extra", {}).get("image"):
+            continue
+
+        # A card shows the title, so a post that reached the public repo early must not get one before its date
+        if front["date"] > date.today():
             continue
 
         slug = re.sub(r"^\d{4}-\d{2}-\d{2}[-_]", "", path.stem)

@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+"""Refuse to commit a post dated after today, or its card, so an unpublished post never reaches the public repo"""
+
+import os
+import re
+import subprocess
+import sys
+from datetime import date
+from pathlib import Path
+
+if os.environ.get("ALLOW_FUTURE_POSTS") == "1":
+    sys.exit(0)
+
+today = date.today().isoformat()
+staged = subprocess.run(["git", "diff", "--cached", "--name-only", "--diff-filter=AM"], capture_output=True, text=True).stdout.split()
+
+
+def post_date(text):
+    m = re.search(r"^date = (\d{4}-\d{2}-\d{2})", text, re.M)
+    return m.group(1) if m else None
+
+
+bad = []
+for path in staged:
+    if re.fullmatch(r"content/posts/[^/]+\.md", path):
+        day = post_date(subprocess.run(["git", "show", f":{path}"], capture_output=True, text=True).stdout)
+        if day and day > today:
+            bad.append(f"{path} is dated {day}")
+
+    card = re.fullmatch(r"static/images/og/(.+)\.png", path)
+    if card:
+        for post in Path("content/posts").glob(f"*-{card.group(1)}.md"):
+            day = post_date(post.read_text())
+            if day and day > today:
+                bad.append(f"{path} is the card of {post.name}, dated {day}")
+
+if bad:
+    print("Refusing to commit unpublished posts, the repo is public:", file=sys.stderr)
+    for line in bad:
+        print(f"  {line}", file=sys.stderr)
+
+    print("Unstage them with `git restore --staged <path>`, or commit anyway with ALLOW_FUTURE_POSTS=1", file=sys.stderr)
+    sys.exit(1)

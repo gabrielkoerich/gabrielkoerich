@@ -52,7 +52,7 @@ def main():
             continue
 
         slug = re.sub(r"^\d{4}-\d{2}-\d{2}[-_]", "", path.stem)
-        posts.append((day, front["title"], f"{base}/posts/{slug}/", front.get("description") or summary(body)))
+        posts.append((day, front["title"], f"{base}/posts/{slug}.md", front.get("description") or summary(body)))
 
     posts.sort(reverse=True)
 
@@ -62,7 +62,9 @@ def main():
     for name in PAGES:
         front, _ = read(ROOT / "content" / name)
         title = front.get("title") or "CV"
-        lines.append(f"- [{title}]({base}/{Path(name).stem}/): {front.get('description', '')}".rstrip(": "))
+        # build-markdown.py writes copies of these pages, consulting is rendered from template fields so it stays HTML
+        url = f"{base}/{Path(name).stem}" + (".md" if name in ("about.md", "cv.md") else "/")
+        lines.append(f"- [{title}]({url}): {front.get('description', '')}".rstrip(": "))
 
     lines += ["", "## Posts", ""]
     lines += [f"- [{t}]({u}): {d}" for day, t, u, d in posts if day.year >= OPTIONAL_BEFORE]

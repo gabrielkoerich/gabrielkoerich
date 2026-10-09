@@ -57,6 +57,10 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":{{ config.title | json_encode | safe }},"url":"{{ config.base_url | safe }}/"},{"@type":"Person","name":{{ config.extra.author | json_encode | safe }},"url":"{{ about_url | safe }}","jobTitle":"Senior Software Engineer","sameAs":{{ same_as | json_encode | safe }}}]}</script>
     {% endif %}
     <link rel="alternate" type="application/atom+xml" title="{{ config.title }}" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
+    {# scripts/build-markdown.py writes these copies after zola build #}
+    {% set_global md_link = here == "/about/" or here == "/cv/" or here == "/cv-summary/" %}
+    {% if is_post %}{% set day_n = page.date | date(format="%Y%m%d") | int %}{% set today_n = now() | date(format="%Y%m%d") | int %}{% if day_n <= today_n %}{% set_global md_link = true %}{% endif %}{% endif %}
+    {% if md_link %}<link rel="alternate" type="text/markdown" href="{{ page.permalink | trim_end_matches(pat='/') }}.md">{% endif %}
     <link rel="icon" type="image/svg+xml" href="{{ get_url(path='favicon.svg', cachebust=true) }}">
 
     <link rel="canonical" href="{{ current_url | default(value=config.base_url) | safe }}">
