@@ -28,3 +28,4 @@ examples/**/encore.gen/
 
 # Private runbooks, kept out of the public repo
 content/runbooks/
+content/docs/

@@ -1,7 +1,7 @@
 # The URL the site will be built for
 base_url = "https://gabrielkoerich.com"
-# Kept in content but not built: paused Portuguese pages and private runbooks
-ignored_content = ["*.pt.md", "**/runbooks/**"]
+# Kept in content but not built: paused Portuguese pages, private runbooks and docs
+ignored_content = ["*.pt.md", "**/runbooks/**", "**/docs/**"]
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true

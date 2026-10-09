@@ -8,7 +8,7 @@ aliases = ["/now/"]
 
 I'm Gabriel Koerich, a software engineer from Brazil. I started coding at 13, and I have built production software for more than 15 years. I'm also the dad of a lovely daughter.
 
-I studied finance, not computer science. In 2013 I founded Algorit, a small software house that built custom web applications for clients. In 2015 I founded Bulldesk, a marketing automation and CRM platform, the first in Brazil to put both in one product. I built most of it myself, ran a team of developers, and handled the infrastructure, the product and the finances. I exited in 2021.
+I studied business administration with a focus on finance. In 2013 I founded Algorit, a small software house that built custom web applications for clients. In 2015 I founded Bulldesk, a marketing automation and CRM platform, the first in Brazil to put both in one product. I built most of it myself, ran a team of developers, and handled the infrastructure, the product and the finances. I exited in 2021.
 
 After Bulldesk I wanted to learn something new, completely different from what I had been doing. I wanted to work close to finance and learn new languages, and that is how I found Rust and Solana. I started as a freelancer, building DeFi smart contracts, dapps and SDKs, and learning the whole process and a new paradigm. Since 2022 I have been at [Lulo](https://lulo.fi), where I architect the DeFi protocol on Solana and EVM.
 
