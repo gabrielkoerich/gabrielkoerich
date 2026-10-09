@@ -61,7 +61,9 @@
     {% set_global md_link = here == "/about/" or here == "/cv/" or here == "/cv-summary/" %}
     {% if is_post %}{% set day_n = page.date | date(format="%Y%m%d") | int %}{% set today_n = now() | date(format="%Y%m%d") | int %}{% if day_n <= today_n %}{% set_global md_link = true %}{% endif %}{% endif %}
     {% if md_link %}<link rel="alternate" type="text/markdown" href="{{ page.permalink | trim_end_matches(pat='/') }}.md">{% endif %}
-    <link rel="icon" type="image/svg+xml" href="{{ get_url(path='favicon.svg', cachebust=true) }}">
+    <link rel="icon" href="{{ get_url(path='favicon.ico', cachebust=true) }}" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path='favicon-32x32.png', cachebust=true) }}">
+    <link rel="apple-touch-icon" href="{{ get_url(path='apple-touch-icon.png', cachebust=true) }}">
 
     <link rel="canonical" href="{{ current_url | default(value=config.base_url) | safe }}">
     {# The current page counts as one of its translations, so more than one means an alternate exists #}
