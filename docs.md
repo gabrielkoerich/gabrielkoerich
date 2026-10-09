@@ -29,7 +29,6 @@ just deploy
 │   ├── cv.md            # CV page
 │   └── posts/           # Blog posts
 ├── templates/           # HTML templates
-├── sass/               # Stylesheets (dark theme)
 └── static/             # Static assets
 ```
 
