@@ -25,7 +25,7 @@ Today I call upon the blockchain industry to calmly begin planning for "bunker m
 
 Creech's argument is that Solana does not need a bunker. Ed25519 derives every signing key by hashing a secret seed. Breaking the curve exposes the key, not the seed, so owners could later prove they know the seed and move to a safe scheme.
 
-Both posts are about the same question: what exactly does an attacker get when the curve falls, and what is left for the owner? I read the papers, ran the math, and built Anza's proof of concept to find out. The examples run in Docker: [examples/solana-quantum-seed](https://github.com/gabrielkoerich/gabrielkoerich/tree/main/examples/solana-quantum-seed).
+Both posts are about the same question: what exactly does an attacker get when the curve falls, and what is left for the owner? I read the papers, ran the math, and built Anza's proof of concept to find out. The examples run in Docker: [examples/is-ed25519-quantum-resistant](https://github.com/gabrielkoerich/gabrielkoerich/tree/main/examples/is-ed25519-quantum-resistant).
 
 ## What breaks, and how soon
 
@@ -182,7 +182,7 @@ The other chains are at a similar stage. Ethereum's [roadmap](https://ethereum.o
 
 Whether Solana is safe depends on the rest landing before a capable quantum computer does. Anza puts that risk as almost negligible within two to three years and possible within five, which gives Solana a few years to specify and ship the migration.
 
-If you work on any of these migrations, I would like to know how you plan to handle dormant accounts. The scripts are at [examples/solana-quantum-seed](https://github.com/gabrielkoerich/gabrielkoerich/tree/main/examples/solana-quantum-seed).
+If you work on any of these migrations, I would like to know how you plan to handle dormant accounts. The scripts are at [examples/is-ed25519-quantum-resistant](https://github.com/gabrielkoerich/gabrielkoerich/tree/main/examples/is-ed25519-quantum-resistant).
 
 ## Papers
 
