@@ -34,7 +34,7 @@ I still use two of them, but they were built for people. What changed is that th
 
 ## What I built
 
-[passbox](https://passbox.gabrielkoerich.com) is a password store where a fingerprint releases one secret into one process.
+[passbox](https://passbox.gabrielkoerich.com) is a password store where a fingerprint releases one or more secrets into one process.
 
 ```bash
 passbox exec --env GITHUB_TOKEN=github/token -- gh api /user
@@ -95,3 +95,7 @@ Source and docs: [passbox.gabrielkoerich.com](https://passbox.gabrielkoerich.com
 - From [v0.13.12](https://github.com/gabrielkoerich/passbox/releases/tag/v0.13.12) to v0.13.42, passbox kept a plaintext list of entry names at `~/.passbox/names` so that `ls` needed no key. It never synced, but any process running as the user could read it, which broke the promise above that names live only inside the ciphertext. [v0.13.43](https://github.com/gabrielkoerich/passbox/releases/tag/v0.13.43) removed it ([72e46cd](https://github.com/gabrielkoerich/passbox/commit/72e46cd)), so listing now needs approval and is audited like a read.
 - [v0.13.44](https://github.com/gabrielkoerich/passbox/releases/tag/v0.13.44) also hardened the broker: decrypted secrets are wiped from memory after use, it refuses a debugger, and a crash writes no core dump ([ff0b994](https://github.com/gabrielkoerich/passbox/commit/ff0b994)).
 - The 1Password paragraph said there is no "this one secret, for this one process". `op run` does inject secrets into a single process, so I corrected it.
+
+**Corrections, 2026-10-12.**
+
+- I wrote that a fingerprint releases one secret. A process can ask for several and approve them with one prompt that lists them all, and it still cannot open any secret it did not ask for.

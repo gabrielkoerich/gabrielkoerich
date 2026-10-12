@@ -45,7 +45,7 @@ The cost is that a change goes through a compile and a release before the servic
 
 **The router picks a complexity.** An LLM call classifies each task as simple, medium or complex. A table in the config maps each level to a model per agent, so `complex` means Opus on Claude and the strongest Codex model on Codex. Labels like `agent:codex` or `complexity:simple` override it. Changing models is a config edit. A model list can also hold `opencode:free`, which orch expands at startup to every free model that `opencode models` returns. So far 1,785 runs have used 13 different free models, about one run in seven, at no cost.
 
-**A different agent reviews.** When a PR is open, orch picks a reviewer that is not the agent that wrote the code and not one that already reviewed this task. The reviewer reads the diff and returns approve, request changes, or reject. Changes go back to the same agent, in the same worktree, on the same PR. After two review cycles the task blocks and waits for me.
+**A different agent reviews.** When a PR is open, orch picks a reviewer that is not the agent that wrote the code and not one that already reviewed this task. The reviewer reads the diff and returns approve or request changes. Changes go back to the same agent, in the same worktree, on the same PR. After two review cycles the task blocks and waits for me.
 
 **Context is built for every run.** Before an agent starts, orch assembles its prompt from the issue and its comments, the repo's `CLAUDE.md`, `AGENTS.md` and `README.md`, the file tree, the parent task if there is one, any review feedback, selected skills, and a memory of the last three attempts: what each agent tried, what it learned, and what failed. A retry starts where the last one stopped.
 
@@ -112,3 +112,9 @@ I am also thinking about a GUI. Today I follow orch through the CLI, tmux, Teleg
 If you run coding agents on your own projects, try orch and tell me what breaks.
 
 If you want to learn more and get involved, here are the [docs](https://orch.gabrielkoerich.com/), with daily updates created automatically by orch itself, [like this one](https://orch.gabrielkoerich.com/posts/daily-review-2026-07-05/), and the [source](https://github.com/gabrielkoerich/orch).
+
+---
+
+**Corrections, 2026-10-12.**
+
+- I wrote that the reviewer can return approve, request changes or reject. orch only has approve and request changes.
