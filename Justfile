@@ -119,12 +119,22 @@ md-to-pdf from_md to_pdf:
     pandoc {{ from_md }} -o {{ to_pdf }} \
       --from markdown+hard_line_breaks \
       --pdf-engine=xelatex \
-      -V geometry:top=1.25in \
-      -V geometry:bottom=0.75in
+      -V colorlinks=true \
+      -V urlcolor=blue \
+      -V linkcolor=blue \
+      -V geometry:top=1in \
+      -V geometry:bottom=0.75in \
+      -V geometry:left=1in \
+      -V geometry:right=1in
+
+# _build-pdf-cv:
+#     { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
+#     just md-to-pdf /tmp/cv-temp.md static/gabrielkoerich-cv.pdf
 
 _build-pdf-cv:
-    { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
+    { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
     just md-to-pdf /tmp/cv-temp.md static/gabrielkoerich-cv.pdf
+
 
 _build-pdf-summarized-cv:
     { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv-summary.md | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md

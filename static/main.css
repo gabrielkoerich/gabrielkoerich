@@ -120,6 +120,19 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Links inside running text need an underline, the accent alone is too close to the body color */
+.content :is(p, li, td, blockquote) a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
+}
+
+.content :is(p, li, td, blockquote) a:hover {
+    opacity: 1;
+    text-decoration-color: var(--accent-color);
+}
+
 /* Header */
 header {
     display: flex;

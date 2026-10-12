@@ -7,40 +7,34 @@ on:
     paths:
       - content/cv.md
       - content/cv-summary.md
+      - justfile
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Commits the PDFs back to main
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Pandoc & wkhtmltopdf
-        run: sudo apt-get install -y pandoc wkhtmltopdf
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
 
-      - name: Build CV PDF
-        run: |
-          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv.md | sed '/^## Notable Projects/,$d' | sed '/<!-- pdf:hide -->/,/<!-- \/pdf:hide -->/d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
-          pandoc /tmp/cv-temp.md -o static/gabrielkoerich-cv.pdf \
-            --from markdown+hard_line_breaks \
-            --pdf-engine=wkhtmltopdf \
-            -V margin-top=15mm \
-            -V margin-bottom=15mm \
-            -V margin-left=18mm \
-            -V margin-right=18mm
+      - name: Install Pandoc & XeLaTeX
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq pandoc texlive-xetex texlive-fonts-recommended lmodern
 
-      - name: Build CV Summary PDF
-        run: |
-          { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv-summary.md | sed '/<!-- pdf:hide -->/,/<!-- \/pdf:hide -->/d' | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
-          pandoc /tmp/cv-temp.md -o static/gabrielkoerich-cv-summary.pdf \
-            --from markdown+hard_line_breaks \
-            --pdf-engine=wkhtmltopdf \
-            -V margin-top=15mm \
-            -V margin-bottom=15mm \
-            -V margin-left=18mm \
-            -V margin-right=18mm
+      # Same recipe as local builds, so the published PDF matches what `just build-cv` shows
+      - name: Build CV PDFs
+        run: just build-cv
 
+      # act sets ACT, so a local run never pushes
       - name: Commit & Push changes
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: "Update CV PDF"
+        if: ${{ !env.ACT }}
+        run: |
+          git add static/gabrielkoerich-cv.pdf static/gabrielkoerich-cv-summary.pdf
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Update CV PDF"
+            git push
+          fi
