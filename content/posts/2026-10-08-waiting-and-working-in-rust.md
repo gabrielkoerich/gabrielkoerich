@@ -90,10 +90,11 @@ use tokio::sync::oneshot;
 
 async fn hash(data: Vec<u8>) -> [u8; 32] {
     let (tx, rx) = oneshot::channel();
+    // A panic in here aborts the process unless the pool sets a panic_handler
     rayon::spawn(move || {
         let _ = tx.send(blake3::hash(&data).into());
     });
-    rx.await.expect("hash task panicked")
+    rx.await.expect("hash task dropped the sender")
 }
 ```
 
@@ -162,7 +163,7 @@ The cost is the reason Tokio steals work. Without stealing, one hot core stays h
 
 An on-chain Solana program has none of this. It is [single threaded](https://solana.com/docs/programs/limitations), it cannot spawn, and it has no async. Parallelism happens one level up. [Every transaction declares every account](https://solana.com/news/sealevel---parallel-processing-thousands-of-smart-contracts) it will read or write, and the runtime runs transactions with no overlapping writes at the same time. The program is a function. The validator decides what runs in parallel.
 
-The validator had to learn the same lesson inside its own scheduler. [Before Agave 1.18](https://www.anza.xyz/blog/introducing-the-central-scheduler-an-optional-feature-of-agave-v1-18), four threads pulled non-vote transactions independently and often took conflicting locks, because none of them knew what the others were doing. The fix was a single scheduler thread that sees every transaction and routes each one to a worker that will not conflict.
+The validator had to learn the same lesson inside its own scheduler. Until Agave 2.0, four threads pulled non-vote transactions independently and often took conflicting locks, because none of them knew what the others were doing. The fix, [opt-in in 1.18](https://www.anza.xyz/blog/introducing-the-central-scheduler-an-optional-feature-of-agave-v1-18) and the default from 2.0, was a single scheduler thread that sees every transaction and routes each one to a worker that will not conflict.
 
 Off chain, the same split applies to a bot. RPC calls, websocket subscriptions and keeping state in sync are waiting, so they go on Tokio. Building and signing a transaction when an opportunity appears is reacting, so it gets its own thread and a ring buffer between them.
 
@@ -197,3 +198,10 @@ On a microcontroller the async model fits better than anywhere else. [Embassy](h
 **Pinning needs control of the machine.** Kernel parameters, isolated cores and a known CPU. A cloud VM or a Mac gives you less of that.
 
 **Benchmarks lie by machine.** Everything above ran on one laptop, with other programs open. The ratios hold more than the absolute numbers. Measure on the target.
+
+---
+
+**Corrections, 2026-10-12.**
+
+- The oneshot example implied a panic in the Rayon task would reach `rx`. By default it aborts the process, so the snippet now says so.
+- The central scheduler was opt-in in Agave 1.18 and became the default in 2.0. I had dated the change to 1.18.

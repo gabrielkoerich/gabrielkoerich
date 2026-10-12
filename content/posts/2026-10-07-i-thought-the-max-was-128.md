@@ -113,7 +113,7 @@ pub fn get_transaction_account_lock_limit(&self) -> usize {
 
 Source: [Agave, `runtime/src/bank.rs`](https://github.com/anza-xyz/agave/blob/8063bd2f7ea538f9d532ca958c882f8caa7fa28d/runtime/src/bank.rs#L3849-L3857)
 
-The gate is [`increase_tx_account_lock_limit`](https://github.com/solana-labs/solana/issues/27241), "increase tx account lock limit to 128". It was activated on devnet and testnet. On mainnet it was never activated:
+The gate is [`increase_tx_account_lock_limit`](https://github.com/solana-labs/solana/issues/27241), "increase tx account lock limit to 128". Its tracking issue lists activations on devnet and testnet, but neither cluster has the feature account today. On mainnet it was never activated:
 
 ```
 $ solana feature status 9LZdXeKGeBV6hRLdxS1rHbHoEUsKqesCC2ZAPTPKJAbK -um
@@ -122,7 +122,7 @@ $ solana feature status 9LZdXeKGeBV6hRLdxS1rHbHoEUsKqesCC2ZAPTPKJAbK -um
 
 [The Solana docs say it directly](https://solana.com/docs/core/transactions): max accounts per transaction is 64, and 128 only when that gate is activated, which it currently is not.
 
-At 64, the worst case ceiling is 11 + 7n ≤ 64, so 7 allocations. A cap of 10 needs up to 81. The compile time check passed because it compared against the wrong constant. It is only as good as the number on the right side, and that number was correct for devnet and wrong for mainnet.
+At 64, the worst case ceiling is 11 + 7n ≤ 64, so 7 allocations. A cap of 10 needs up to 81. The compile time check passed because it compared against the wrong constant. It is only as good as the number on the right side, and that number was wrong for every cluster I would deploy to.
 
 ## The lookup table did not change it
 
@@ -209,3 +209,9 @@ It is not solved yet, because the first transaction still has to value every leg
 The cost is known: every reserve total splits into reserved and available, and valuation, share supply checks, rebalance, swap based rebalance and moving liquidity between reserves all have to respect that split.
 
 The layout is ready for whatever comes out of it. The vault account keeps 20 allocation slots, so raising the active cap is one constant and no migration.
+
+---
+
+**Corrections, 2026-10-12.**
+
+- I wrote that the 128 account lock limit was active on devnet and testnet. Its tracking issue lists those activations, but neither cluster has the feature account today, so 64 is the limit there too.

@@ -83,7 +83,7 @@ When both get it wrong, I fix the category by hand. That is the other thing I st
 
 This took longer than everything else.
 
-The same money shows up in more than one place. A PIX between two of my banks appears in both statements. A bill gets downloaded twice. beangulp has a flag that compares new entries with the ledger and comments out duplicates, but by default it matches on amount and date with a 5% tolerance. Two purchases of the same price on the same day look like one.
+The same money shows up in more than one place. A PIX between two of my banks appears in both statements. A bill gets downloaded twice. beangulp has a flag that compares new entries with the ledger and comments out duplicates, but by default it only checks that amounts are within 5% and dates within two days. Two purchases of the same price on the same day look like one.
 
 So every card importer overrides the comparison and also requires the description to match. Transfers between my own accounts needed their own rule, restricted to the same pair of accounts, because a loan payment of R$ 3,500.00 should not match a PIX of R$ 3,500.00 just because the numbers are equal.
 
@@ -130,3 +130,9 @@ Two other passbox changes come with the move. Today the broker cannot tell which
 **Open source some importers.** The bank importers have nothing personal in them, because the categories live in a separate file. Few people use Beancount in Brazil, and each of them probably wrote their own parser for the same banks. The work before publishing is the test fixtures, which are my real statements today and need to become fake ones.
 
 If you keep your finances in plain text, especially with Brazilian banks, I would like to know how you handle the statements. And if you would use these importers, tell me, because that decides which ones I publish first.
+
+---
+
+**Corrections, 2026-10-12.**
+
+- The 5% tolerance in beangulp's duplicate check applies to amounts. Dates match within two days.

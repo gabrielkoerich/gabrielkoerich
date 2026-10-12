@@ -102,7 +102,7 @@ I built it at commit `54963bf` and ran the bundled example three times in Docker
 | 2 | 358 ms | 45 ms | 366,525 bytes |
 | 3 | 432 ms | 71 ms | 364,797 bytes |
 
-These numbers describe one machine proving and checking one proof, off chain. On a chain the cost is different. Every validator would verify every migration proof, and the proof has to reach the chain somehow: 365 KB is about 300 times today's 1,232-byte transaction limit and about 90 times the proposed 4,096 bytes. So a proof this size cannot ride in a normal transaction, and these runs do not answer how a migration would carry or verify proofs at network scale. The README also calls the proof envelope stable, but its size changed on every run here.
+These numbers describe one machine proving and checking one proof, off chain. On a chain the cost is different. Every validator would verify every migration proof, and the proof has to reach the chain somehow: 365 KB is about 90 times the 4,096-byte limit of v1 transactions and about 300 times the 1,232 bytes of legacy ones. So a proof this size cannot ride in a normal transaction, and these runs do not answer how a migration would carry or verify proofs at network scale. The README also calls the proof envelope stable, but its size changed on every run here.
 
 The README also states the limits of the design.
 
@@ -139,7 +139,7 @@ After the switch, accounts need a new signature scheme, and every candidate is b
 | ML-DSA-44 ([FIPS 204](https://csrc.nist.gov/pubs/fips/204/final)) | 1,312 bytes | 2,420 bytes | Lattices |
 | SLH-DSA-128s ([FIPS 205](https://csrc.nist.gov/pubs/fips/205/final)) | 32 bytes | 7,856 bytes | Hashes only |
 
-A Solana transaction is limited to 1,232 bytes today. Anza's post discusses Falcon, "the smallest of the three NIST schemes" and still "roughly 10 times larger" than Ed25519, and proposes indexing the new accounts by a hash of the public key. SIMD-0296 and SIMD-0385 would raise the transaction size to 4,096 bytes.
+A Solana transaction was limited to 1,232 bytes until September, when SIMD-0296 and SIMD-0385 raised it to 4,096 bytes with v1 transactions. Anza's post discusses Falcon, "the smallest of the three NIST schemes" and still "roughly 10 times larger" than Ed25519, and proposes indexing the new accounts by a hash of the public key.
 
 Drake goes further and wants to avoid structured math altogether, lattices included, and use only hash-based schemes like [SPHINCS+](https://eprint.iacr.org/2019/1086), which became SLH-DSA. Ethereum's draft roadmap at [strawmap.org](https://strawmap.org) already plans hash-based signatures for consensus, following [Hash-Based Multi-Signatures for Post-Quantum Ethereum](https://eprint.iacr.org/2025/055). The cost is in the table: 7,856 bytes per signature.
 
@@ -155,7 +155,7 @@ User accounts are not the only thing signed with Ed25519. Validator identity, go
 
 **One circuit per wallet type.** RFC 8032 keys, BIP39 with SLIP-0010, and any wallet with its own derivation each need their own proof, and each needs an audit.
 
-**Bigger transactions.** A post-quantum signature is ten to a hundred times the size of an Ed25519 signature, on a chain built around a 1,232-byte transaction.
+**Bigger transactions.** A post-quantum signature is ten to a hundred times the size of an Ed25519 signature, on a chain where a transaction tops out at 4,096 bytes.
 
 **Validators too.** Identity keys, gossip, TLS and votes all need new schemes in the same window.
 
@@ -169,7 +169,7 @@ Some of the pieces already exist:
 - An on-chain Falcon verifier that costs under 170k compute units, the reason the [Falcon syscall SIMD](https://github.com/solana-foundation/solana-improvement-documents/pull/461) was paused.
 - The Winternitz vault, usable today.
 - Anza's seed proof, as a proof of concept.
-- SIMD-0296 and SIMD-0385 for bigger transactions.
+- v1 transactions up to 4,096 bytes, live since September (SIMD-0296 and SIMD-0385).
 
 The pieces that make it safe do not:
 
@@ -197,3 +197,9 @@ If you work on any of these migrations, I would like to know how you plan to han
 - Baldimtsi, Chalkias, Roy, Sedaghat, [Post-Quantum Readiness in EdDSA Chains](https://eprint.iacr.org/2025/1368), 2025
 - Babbush, Zalcman, Gidney, Broughton, Khattar, Neven, Bergamaschi, Drake, Boneh, [Securing Elliptic Curve Cryptocurrencies against Quantum Vulnerabilities](https://arxiv.org/abs/2603.28846), 2026
 - Chevignard, Fouque, Schrottenloher, [Reducing the Number of Qubits in Quantum Discrete Logarithms on Elliptic Curves](https://eprint.iacr.org/2026/280), 2026
+
+---
+
+**Corrections, 2026-10-12.**
+
+- I wrote the 4,096-byte transaction size as a proposal. v1 transactions with that limit went live on mainnet on September 15, before this post, so I corrected the four places that said otherwise.

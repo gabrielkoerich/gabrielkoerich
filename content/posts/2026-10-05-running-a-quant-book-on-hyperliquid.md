@@ -50,9 +50,9 @@ I made this a hard rule after the alternative piled up. A one-off polars script 
 
 Parameter search runs through sweep profiles: a base config pinned to what runs live and a grid of what to vary. Each cell gets a hash, so a re-run overwrites instead of duplicating.
 
-The most important piece came last: an anchored walk-forward. Fit on 12 months, test on the next 6, step forward 6, repeat. Rank by the mean out-of-sample Sharpe and kill anything whose worst out-of-sample drawdown is too deep.
+The most important piece came last: a rolling walk-forward. Fit on 12 months, test on the next 6, step forward 6, repeat. Rank by the mean out-of-sample Sharpe and kill anything whose worst out-of-sample drawdown is too deep.
 
-I built it because of one strategy. Crypto carry, from a 2023 paper that reported a Sharpe of 6.45. My 2024 in-sample run showed Sharpe 2.45 and +36.7%. Over the full three years it returned −40% with a −53% drawdown, and the walk-forward mean out-of-sample Sharpe was −2.61. A single good year had carried the whole result.
+I built it because of one strategy. Crypto carry, a strategy from a 2023 paper that a 2025 replication put at a Sharpe of 6.45. My 2024 in-sample run showed Sharpe 2.45 and +36.7%. Over the full three years it returned −40% with a −53% drawdown, and the walk-forward mean out-of-sample Sharpe was −2.61. A single good year had carried the whole result.
 
 Here is what the backtests got wrong more than once:
 
@@ -114,7 +114,7 @@ Now every live path that reads a file checks the timestamp of its last row again
 
 Every position should carry a stop. An audit across 12 subaccounts found 20 positions with a stop and 33 without. One sleeve had piled up 221 orphan stop orders, left behind by positions closed some other way. A trailing stop failed to trail because the code read `trigger` and the field is `triggerPx`, which also skipped the guard that stops a stop from ever being loosened.
 
-The rules now: one stop per position, attached to the position, modified in place by order id, never stacked and never loosened. Most HIP-3 stocks are isolated-only at 10x, so liquidation sits around 9.5% from entry, and a volatility stop that widens to 10% sits past it. That one is still open.
+The rules now: one stop per position, attached to the position, modified in place by order id, never stacked and never loosened. Most HIP-3 stocks are isolated-only at 10x, so liquidation sits around 5% from entry, and a volatility stop that widens to 10% sits well past it. That one is still open.
 
 ### The config that lied
 
@@ -155,3 +155,11 @@ There are two places it could go. One is a small server at home, which I am alre
 **Open sourcing it.** I am thinking about it. Most of the hard parts have nothing to do with which strategy you run: an execution client that fixes six Nautilus bugs on Hyperliquid, one module for HIP-3 names, the sweep and walk-forward harness, the tilt monitor and the browser lock. Getting it there means cleaning out a lot of code that only makes sense on my machine.
 
 If you run Nautilus on Hyperliquid, or would use any of those parts, tell me. That will decide what I publish first.
+
+---
+
+**Corrections, 2026-10-12.**
+
+- Liquidation at 10x isolated sits around 5% from entry, not 9.5%: Hyperliquid's maintenance margin is half the initial margin at max leverage.
+- The 6.45 Sharpe comes from a 2025 replication, the 2023 paper is the source of the strategy.
+- The walk-forward moves its training window forward each step, which is a rolling walk-forward, so I stopped calling it anchored.
