@@ -1,0 +1,15 @@
+{
+  "name": "queues",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "queue": "bun queue.ts",
+    "emitter": "bun emitter.ts",
+    "retry": "bun retry.ts",
+    "check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.9.0"
+  }
+}
