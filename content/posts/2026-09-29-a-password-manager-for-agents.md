@@ -8,15 +8,13 @@ tags = ["ai", "agents", "security", "rust", "secrets-management", "mcp", "touch-
 
 I have twenty-three scheduled jobs that run coding agents against my finance project. They read API keys, an exchange signing key, a mail password. They got those from `pass`, which works like this: one GPG passphrase opens everything, the agent caches it, and from then on the agent can read every secret I own.
 
-That was fine when the one reading secrets was me. It stopped being fine when it became an agent whose transcript gets sent to a model provider.
+That was fine while I was the only one reading secrets. Now an agent reads them, and its transcript gets sent to a model provider.
 
 ## The problem
 
-Three things happen when an agent needs a secret.
+**An agent that needs one secret reads the whole store.** Nothing scopes a GPG passphrase to one file. Once the agent has it, `pass show anything` works. So "this job needs one API key" really means "this job can read everything I own".
 
-**It reads the whole store, not one entry.** Nothing scopes a GPG passphrase to one file. Once the agent has it, `pass show anything` works. So "this job needs one API key" really means "this job can read everything I own".
-
-**The value lands in the context.** `pass show api/key` prints to stdout, the agent captures stdout, and now the secret is in a transcript that gets logged, retried, and sent to a model. A `.env` file is the same problem with fewer steps. You cannot un-send it.
+**The value lands in the context.** `pass show api/key` prints to stdout, the agent captures stdout, and now the secret is in a transcript that gets logged, retried, and sent to a model, and you cannot un-send it. A `.env` file is the same problem with fewer steps.
 
 **Nobody can say what was read.** There is no record of which agent opened which secret at which time. When something leaks, the investigation starts at "well, it had access to everything".
 
@@ -32,7 +30,7 @@ I also found hardcoded passwords in my own repo while looking into this, which i
 
 **Vault** solves scoping properly and costs a server, a policy language, and an operator. For a laptop and a handful of scheduled jobs it is the wrong size. And you still end up with a token that, once leaked, opens what it was scoped to.
 
-None of these are bad, and I still use two of them. They were built for people. What changed is that the thing asking for a secret is now a program, and its memory is a transcript that goes somewhere else.
+I still use two of them, but they were built for people. What changed is that the thing asking for a secret is now a program, and its memory is a transcript that goes somewhere else.
 
 ## What I built
 
@@ -43,8 +41,6 @@ passbox exec --env GITHUB_TOKEN=github/token -- gh api /user
 ```
 
 macOS raises a Touch ID prompt naming the agent and the secret. The value goes from the broker into that child process. It is never in the agent's stdout, transcript, or tool result.
-
-Four properties follow from that:
 
 **Entry names live inside the ciphertext.** Files on disk are random ids, so the store leaks how many secrets you have and nothing else. No `github/token` in a filename or a commit subject.
 
@@ -78,7 +74,7 @@ One approval at launch, the value in the process environment, every child inheri
 
 **Lose the Mac and the secrets are gone**, unless you turned sync on. `pass` gets this right by default and passbox does not.
 
-**It is young and unreviewed.** Cross-implementation tests raise confidence. Python's `cryptography` opens what CryptoKit sealed, and the reference `age` CLI reads the store. Neither is an audit.
+**It is young and unreviewed.** Cross-implementation tests raise confidence. Python's `cryptography` opens what CryptoKit sealed, and the reference `age` CLI reads the store.
 
 ## Why bother
 

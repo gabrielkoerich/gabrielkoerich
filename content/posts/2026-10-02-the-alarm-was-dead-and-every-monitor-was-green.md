@@ -15,7 +15,7 @@ I spent a day rewiring part of it. By the end, the alarm had been unreachable fo
 
 ## Everything was green because I was checking the wrong thing
 
-The alarm monitor checked that port 9009 accepted a TCP connection. It did. All day. What it did not do was answer.
+The alarm monitor checked that port 9009 accepted a TCP connection. It did, all day, but it never answered.
 
 I found it by replaying the panel's own protocol by hand: connect, send the auth packet, read the reply. The connection succeeded and the panel returned zero bytes, then timed out. A wrong password gives you a rejection. Silence means the listener is up and the service behind it is dead. The network module had come back from a power cut with its TCP accept loop running and nothing behind it.
 

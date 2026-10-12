@@ -19,8 +19,6 @@ Each tool in Rust answers one of these well and the others badly. I measured the
 
 A Rust `async fn` compiles to a state machine. Each `.await` is a point where the function can stop and save its local variables into that state machine. The future does nothing on its own. An executor calls `poll` on it. The future either finishes, or registers a waker and returns `Pending`. When the socket has data or the timer fires, the waker puts the task back in the executor's queue, and the executor polls it again.
 
-Three properties follow.
-
 **It is cooperative.** The executor cannot interrupt a task. A task gives up the thread only at an `.await` that is not ready. Code between two awaits runs to completion, however long it takes.
 
 **It is cheap.** A task is a heap allocation the size of its state machine, not a thread with a stack. A thread in Rust gets a [2 MiB stack by default](https://doc.rust-lang.org/std/thread/index.html#stack-size).
@@ -125,7 +123,7 @@ I measured one way wake up latency three ways, sending one message at a time wit
 | thread blocked on `std::sync::mpsc` | 2.6 to 3 µs | 130 to 220 µs | 0.56 to 0.73 ms |
 | thread spinning on an atomic | 0.13 to 0.25 µs | 3.5 to 5.4 µs | 17 to 240 µs |
 
-The median tells you about throughput. The tail tells you about the one tick you missed. A parked thread or task cost microseconds to wake at the median and hundreds of microseconds in the tail. The likely cause is that the OS has to schedule the thread again, which I did not measure directly. A thread that never sleeps is already running when the message lands.
+The median tells you about throughput, the tail about the one tick you missed. A parked thread or task cost microseconds to wake at the median and hundreds of microseconds in the tail. The likely cause is that the OS has to schedule the thread again, which I did not measure directly. A thread that never sleeps is already running when the message lands.
 
 For a hot path that has to react, the design changes:
 
@@ -150,7 +148,7 @@ The other half is the operating system. A spinning thread is still preempted whe
 
 macOS cannot do this. Apple's affinity API [only expresses hints](https://developer.apple.com/library/archive/releasenotes/Performance/RN-AffinityAPI/), and on Apple Silicon [it is not supported at all](https://developer.apple.com/forums/thread/703361). That is why my spinning thread had a p99.9 anywhere from 17 to 240 µs: a median of 125 ns, and every so often the kernel took the core away. Measure latency work on the hardware and OS it will run on.
 
-The [LMAX Disruptor](https://lmax-exchange.github.io/disruptor/user-guide/index.html), a Java library built for an exchange, names the trade off directly. Its default wait strategy blocks and saves CPU. Its busy spin strategy is the fastest, and they say to use it only when there are fewer handler threads than physical cores. Spinning only works if every spinner has a core of its own.
+The [LMAX Disruptor](https://lmax-exchange.github.io/disruptor/user-guide/index.html), a Java library built for an exchange, names the trade off directly. Its default wait strategy blocks and saves CPU. Its busy spin strategy is the fastest, and they say to use it only when there are fewer handler threads than physical cores.
 
 ## Thread per core
 
@@ -164,7 +162,7 @@ The cost is the reason Tokio steals work. Without stealing, one hot core stays h
 
 An on-chain Solana program has none of this. It is [single threaded](https://solana.com/docs/programs/limitations), it cannot spawn, and it has no async. Parallelism happens one level up. [Every transaction declares every account](https://solana.com/news/sealevel---parallel-processing-thousands-of-smart-contracts) it will read or write, and the runtime runs transactions with no overlapping writes at the same time. The program is a function. The validator decides what runs in parallel.
 
-The validator had to learn the same lesson inside its own scheduler. [Before Agave 1.18](https://www.anza.xyz/blog/introducing-the-central-scheduler-an-optional-feature-of-agave-v1-18), four threads pulled non-vote transactions independently and often took conflicting locks, because none of them knew what the others were doing. The fix was a single scheduler thread that sees every transaction and routes each one to a worker that will not conflict. Deciding who touches what before the work starts beat letting threads find out through locks.
+The validator had to learn the same lesson inside its own scheduler. [Before Agave 1.18](https://www.anza.xyz/blog/introducing-the-central-scheduler-an-optional-feature-of-agave-v1-18), four threads pulled non-vote transactions independently and often took conflicting locks, because none of them knew what the others were doing. The fix was a single scheduler thread that sees every transaction and routes each one to a worker that will not conflict.
 
 Off chain, the same split applies to a bot. RPC calls, websocket subscriptions and keeping state in sync are waiting, so they go on Tokio. Building and signing a transaction when an opportunity appears is reacting, so it gets its own thread and a ring buffer between them.
 

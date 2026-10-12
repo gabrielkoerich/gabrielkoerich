@@ -23,7 +23,7 @@ I tried the usual options first.
 
 Beancount is double entry accounting in a text file. Every transaction has to balance, and I can assert that an account holds an exact amount on a given day. If the numbers do not match the bank, `bean-check` fails. It lives in git, so every change has a diff. And because it is text, I can query it with SQL, read it with [Fava](https://beancount.github.io/fava/), and hand it to an agent.
 
-The catch is that Beancount gives you the format and nothing else. Brazilian banks do not give individuals an API. They give you a PDF by email.
+The catch is that Beancount gives you the format and nothing else. Brazilian banks do not give individuals an API, they give you a PDF by email.
 
 ## Getting the statements
 
@@ -121,7 +121,7 @@ I can ask the ledger anything. How much a loan really costs after fees and insur
 
 **Get it off my Mac.** Everything runs on my laptop today. If the lid is closed at 8, the job does not run. I want the daily job on a small server at home. The Mac stays in the picture for two things that only exist there: Mail.app and the key that holds my secrets.
 
-**Teach passbox to fetch mail.** I wrote [passbox](@/posts/2026-09-29-a-password-manager-for-agents.md) so agents can use a secret without seeing it, and it already works across machines: a Linux box asks my Mac over Tailscale, and a fingerprint releases the secret. The price API keys already come from passbox, and the rest of the pipeline's secrets, like the passwords that open the bank PDFs, are moving there now. The server will also need my statements, so passbox needs a Mail tool. The job asks the Mac to search a mailbox, and the Mac sends back the PDF attachments and nothing else from the inbox. The search has to be asynchronous, because the iCloud search already takes more than 120 seconds. The job starts it, gets a handle, and checks back later. This tool cannot ask for a fingerprint, because nobody is awake to give one when the job runs. So it is limited by what it returns instead.
+**Teach passbox to fetch mail.** I wrote [passbox](@/posts/2026-09-29-a-password-manager-for-agents.md) so agents can use a secret without seeing it, and it already works across machines: a Linux box asks my Mac over Tailscale, and a fingerprint releases the secret. The price API keys already come from passbox, and the rest of the pipeline's secrets, like the passwords that open the bank PDFs, are moving there now. The server will also need my statements, so passbox needs a Mail tool. The job asks the Mac to search a mailbox, and the Mac sends back the PDF attachments and nothing else from the inbox. The search has to be asynchronous, because the iCloud search already takes more than 120 seconds. The job starts it, gets a handle, and checks back later. This tool cannot ask for a fingerprint, because nobody is awake to give one when the job runs, so it is limited by what it returns instead.
 
 Two other passbox changes come with the move. Today the broker cannot tell which machine is asking, so it cannot have rules like "the server can read the price API keys and nothing else". Fixing that means running Tailscale inside the broker so it sees the real caller. And the server should get one approval in the morning that covers the secrets the day's jobs need, instead of a prompt for each read.
 

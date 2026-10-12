@@ -11,8 +11,6 @@ This post covers how it is built, what the backtests said, what live trading sai
 
 ## Why Hyperliquid
 
-Three reasons.
-
 **It has an API that does not fight you.** Orders, positions, fills and funding are one HTTP call away, and an agent wallet can sign orders without holding the master key.
 
 **Subaccounts are free.** Each strategy gets its own account, its own margin and its own P&L. When something goes wrong, the damage stays in one box, and I can read a strategy's equity straight from the exchange instead of reconstructing it.
@@ -76,7 +74,7 @@ A HIP-3 coin has a different name depending on who you ask. `clearinghouseState`
 
 The stock momentum sleeve had a component that closes positions no longer in the panel. It built `xyz:` + the coin name, received a name that already had the prefix, and asked for `xyz:xyz:MSFT`. That matched nothing in the panel, so every HIP-3 position looked stale, and it closed all nine of them five seconds after every start. For about a month.
 
-Three things hid it:
+It stayed hidden because:
 
 - The close path stripped one prefix, so the close orders themselves went through fine
 - The sleeves had no logging config, so the INFO lines that would have shown it went nowhere
@@ -98,7 +96,7 @@ The fix is in the producer: an all-empty result is suspect. Refuse to write it, 
 
 The cross-sectional momentum sleeves stopped rebalancing for 12 days. There were four causes. The worst: an order rejection arrived about 3ms after the sleeve had already saved "rebalanced today", so the next attempt was scheduled seven days out. The hedger had the same shape: it recorded a hedge step when the submit came back with a 429, then waited four hours for the next step.
 
-Both fixes were the same. Advance the state only after the side effect is confirmed.
+Both fixes were the same: advance the state only after the side effect is confirmed.
 
 ### Silence
 

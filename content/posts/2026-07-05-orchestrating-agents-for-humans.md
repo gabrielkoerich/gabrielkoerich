@@ -37,7 +37,7 @@ The cost is that a change goes through a compile and a release before the servic
 
 ## The design
 
-**GitHub issues are the source of truth.** A task is an issue, and its status is a label: `new`, `routed`, `in_progress`, `needs_review`, `in_review`, `done`, `blocked`. I can see and change the state of everything from my phone. Work that does not deserve an issue, like a scheduled report, is an internal task in SQLite and goes through the same pipeline.
+**GitHub issues hold the state.** A task is an issue, and its status is a label: `new`, `routed`, `in_progress`, `needs_review`, `in_review`, `done`, `blocked`. I can see and change the state of everything from my phone. Work that does not deserve an issue, like a scheduled report, is an internal task in SQLite and goes through the same pipeline.
 
 **One worktree per task.** Each task gets a branch and a worktree under `~/.orch/worktrees/<project>/<branch>/`. The agent never touches my checkout. A tool-level sandbox blocks reads and writes to the main project directory.
 
@@ -109,6 +109,6 @@ This feature will be built the same way as everything else in orch. It starts as
 
 I am also thinking about a GUI. Today I follow orch through the CLI, tmux, Telegram and the GitHub issues. One window with every project, task, agent session and cooldown would make it easier to see what is happening and to step in when something needs me.
 
-There is more to come, so keep watching. And if you run coding agents on your own projects, try orch and tell me what breaks.
+If you run coding agents on your own projects, try orch and tell me what breaks.
 
 If you want to learn more and get involved, here are the [docs](https://orch.gabrielkoerich.com/), with daily updates created automatically by orch itself, [like this one](https://orch.gabrielkoerich.com/posts/daily-review-2026-07-05/), and the [source](https://github.com/gabrielkoerich/orch).

@@ -95,7 +95,7 @@ pub fn validate_account_locks(
 
 Source: [Agave, `accounts-db/src/account_locks.rs`](https://github.com/anza-xyz/agave/blob/8063bd2f7ea538f9d532ca958c882f8caa7fa28d/accounts-db/src/account_locks.rs#L143-L154)
 
-`account_keys.len()` adds up the static keys and every address loaded from a lookup table, writable and read-only. Marking an account read-only lets more transactions run beside yours. It does not make room under the limit.
+`account_keys.len()` adds up the static keys and every address loaded from a lookup table, writable and read-only. Marking an account read-only lets more transactions run beside yours, but it does not make room under the limit.
 
 The validator does not use the constant directly. In Agave the limit depends on a feature gate:
 
@@ -174,7 +174,7 @@ const_assert_eq!(size_of::<Schedule>(), 8 * 8 + 3 * 32 + /* ... */ 32 * 8);
 const_assert_eq!(size_of::<Schedule>(), 424);
 ```
 
-The literal looks redundant, and it caught a real bug. A change took 32 bytes of the reserved tail to add 24 bytes of new fields. The field sum was updated on both sides and still matched, and the account had silently become 8 bytes smaller. On a live account that would misread every field after the change. Only the literal noticed.
+The literal looks redundant, and it caught a real bug. A change took 32 bytes of the reserved tail to add 24 bytes of new fields. The field sum was updated on both sides and still matched, and the account had silently become 8 bytes smaller. On a live account that would misread every field after the change, and only the literal noticed.
 
 The reserved tail is made of `u64`, so it can only give up whole 8 byte slots. A 15 byte field costs 16 bytes of reserve, and the arithmetic has to say so.
 
