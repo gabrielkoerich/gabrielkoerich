@@ -5,7 +5,9 @@ description = "Senior Software Engineer with 15+ years experience"
 
 ## Summary <a href="{{ asset(path="gabrielkoerich-cv.pdf") }}" class="no-print" style="float: right; font-size: 0.85em; font-weight: normal;">Download as PDF</a>
 
-Senior software engineer with 15+ years building production systems, coding since age 13. Most of my work is backends that do many things at once: queues, background workers, retries and concurrency. I have written Rust since 2021. Currently building Solana DeFi at Lulo. Previously founded Bulldesk, a marketing automation SaaS that ran 500M+ background jobs a month, acquired in 2021. BBA in Finance.
+Senior software engineer with 15+ years building production systems, coding since age 13. Most of my work is backends that do many things at once: queues, background workers, retries and concurrency. 
+
+I have written Rust since 2021 and I'm currently building Solana DeFi at Lulo. Previously founded Bulldesk, a marketing automation SaaS that ran 500M+ background jobs a month, acquired in 2021. BBA in Finance.
 
 I also build AI tooling: I run Claude Code, Codex and OpenCode in parallel every day with [orch](https://github.com/gabrielkoerich/orch), an agent orchestrator I wrote in Rust, and help companies do the same.
 
