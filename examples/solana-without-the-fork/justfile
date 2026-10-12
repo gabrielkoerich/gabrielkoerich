@@ -1,0 +1,23 @@
+run := "docker run --rm -v " + justfile_directory() + ":/work -v upstream-solana-cargo:/usr/local/cargo/registry upstream-solana"
+
+image:
+    docker build -t upstream-solana .
+
+# Upstream nightly rustc, upstream LLVM and sbpf-linker
+build: image
+    {{run}} cargo build-bpf
+
+# The same crate through platform-tools v1.57, for sBPF v3
+build-pt: image
+    {{run}} sh -c 'CARGO_TARGET_DIR=target-pt cargo +solana build --release --target sbpfv3-solana-solana'
+
+# The same five Mollusk tests against both .so files
+test: build build-pt
+    {{run}} cargo test --release --test counter -- --nocapture
+    {{run}} sh -c 'ELF=target-pt/sbpfv3-solana-solana/release/counter cargo test --release --test counter -- --nocapture'
+
+size: build build-pt
+    {{run}} sh -c 'ls -l target/bpfel-unknown-none/release/libcounter.so target-pt/sbpfv3-solana-solana/release/counter.so'
+
+clean:
+    trash target target-pt
