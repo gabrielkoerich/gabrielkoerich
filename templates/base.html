@@ -102,6 +102,7 @@
                 <a class="header-nav-link" href="{{ i18n::url(path='about.md', lang=lang) }}">{{ trans(key="nav_about", lang=lang) }}</a>
                 <a class="header-nav-link" href="{{ i18n::url(path='posts/_index.md', lang=lang) }}">{{ trans(key="nav_posts", lang=lang) }}</a>
                 <a class="header-nav-link" href="{{ i18n::url(path='consulting.md', lang=lang) }}">{{ trans(key="nav_consulting", lang=lang) }}</a>
+                <a class="header-nav-link" href="https://projects.gabrielkoerich.com/">{{ trans(key="nav_projects", lang=lang) }}</a>
                 {% if translations | length > 1 %}
                 <span class="header-nav-lang" role="group" aria-label="{{ trans(key='lang_label', lang=lang) }}">
                     {% for t in translations | sort(attribute="lang") %}{% if not loop.first %} | {% endif %}{% if t.lang == lang %}<span aria-current="true">{{ t.lang | upper }}</span>{% else %}<a class="header-nav-link" href="{{ t.permalink | safe }}" hreflang="{{ t.lang }}" lang="{{ t.lang }}" onclick="try { localStorage.setItem('lang', '{{ t.lang }}') } catch (e) {}">{{ t.lang | upper }}</a>{% endif %}{% endfor %}
