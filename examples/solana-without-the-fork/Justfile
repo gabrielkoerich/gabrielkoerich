@@ -1,0 +1,43 @@
+run := "docker run --rm -v " + justfile_directory() + ":/work -v upstream-solana-cargo:/usr/local/cargo/registry upstream-solana"
+
+image:
+    docker build -t upstream-solana .
+
+# Upstream nightly rustc, upstream LLVM and sbpf-linker
+build: image
+    {{run}} cargo build-bpf
+
+# The same crate through platform-tools v1.57, for sBPF v3
+build-pt: image
+    {{run}} sh -c 'CARGO_TARGET_DIR=target-pt cargo +solana build --release --target sbpfv3-solana-solana'
+
+# The same five Mollusk tests against both .so files
+test: build build-pt
+    {{run}} cargo test --release --test counter -- --nocapture
+    {{run}} sh -c 'ELF=target-pt/sbpfv3-solana-solana/release/counter cargo test --release --test counter -- --nocapture'
+
+size: build build-pt
+    {{run}} sh -c 'ls -l target/bpfel-unknown-none/release/libcounter.so target-pt/sbpfv3-solana-solana/release/counter.so'
+
+clean:
+    rm -rf target target-pt .solana validator/node_modules
+
+# Agave 4.3.0, the version mainnet runs, cached in .solana with everything the validator writes
+cache := justfile_directory() / ".solana"
+agave_target := if os() == "macos" { arch() + "-apple-darwin" } else { "x86_64-unknown-linux-gnu" }
+agave_sha256 := if agave_target == "aarch64-apple-darwin" { "0bfbd769a55e32f0a1fe1b92f76f360f01ee19475facf8c31cb90f99dcca7fe0" } else if agave_target == "x86_64-apple-darwin" { "4424d399404ec45d55533c60d0b524b7dd9addca7183c650b7b133828bcf558c" } else { "c97289a8abb1d0efb497d8b5cb285baabd9b7f8ea6647f5d145c5dc8ff3611e8" }
+
+# Deploys the upstream build to a local validator with mainnet's feature set and sends real instructions
+validator: build
+    #!/usr/bin/env bash
+    set -euo pipefail
+    agave={{cache}}/agave-v4.3.0
+    if [ ! -x "$agave/bin/solana-test-validator" ]; then
+      mkdir -p "$agave"
+      archive={{cache}}/agave-v4.3.0-{{agave_target}}.tar.bz2
+      curl -sSfL -o "$archive" https://github.com/anza-xyz/agave/releases/download/v4.3.0/solana-release-{{agave_target}}.tar.bz2
+      echo "{{agave_sha256}}  $archive" | shasum -a 256 -c -
+      tar xjf "$archive" -C "$agave" --strip-components=1
+    fi
+    cd validator
+    WORK={{cache}}/validator PATH="$agave/bin:$PATH" ./run.sh

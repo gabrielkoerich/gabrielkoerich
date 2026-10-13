@@ -1,0 +1,7 @@
+{
+  "name": "counter-client",
+  "private": true,
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0"
+  }
+}

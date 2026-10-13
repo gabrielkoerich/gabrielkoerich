@@ -21,6 +21,7 @@ data/github-events.json
 # Build output inside examples
 examples/**/target/
 examples/**/node_modules/
+examples/**/.solana/
 examples/**/.terraform/
 examples/**/.terraform.lock.hcl
 examples/**/.encore/
