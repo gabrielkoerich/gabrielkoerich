@@ -22,7 +22,7 @@ The timing works because of sBPF v3. It moves syscalls to link time: a program c
 
 ## Reading it first
 
-I read code before I run it, and a linker runs on every build. This one is a pleasant read. sbpf-linker is a handful of Rust files, it makes no network calls, starts no other process, and writes only the `.so` it was asked for. The crates.io packages match their git tags file for file, every dependency comes from crates.io, and the release workflow pins its actions by commit and publishes with crates.io trusted publishing. The syscall hashes in the template and the builtins crate all match murmur3 of their names.
+I read code before I run it, and a linker runs on every build. This one is a pleasant read. sbpf-linker is a handful of Rust files, and it does nothing a linker should not: no network calls, no other processes, and it writes only the `.so` it was asked for. The crates.io packages match their git tags file for file, every dependency comes from crates.io, and the release workflow pins its actions by commit and publishes with crates.io trusted publishing. The syscall hashes in the template and the builtins crate all match murmur3 of their names.
 
 Everything below runs in Docker, with sbpf-linker built from its crates.io source, apart from the local validator at the end.
 
