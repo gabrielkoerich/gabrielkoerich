@@ -20,14 +20,16 @@ def hashes(root):
     return {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob("*")) if p.is_file()}
 
 
-def url(path):
+def urls(path):
     if path == "index.html":
-        return f"{SITE}/"
+        return [f"{SITE}/"]
 
+    # Cloudflare caches the form without the slash on its own, a redirect or a 404 from before the page existed
     if path.endswith("/index.html"):
-        return f"{SITE}/{path.removesuffix('index.html')}"
+        page = f"{SITE}/{path.removesuffix('/index.html')}"
+        return [page, f"{page}/"]
 
-    return f"{SITE}/{path}"
+    return [f"{SITE}/{path}"]
 
 
 def purge(body):
@@ -59,17 +61,17 @@ def main():
         ok = purge(host)
     else:
         old = json.loads(manifest.read_text())
-        urls = sorted({url(p) for p in new.keys() | old.keys() if new.get(p) != old.get(p)})
-        print(f"{len(urls)} URLs changed")
-        for u in urls:
+        changed = sorted({u for p in new.keys() | old.keys() if new.get(p) != old.get(p) for u in urls(p)})
+        print(f"{len(changed)} URLs changed")
+        for u in changed:
             print(f"  {u}")
 
-        if not urls:
+        if not changed:
             ok = True
-        elif len(urls) > LIMIT:
+        elif len(changed) > LIMIT:
             ok = purge(host)
         else:
-            ok = all(purge({"files": urls[i:i + BATCH]}) for i in range(0, len(urls), BATCH)) or purge(host)
+            ok = all(purge({"files": changed[i:i + BATCH]}) for i in range(0, len(changed), BATCH)) or purge(host)
 
     # Only the zone is left, and it also clears every other subdomain
     if not ok:
