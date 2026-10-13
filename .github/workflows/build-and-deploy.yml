@@ -130,29 +130,41 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      # Pages are cached at the edge for 12 hours, so a deploy that cannot purge leaves the old site live
-      - name: Purge Cloudflare cache
-        env:
-          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        run: |
-          if [ -z "$CF_API_TOKEN" ]; then
-            echo "::error::CF_API_TOKEN is not set, the edge cache was not purged"
-            exit 1
-          fi
-
-          response=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/b4f279fbdc18c1d62d60751dcefbc03e/purge_cache" \
-            -H "Authorization: Bearer $CF_API_TOKEN" \
-            -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}')
-          echo "$response"
-          echo "$response" | grep -q '"success":true' || { echo "::error::Cloudflare cache purge failed"; exit 1; }
-
-      - name: Checkout for IndexNow
+      - name: Checkout the scripts
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
             static
             scripts
+
+      # The artifact just deployed, so the hashes match what Pages now serves
+      - name: Download the deployed site
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: ${{ runner.temp }}/artifact
+
+      - name: Unpack the deployed site
+        run: mkdir "$RUNNER_TEMP/site" && tar -xf "$RUNNER_TEMP/artifact/artifact.tar" -C "$RUNNER_TEMP/site"
+
+      - name: Restore the file list of the last deploy
+        uses: actions/cache/restore@v4
+        with:
+          path: .purge-manifest.json
+          key: purge-manifest-${{ github.run_id }}
+          restore-keys: purge-manifest-
+
+      # Pages are cached at the edge for 12 hours, so a deploy that cannot purge leaves the old site live
+      - name: Purge the changed pages from the Cloudflare cache
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: python3 scripts/purge-cloudflare.py "$RUNNER_TEMP/site" .purge-manifest.json
+
+      - name: Save the file list for the next deploy
+        uses: actions/cache/save@v4
+        with:
+          path: .purge-manifest.json
+          key: purge-manifest-${{ github.run_id }}-${{ github.run_attempt }}
 
       # Tells Bing and other IndexNow engines about pages changed today, Google does not use IndexNow
       - name: Submit changed URLs to IndexNow

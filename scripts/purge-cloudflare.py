@@ -1,0 +1,85 @@
+"""Purge the Cloudflare cache for the files that changed since the last deploy, run after the deploy"""
+
+import hashlib
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+SITE = "https://gabrielkoerich.com"
+ZONE = "b4f279fbdc18c1d62d60751dcefbc03e"
+# URLs per purge request, the limit on the Free plan
+BATCH = 30
+# Past this many changed URLs one hostname purge is cheaper than the batches
+LIMIT = 300
+
+
+def hashes(root):
+    return {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob("*")) if p.is_file()}
+
+
+def url(path):
+    if path == "index.html":
+        return f"{SITE}/"
+
+    if path.endswith("/index.html"):
+        return f"{SITE}/{path.removesuffix('index.html')}"
+
+    return f"{SITE}/{path}"
+
+
+def purge(body):
+    print(f"purging {json.dumps(body)}")
+    request = urllib.request.Request(
+        f"https://api.cloudflare.com/client/v4/zones/{ZONE}/purge_cache",
+        data=json.dumps(body).encode(),
+        headers={"Authorization": f"Bearer {os.environ['CF_API_TOKEN']}", "Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            result = response.read().decode()
+    except urllib.error.HTTPError as error:
+        result = error.read().decode()
+
+    print(result)
+    return '"success":true' in result
+
+
+def main():
+    root, manifest = Path(sys.argv[1]), Path(sys.argv[2])
+    if not os.environ.get("CF_API_TOKEN"):
+        raise SystemExit("CF_API_TOKEN is not set, the edge cache was not purged")
+
+    new = hashes(root)
+    host = {"hosts": [SITE.removeprefix("https://")]}
+    if not manifest.exists():
+        print("no file list from the last deploy, purging the hostname")
+        ok = purge(host)
+    else:
+        old = json.loads(manifest.read_text())
+        urls = sorted({url(p) for p in new.keys() | old.keys() if new.get(p) != old.get(p)})
+        print(f"{len(urls)} URLs changed")
+        for u in urls:
+            print(f"  {u}")
+
+        if not urls:
+            ok = True
+        elif len(urls) > LIMIT:
+            ok = purge(host)
+        else:
+            ok = all(purge({"files": urls[i:i + BATCH]}) for i in range(0, len(urls), BATCH)) or purge(host)
+
+    # Only the zone is left, and it also clears every other subdomain
+    if not ok:
+        ok = purge({"purge_everything": True})
+
+    if not ok:
+        raise SystemExit("Cloudflare cache purge failed")
+
+    manifest.write_text(json.dumps(new))
+
+
+if __name__ == "__main__":
+    main()
