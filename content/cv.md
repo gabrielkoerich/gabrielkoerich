@@ -47,7 +47,7 @@ I also build AI tooling: I run Claude Code, Codex and OpenCode in parallel every
 
 Smart contract development for the DeFi protocol. Implemented the lending aggregator contract. Designed a security pool that protects users against protocol hacks while earning yield, and a higher-yield pool with standard DeFi risk.
 
-- Built an indexer that receives transactions through webhooks and dispatches jobs over GCP Pub/Sub
+- Built an indexer that receives transactions through Helius webhooks and dispatches jobs over GCP Pub/Sub
 - Architected the protocol and its CPI integrations with major Solana protocols
 - Built the SDKs and CLIs, with Rust unit tests and Anchor integration tests
 - EVM protocol integrations with Solidity, Forge and Hardhat
