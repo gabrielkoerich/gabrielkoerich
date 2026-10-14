@@ -54,14 +54,15 @@ def purge(body):
 
 
 def warm_targets(root, paths):
-    # A page in its slash form only, the form without the slash is a redirect
     pages = sorted({urls(p)[-1] for p in paths if p.endswith("index.html")})
+    # Cloudflare caches the form without the slash on its own, as the redirect to the slash form
+    redirects = sorted({urls(p)[0] for p in paths if p.endswith("/index.html")})
     files = sorted({urls(p)[-1] for p in paths if not p.endswith("index.html")})
     # The stylesheets every page loads, linked with a cachebust query that is part of the cache key
     home = (root / "index.html").read_text(errors="ignore")
     styles = sorted({u for u in re.findall(r'href="?([^" >]+\.css[^" >]*)', home) if u.startswith(SITE)})
     # Pages first, so the cap never drops a page for an image
-    return list(dict.fromkeys(pages + styles + files))[:WARM_LIMIT]
+    return list(dict.fromkeys(pages + styles + redirects + files))[:WARM_LIMIT]
 
 
 def fetch(url):
