@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% import "macros/posts.html" as posts_macros %}
 
+{# A tag with fewer than two published posts is a thin copy of its post, search engines skip it but still follow its links #}
+{% block head_extra %}
+{% set today = now() | date(format="%Y%m%d") | int %}
+{% set_global published = 0 %}
+{% for p in term.pages %}{% if p.date %}{% set day = p.date | date(format="%Y%m%d") | int %}{% if day <= today %}{% set_global published = published + 1 %}{% endif %}{% endif %}{% endfor %}
+{% if published < 2 %}<meta name="robots" content="noindex, follow">{% endif %}
+{% endblock head_extra %}
+
 {% block content %}
 <h1>#{{term.name}}</h1>
 

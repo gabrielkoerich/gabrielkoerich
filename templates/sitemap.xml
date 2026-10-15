@@ -1,9 +1,18 @@
 {%- set today = now() | date(format="%Y%m%d") | int -%}
+{#- Tags with fewer than two published posts carry noindex, so they stay out of the sitemap too -#}
+{%- set_global thin = [] -%}
+{%- set tags = get_taxonomy(kind="tags") -%}
+{%- for term in tags.items -%}
+    {%- set_global published = 0 -%}
+    {%- for p in term.pages -%}{%- if p.date -%}{%- set day = p.date | date(format="%Y%m%d") | int -%}{%- if day <= today -%}{%- set_global published = published + 1 -%}{%- endif -%}{%- endif -%}{%- endfor -%}
+    {%- if published < 2 -%}{%- set_global thin = thin | concat(with=term.permalink) -%}{%- endif -%}
+{%- endfor -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {%- for sitemap_entry in entries %}
     {%- set show = true %}
     {%- if sitemap_entry.updated %}{% set entry_day = sitemap_entry.updated | date(format="%Y%m%d") | int %}{% if entry_day > today %}{% set show = false %}{% endif %}{% endif %}
+    {%- if sitemap_entry.permalink in thin %}{% set show = false %}{% endif %}
     {%- if show %}
     <url>
         <loc>{{ sitemap_entry.permalink | escape_xml | safe }}</loc>
