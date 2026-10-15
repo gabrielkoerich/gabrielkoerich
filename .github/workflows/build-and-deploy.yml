@@ -166,7 +166,23 @@ jobs:
           path: .purge-manifest.json
           key: purge-manifest-${{ github.run_id }}-${{ github.run_attempt }}
 
-      # Tells Bing and other IndexNow engines about pages changed today, Google does not use IndexNow
+      - name: Restore the page list of the last IndexNow run
+        uses: actions/cache/restore@v4
+        with:
+          path: .indexnow-pages.json
+          key: indexnow-pages-${{ github.run_id }}
+          restore-keys: indexnow-pages-
+
+      # Tells Bing and other IndexNow engines about the pages changed since the last deploy, Google does not use IndexNow
       - name: Submit changed URLs to IndexNow
         continue-on-error: true
-        run: python3 scripts/indexnow.py
+        run: |
+          key=$(basename static/*.txt .txt | grep -E '^[0-9a-f]{32}$' | head -1)
+          python3 scripts/indexnow.py "$RUNNER_TEMP/site" .indexnow-pages.json https://gabrielkoerich.com/ "$key"
+
+      - name: Save the page list for the next IndexNow run
+        if: hashFiles('.indexnow-pages.json') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: .indexnow-pages.json
+          key: indexnow-pages-${{ github.run_id }}-${{ github.run_attempt }}
