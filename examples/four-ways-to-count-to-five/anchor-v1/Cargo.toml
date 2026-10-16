@@ -1,0 +1,24 @@
+[package]
+name = "fib-anchor-v1"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+default = ["no-log-ix-name"]
+# drops the "Instruction: Fib" log Anchor emits on every entry
+no-log-ix-name = []
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+idl-build = ["anchor-lang/idl-build"]
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+
+[dependencies]
+anchor-lang = { version = "=1.2.1", features = ["init-if-needed"] }
+
+[lints.rust.unexpected_cfgs]
+level = "allow"

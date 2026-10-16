@@ -1,0 +1,26 @@
+[package]
+name = "fib-anchor-v2"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+default = ["no-log-ix-name", "guardrails"]
+# anchor-lang default, runtime borrow and is_writable checks, on in the main build, `just build` also makes one without them
+guardrails = ["anchor-lang/guardrails"]
+# drops the "Instruction: Fib" log Anchor emits on every entry
+no-log-ix-name = []
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+idl-build = []
+
+[dependencies]
+anchor-lang = { version = "=2.0.0-rc.1", default-features = false, features = ["alloc"] }
+bytemuck = { version = "1", features = ["derive"] }
+# the #[program] derives expand to `wincode::` paths, so it must be a direct dependency
+wincode = { version = "0.5", features = ["derive"] }
+
+[lints.rust.unexpected_cfgs]
+level = "allow"
