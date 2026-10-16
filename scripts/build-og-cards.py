@@ -109,7 +109,8 @@ def main():
         if (OUT / f"{slug}.png").exists() and "--all" not in sys.argv:
             continue
 
-        card(front).save(OUT / f"{slug}.png", optimize=True)
+        # A 256 colour palette halves the file and looks the same, the cards are flat colours and one soft glow
+        card(front).quantize(256, dither=Image.Dither.FLOYDSTEINBERG).save(OUT / f"{slug}.png", optimize=True)
         count += 1
 
     print(f"drew {count} cards into {OUT}")
