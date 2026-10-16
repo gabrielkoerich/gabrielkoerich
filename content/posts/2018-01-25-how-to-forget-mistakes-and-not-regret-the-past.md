@@ -1,6 +1,7 @@
 +++
 title = "How to forget mistakes and not regret the past?"
 date = 2018-01-25
+description = "A short note on getting past a mistake: forgive yourself, own what it caused, learn from it, and swap regret for a plan for next time."
 aliases = ["/posts/external/como-esquecer-os-erros-e-nao-se-arrepender-do-passado/"]
 [taxonomies]
 tags = ["life", "mindset", "medium"]

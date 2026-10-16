@@ -1,6 +1,7 @@
 +++
 title = "My finances in plain text"
 date = 2026-10-09
+description = "Since 2022 every real I spend goes into a Beancount ledger, about 13,400 transactions, most never typed. The importers, categories and daily jobs behind it."
 [taxonomies]
 tags = ["beancount", "finance", "ai", "python"]
 +++

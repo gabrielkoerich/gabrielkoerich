@@ -1,6 +1,7 @@
 +++
 title = "Refactoring to Events"
 date = 2018-05-24
+description = "A Stripe webhook controller full of ifs and elses, refactored step by step into events and listeners, one event per webhook type, so the controller gets thin."
 [taxonomies]
 tags = ["event-driven", "architecture", "laravel", "software-engineering", "medium"]
 [extra]

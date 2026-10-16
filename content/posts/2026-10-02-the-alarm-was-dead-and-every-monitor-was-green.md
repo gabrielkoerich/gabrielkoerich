@@ -1,6 +1,7 @@
 +++
 title = "The alarm was dead and every monitor was green"
 date = 2026-10-02
+description = "My home alarm was dead while every monitor showed green. What I was checking wrong, why silence has to be loud, and the failures that look like success."
 [taxonomies]
 tags = ["home-security", "home-assistant", "homelab", "security", "privacy", "vlm", "local-llm", "ollama", "ai"]
 [extra]

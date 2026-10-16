@@ -1,6 +1,7 @@
 +++
 title = "Does the Japan case overthrow buy and hold?"
 date = 2017-06-17
+description = "The Nikkei lost money for 20 years after 1989. Does that make buy and hold a bad strategy? Valuations, dividends and how Japan then differs from Brazil now."
 aliases = ["/posts/external/o-caso-do-japao-derruba-o-buy-and-hold/"]
 [taxonomies]
 tags = ["finance", "investing", "stock-market", "buy-and-hold", "medium"]

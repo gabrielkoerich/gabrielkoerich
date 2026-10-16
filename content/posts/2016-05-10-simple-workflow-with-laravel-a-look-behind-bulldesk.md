@@ -1,6 +1,7 @@
 +++
 title = "Simple workflow with Laravel, a look behind Bulldesk"
 date = 2016-05-10
+description = "The stack and the workflow behind Bulldesk in 2016: PHP 7 and Laravel, VueJS with Laravel Elixir, tests and deploys, piece by piece."
 aliases = ["/posts/external/simples-workflow-com-laravel-uma-visao-por-tras-do-bulldesk/"]
 [taxonomies]
 tags = ["bulldesk", "laravel", "devops", "software-engineering", "medium"]

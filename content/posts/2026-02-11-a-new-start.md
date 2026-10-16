@@ -1,6 +1,7 @@
 +++
 title = "A new start"
 date = 2026-02-11
+description = "After years of silence I am restarting this blog, with short honest notes on AI coding agents, Solana and Rust, and fifteen years of engineering."
 aliases = ["/posts/welcome/"]
 [taxonomies]
 tags = ["meta", "ai", "agents", "solana", "rust", "career"]

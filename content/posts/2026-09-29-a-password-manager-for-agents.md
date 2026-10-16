@@ -1,6 +1,7 @@
 +++
 title = "A password manager for agents"
 date = 2026-09-29
+description = "My agents read secrets from pass, and one passphrase opened everything. Why I built passbox, the alternatives I rejected and what I got wrong first."
 aliases = ["/posts/passbox/"]
 [taxonomies]
 tags = ["ai", "agents", "security", "rust", "secrets-management", "mcp", "touch-id", "secure-enclave", "tailscale", "macos"]

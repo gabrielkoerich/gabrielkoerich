@@ -1,6 +1,7 @@
 +++
 title = "Risk on the stock market [1]"
 date = 2017-06-16
+description = "What risk means for a long term stock investor. Following Benjamin Graham, a price swing is not a loss, and the real risk is paying too much for a company."
 aliases = ["/posts/external/risco-na-bolsa-de-valores-1/"]
 [taxonomies]
 tags = ["finance", "investing", "stock-market", "medium"]

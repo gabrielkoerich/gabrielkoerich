@@ -1,6 +1,7 @@
 +++
 title = "Please don't create unnecessary abstractions"
 date = 2016-02-27
+description = "Why a PostRepositoryInterface with one implementation is a waste, and why I start with as little code as possible and grow it when the project asks."
 aliases = ["/posts/external/por-favor-nao-crie-abstracoes-desnecessarias/"]
 [taxonomies]
 tags = ["software-engineering", "architecture", "laravel", "medium"]

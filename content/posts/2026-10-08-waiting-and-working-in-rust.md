@@ -1,6 +1,7 @@
 +++
 title = "Waiting and working in Rust"
 date = 2026-10-08
+description = "Rust has at least five ways to do more than one thing. Should you use async? It is three questions: is the program waiting, working or reacting?"
 [taxonomies]
 tags = ["rust", "async", "concurrency", "tokio", "rayon", "performance", "low-latency", "solana"]
 +++

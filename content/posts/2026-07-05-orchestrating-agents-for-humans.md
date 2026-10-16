@@ -1,6 +1,7 @@
 +++
 title = "Orchestrating agents for humans"
 date = 2026-07-05
+description = "I was the slow part of running Claude Code, Codex and OpenCode side by side, so I built orch: why Rust, the design, what broke and what it costs."
 [taxonomies]
 tags = ["ai", "rust", "agents"]
 +++

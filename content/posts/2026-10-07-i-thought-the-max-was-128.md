@@ -1,6 +1,7 @@
 +++
 title = "I thought the max was 128"
 date = 2026-10-07
+description = "A Solana vault with 20 assets could be created but not withdrawn from. Three transaction limits, where 128 came from, and why a lookup table did not help."
 [taxonomies]
 tags = ["solana", "rust", "anchor", "defi"]
 +++
