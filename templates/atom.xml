@@ -21,8 +21,8 @@
     <id>{{ feed_url | safe }}</id>
     <entry xml:lang="en">
         <title>My &#x27;quake&#x27; Ghostty terminal</title>
-        <published>2026-10-20T03:32:00-03:00</published>
-        <updated>2026-10-20T03:32:00-03:00</updated>
+        <published>2026-10-20T03:29:00-03:00</published>
+        <updated>2026-10-20T03:29:00-03:00</updated>
         <author>
             <name>{{ config.extra.author }}</name>
         </author>
