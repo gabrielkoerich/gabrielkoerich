@@ -6,7 +6,7 @@ I started coding at 13 out of curiosity. More than 15 years later I build DeFi p
 
 Since 2021 Rust has been my main language, and I have gone deep into the Solana ecosystem.
 
-Currently architecting Solana smart contracts at <a href="https://lulo.fi" target="_blank">Lulo</a>.
+Currently architecting Solana smart contracts.
 
 Previously founded Bulldesk (marketing automation SaaS, acquired 2021).
 

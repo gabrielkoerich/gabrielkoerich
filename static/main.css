@@ -1279,3 +1279,86 @@ h1 + .content {
 .twitter-tweet-rendered {
     margin: 2rem auto !important;
 }
+
+/* Subscribe form */
+.subscribe {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.subscribe label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.subscribe label a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.subscribe-row {
+    display: flex;
+    max-width: 18rem;
+    margin: 0 auto;
+}
+
+.subscribe-row[hidden] {
+    display: none;
+}
+
+.subscribe input[type="email"] {
+    flex: 1;
+    min-width: 0;
+    padding: 0.35rem 0.8rem;
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-right: 0;
+    border-radius: 999px 0 0 999px;
+    font: inherit;
+    font-size: 0.875rem;
+}
+
+.subscribe input[type="email"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.subscribe button {
+    padding: 0.35rem 0.8rem;
+    background: var(--bg-secondary);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0 999px 999px 0;
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.subscribe button:hover {
+    color: var(--heading-color);
+}
+
+.subscribe-trap {
+    position: absolute;
+    left: -9999px;
+}
+
+.subscribe + .section-heading-inline {
+    margin-top: 1.5rem;
+}
+
+.subscribe + h1 {
+    margin-top: 2rem;
+}
+
+.subscribe-status {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+#hero:has(+ .subscribe) {
+    margin-bottom: 1.5rem;
+}

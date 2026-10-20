@@ -1,6 +1,6 @@
 +++
 title = "About"
-description = "Gabriel Koerich, software engineer. Solana DeFi at Lulo, founder of Bulldesk, and a heavy user of coding agents."
+description = "Gabriel Koerich, software engineer. Solana DeFi, former founder of Bulldesk, and a heavy user of coding agents."
 template = "about.html"
 # /now was dropped, old links land here
 aliases = ["/now/"]

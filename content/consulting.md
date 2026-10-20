@@ -86,7 +86,7 @@ kind = "list"
 items = [
     "**15+ years** building production software.",
     "**Founder track record**: built and sold Bulldesk (Marketing Automation SaaS, 80M+ req/mo, 500M+ background jobs/mo).",
-    "**Currently architecting** Solana DeFi at [Lulo](https://lulo.fi).",
+    "**Currently architecting** Solana DeFi protocols",
     "**Daily AI practitioner**: I orchestrate Claude, Codex, and OpenCode in my own workflow ([orch](https://github.com/gabrielkoerich/orch)) and built this site with AI assistance.",
     "**Finance background (BBA)**: I weigh business outcomes alongside the code.",
 ]

@@ -45,6 +45,8 @@ booking_url = "https://calendar.google.com/calendar/u/0/appointments/schedules/A
 available_for_consulting = true
 # Repos to hide from the homepage pinned list (e.g. archived/superseded projects)
 hidden_repos = []
+# Brevo form URL (the action of its HTML form), the subscribe form stays hidden while empty
+newsletter_action = "https://e96ea1c8.sibforms.com/serve/MUIFAN6UqaRdJUlX-kKyp9wZGZDI2RNXAVc7gsXNal6-Arie1HSDu06WCb00nO9koFWfsjMTTvMuv65zy15pBebY-gQtqbs4recPjsmHoh1-LWRH2gF_OwOxX8XytOZrJIsvTjpbLzxBaT3DqAQZoQ1-cofZHTzP73J5bG3wb-36B-WA-FNvqWDFI-uW6kYNIjnQLWbWZW5x298QIg=="
 
 # English strings, `trans(key=..., lang=lang)` reads them, Portuguese ones live under [languages.pt.translations]
 [translations]
@@ -70,6 +72,11 @@ repo_contributor = "Open-source contributor."
 latest_posts = "Latest posts"
 all_posts = "All posts →"
 no_posts = "No posts found."
+subscribe_text = "Get future posts by email"
+subscribe_rss = "or grab the RSS feed"
+subscribe_button = "Subscribe"
+subscribe_done = "Almost there: check your inbox to confirm."
+subscribe_error = "That didn't work. Please try again."
 tags = "Tags"
 comments = "Comments"
 cta_available = "Available for AI consulting"

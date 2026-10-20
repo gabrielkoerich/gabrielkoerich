@@ -136,10 +136,14 @@ _build-pdf-cv:
     just md-to-pdf /tmp/cv-temp.md static/gabrielkoerich-cv.pdf
 
 
+_build-pdf-cv-br:
+    { echo "# Gabriel Koerich | Consultor e Engenheiro de Software Sênior"; tail -n +5 content/cv-pt.md | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-br-temp.md
+    just md-to-pdf /tmp/cv-br-temp.md static/gabrielkoerich-cv-pt.pdf
+
 _build-pdf-summarized-cv:
     { echo "# Gabriel Koerich | Software Engineer"; tail -n +5 content/cv-summary.md | sed 's/ <a [^>]*class="no-print"[^>]*>[^<]*<\/a>//g'; } > /tmp/cv-temp.md
     just md-to-pdf /tmp/cv-temp.md static/gabrielkoerich-cv-summary.pdf
 
 # Build CV PDF from content/cv.md
 [group('cv')]
-build-cv: _build-pdf-cv _build-pdf-summarized-cv
+build-cv: _build-pdf-cv _build-pdf-cv-br _build-pdf-summarized-cv

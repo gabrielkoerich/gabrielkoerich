@@ -3,6 +3,7 @@
 {% import "macros/i18n.html" as i18n %}
 
 {% block content %}
+{% include "partials/subscribe.html" %}
 <h1>{{ section.title }}</h1>
 <p class="posts-intro">{{ section.extra.intro | markdown(inline=true) | safe }}</p>
 
