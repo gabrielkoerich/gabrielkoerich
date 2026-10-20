@@ -2,7 +2,7 @@
 {%- set today = now() | date(format="%Y%m%d") | int -%}
 {%- set_global entries = [] -%}
 {%- for page in pages -%}
-{%- if page.date and page.relative_path is starting_with("posts/") -%}
+{%- if page.date and page.relative_path is starting_with("posts/") and page.slug != "my-quake-ghostty-terminal" -%}
 {%- set day = page.date | date(format="%Y%m%d") | int -%}
 {%- if day <= today -%}{%- set_global entries = entries | concat(with=page) -%}{%- endif -%}
 {%- endif -%}
