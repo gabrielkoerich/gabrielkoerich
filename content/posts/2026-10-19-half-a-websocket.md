@@ -168,7 +168,7 @@ So the old line, "one shared websocket client, read by everyone, removes most of
 
 ## What I found while writing this 
 
-That's one of the reasons I love writing about those things, I always learn with something wrong I did and when I'm writing and explaining I'm also learning:
+That's one of the reasons I love writing about those things, I'm always learning with something wrong I did when I'm writing and explaining:
 
 ### Every account push erased the fills
 
