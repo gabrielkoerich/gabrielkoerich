@@ -3,7 +3,7 @@ title = "Running a quant book on Hyperliquid"
 date = 2026-10-05
 description = "A small systematic trading book on Hyperliquid run by one daemon on my Mac: how it is built, what backtests said, what live trading said, and the bugs."
 [taxonomies]
-tags = ["quant", "trading", "hyperliquid", "python"]
+tags = ["quant", "trading", "hyperliquid", "python", "perps"]
 +++
 
 For the last few months I have been running a small systematic trading book on Hyperliquid. It is a handful of strategies, each one on its own subaccount, managed by one daemon on my Mac. It trades crypto perps and, through HIP-3, stock and commodity perps like the S&P 500, gold and oil.

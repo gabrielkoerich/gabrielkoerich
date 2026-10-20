@@ -3,7 +3,7 @@ title = "Half a websocket"
 description = "I planned a shared Hyperliquid websocket and found I had built half of it in June. What moved off REST, what still polls, and where the 429s come from."
 date = 2026-10-19
 [taxonomies]
-tags = ["distributed-systems", "quant", "python", "hyperliquid", "websockets"]
+tags = ["distributed-systems", "quant", "python", "hyperliquid", "websockets", "solana", "perps"]
 +++
 
 At the end of [Running a quant book on Hyperliquid](@/posts/2026-10-05-running-a-quant-book-on-hyperliquid.md) I listed "one connection" as future work: most of the 429 storms came from many processes each polling REST for the same account state, and one shared websocket, read by everyone, would remove most of that traffic. I sat down to plan it and found I had already built half of it, in June. The daemon has kept a websocket per account and an in-memory snapshot since then. The sleeves, where most of the 429s come from, have never read it.
