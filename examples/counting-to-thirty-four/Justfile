@@ -1,0 +1,31 @@
+# Agave 3.1.10 for cargo build-sbf (platform-tools v1.52), same as four-ways-to-count-to-five, kept in .solana
+cache := justfile_directory() / ".solana"
+agave_target := if os() == "macos" { arch() + "-apple-darwin" } else { "x86_64-unknown-linux-gnu" }
+agave_sha256 := if agave_target == "aarch64-apple-darwin" { "839693d40bdd0bd76d9569f7df3d38fb3bc69aa5028fc60bef3aa948eee453a5" } else if agave_target == "x86_64-apple-darwin" { "707a61edb7a8d028559fd1dd27966d67774ad4c97a61cd66ec3089e8a07d5423" } else { "a7205ff29bcf0f7199740225ecae2b85a28ea9668892d5ec21bd9749882984a1" }
+run := "docker run --rm -v " + justfile_directory() + ":/work -w /work/bench rust:1"
+
+build:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    agave={{cache}}/agave-v3.1.10
+    if [ ! -x "$agave/bin/cargo-build-sbf" ]; then
+      mkdir -p "$agave"
+      archive={{cache}}/agave-v3.1.10-{{agave_target}}.tar.bz2
+      curl -sSfL -o "$archive" https://github.com/anza-xyz/agave/releases/download/v3.1.10/solana-release-{{agave_target}}.tar.bz2
+      echo "{{agave_sha256}}  $archive" | shasum -a 256 -c -
+      tar xjf "$archive" -C "$agave" --strip-components=1
+    fi
+    export PATH="$agave/bin:$PATH"
+    (cd fib && cargo build-sbf)
+    (cd relay && cargo build-sbf)
+
+# Both tables, run in Docker
+bench: build
+    {{run}} cargo run --release
+
+# The failing logs of fib n=8 under the mainnet feature set
+logs: build
+    {{run}} cargo run --release -- --logs
+
+clean:
+    rm -rf .solana fib/target relay/target bench/target
