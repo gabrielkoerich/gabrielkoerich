@@ -200,6 +200,6 @@ The first step is to serve the snapshot to the sleeves. The hedger already reads
 
 The HIP-3 positions and the order report batch fixes live in my subclass, and every Nautilus upgrade is a chance for them to drift. They belong in Nautilus itself, so I should open a pull request with them instead of carrying them on my side.
 
-None of that touches the largest source of 429s, Nautilus checking order status inside each sleeve. It needs a longer check interval in each node or a way to feed the adapter from shared state, and I have not looked at which one Nautilus allows. 
+None of that touches the largest source of 429s, Nautilus checking order status inside each sleeve. It needs a longer check interval in each node or a way to feed the adapter from shared state, and I have not looked at which one Nautilus allows.  That is the other half of the websocket, and the [rate limits](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/rate-limits-and-user-limits) page says how much room it has to work in.
 
-That is the other half of the websocket, and the [rate limits](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/rate-limits-and-user-limits) page says how much room it has to work in.
+I also want to make this work in a perp protocol in Solana, but I'm still looking for the better one to go. After getting hit by the Drift hack I didn't touch perps on Solana anymore, gotta go back to test the other platforms.
