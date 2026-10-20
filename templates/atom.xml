@@ -19,6 +19,17 @@
     <updated>{{ newest.updated | default(value=newest.date) | date(format="%+") }}</updated>
     {%- endif %}
     <id>{{ feed_url | safe }}</id>
+    <entry xml:lang="en">
+        <title>My &#x27;quake&#x27; Ghostty terminal</title>
+        <published>2026-10-20T03:32:00-03:00</published>
+        <updated>2026-10-20T03:32:00-03:00</updated>
+        <author>
+            <name>{{ config.extra.author }}</name>
+        </author>
+        <link rel="alternate" type="text/html" href="{{ config.base_url | safe }}/posts/my-quake-ghostty-terminal/"/>
+        <id>{{ config.base_url | safe }}/posts/my-quake-ghostty-terminal/#newsletter</id>
+        <summary>After 10 years on iTerm I moved to Ghostty: a drop-down terminal on one global shortcut, with native tabs, tmux, and no useless title row on top.</summary>
+    </entry>
     {%- for page in entries %}
     <entry xml:lang="{{ page.lang }}">
         <title>{{ page.title }}</title>
