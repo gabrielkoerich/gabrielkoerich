@@ -66,9 +66,9 @@ On the Mac each of those raises a prompt. This one is a Things read from the Lin
 
 <a href="/images/posts/passbox-v2-remote-prompt.png"><img src="/images/posts/passbox-v2-remote-prompt.png" alt="Touch ID prompt on the Mac for plugin:things3.upcoming, asked by passbox on the Linux box" width="280" style="display:block;margin:2rem auto"></a>
 
-The host name comes from `tailscale whois`. The agent part is whatever the job sets in `PASSBOX_AGENT`, and this one set nothing.
+The agent part of the prompt is whatever the job sets in `PASSBOX_AGENT`, and this one set nothing.
 
-Secrets and app reads are approved in different ways. A job's secrets come from one `passbox grant` a day, so the box costs me one fingerprint a day for all of them. The app reads are covered by windows, since my Mac's `config.toml` lists every read-only tool at `24h`, so each tool prompts the first time a job calls it that day. When I tested it from the Linux box on October 21, the first `things3` call prompted and the calls after it came back in 0.2 seconds with no prompt.
+Secrets and app reads are approved in different ways. A job's secrets come from one `passbox grant` a day, so the box costs me one fingerprint a day for all of them. The app reads are covered by windows. My Mac's `config.toml` lists every read-only tool at `24h`, so each tool prompts the first time a job calls it that day. When I tested it from the Linux box on October 21, the first `things3` call prompted and the calls after it came back in 0.2 seconds with no prompt.
 
 The `imap` plugin shows why the broker runs a plugin that needs a secret itself. My IMAP account is in the store on the Mac, so a job on the Linux box asks for `imap search` and gets back only the mail, while the password stays on the Mac.
 
