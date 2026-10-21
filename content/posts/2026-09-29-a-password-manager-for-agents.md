@@ -81,7 +81,7 @@ One approval at launch, the value in the process environment, every child inheri
 
 The other option is to hand an agent the keys to everything and hope the transcript never leaks.
 
-So I use passbox for the secrets my agents touch, `pass` for the ones I cannot afford to lose, and 1Password for the ones I need on my phone. passbox only does the one job: it sits between an agent and a credential.
+So I use passbox for the secrets my agents touch, `pass` for the ones I cannot afford to lose, and 1Password, on my Mac only, for SSH and the passwords I keep out of the Passwords app. passbox only does the one job: it sits between an agent and a credential.
 
 If you run agents on your own machine, I would like to know whether this holds up for you.
 
