@@ -1,5 +1,5 @@
 +++
-title = "Passbox v2 is out!"
+title = "Passbox v2, the release where I took things out"
 date = 2026-10-21
 description = "passbox v2 opens approval windows for read-only plugin tools, drops every tool that acts for the caller, and removes get --reveal. What changed since 0.13."
 [taxonomies]
