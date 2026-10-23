@@ -2,7 +2,7 @@
 
 Usage: indexnow.py <site dir> <manifest> <page url> <key>
 
-The manifest maps every page of the last deploy to its hash. Without one, every page goes out once.
+The manifest maps every page, markdown copy and llms.txt of the last deploy to its hash. Without one, every page goes out once.
 Pages marked noindex and alias redirects are left out. A failed submission only warns and keeps the old
 manifest, so the next deploy sends the same pages again.
 """
@@ -29,6 +29,12 @@ def pages(root):
             continue
 
         out[path.relative_to(root).as_posix()] = hashlib.sha256(html).hexdigest()
+
+    # The markdown copies and llms.txt are in the sitemap too
+    for path in sorted([*root.rglob("*.md"), root / "llms.txt"]):
+        if path.is_file():
+            out[path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
+
     return out
 
 

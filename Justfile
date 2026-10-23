@@ -100,6 +100,8 @@ build: fetch-github _zola
     bin=".tools/zola-{{ zola_version }}"
     [ -x "$bin" ] || bin="zola"
     "$bin" build && "$bin" check
+    python3 scripts/build-markdown.py
+    python3 scripts/build-llms-txt.py
 
 # Serve the site locally for development, unpublished posts included
 [group('website')]

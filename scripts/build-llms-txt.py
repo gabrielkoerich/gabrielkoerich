@@ -5,6 +5,7 @@ import re
 import sys
 import tomllib
 from datetime import date
+from importlib import import_module
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -85,6 +86,7 @@ def main():
         lines += ["", "## Optional", ""] + old
 
     OUT.write_text("\n".join(lines) + "\n")
+    import_module("build-markdown").add_to_sitemap(OUT.parent / "sitemap.xml", [(f"{base}/llms.txt", today)])
     print(f"wrote {OUT} with {len(posts)} posts")
 
 

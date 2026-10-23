@@ -39,6 +39,12 @@ def convert(body, base):
     return re.sub(r"\]\(/(?!/)", f"]({base}/", body)
 
 
+def add_to_sitemap(sitemap, entries):
+    """Append (url, lastmod) entries, zola wrote the sitemap before these files existed"""
+    rows = "".join(f"<url><loc>{url}</loc>" + (f"<lastmod>{day}</lastmod>" if day else "") + "</url>" for url, day in entries)
+    sitemap.write_text(sitemap.read_text().replace("</urlset>", rows + "</urlset>"))
+
+
 def write(source, url, out, base):
     _, front, body = source.read_text().split("+++", 2)
     meta = tomllib.loads(front)
@@ -55,12 +61,13 @@ def write(source, url, out, base):
 
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(lines) + "\n" + convert(body, base).strip() + "\n")
+    return meta.get("updated") or meta.get("date")
 
 
 def main():
     base = tomllib.loads((ROOT / "config.toml").read_text())["base_url"].rstrip("/")
     today = date.today()
-    count = 0
+    entries = []
 
     for path in sorted((ROOT / "content" / "posts").glob("*.md")):
         if path.name.startswith("_") or path.name.endswith(".pt.md"):
@@ -72,17 +79,18 @@ def main():
             continue
 
         s = slug(path.name)
-        write(path, f"{base}/posts/{s}/", PUBLIC / "posts" / f"{s}.md", base)
-        count += 1
+        day = write(path, f"{base}/posts/{s}/", PUBLIC / "posts" / f"{s}.md", base)
+        entries.append((f"{base}/posts/{s}.md", day))
 
     for name in PAGES:
         path = ROOT / "content" / name
         if path.exists():
             stem = Path(name).stem
-            write(path, f"{base}/{stem}/", PUBLIC / f"{stem}.md", base)
-            count += 1
+            day = write(path, f"{base}/{stem}/", PUBLIC / f"{stem}.md", base)
+            entries.append((f"{base}/{stem}.md", day))
 
-    print(f"wrote {count} markdown copies into {PUBLIC}")
+    add_to_sitemap(PUBLIC / "sitemap.xml", entries)
+    print(f"wrote {len(entries)} markdown copies into {PUBLIC} and its sitemap")
 
 
 if __name__ == "__main__":
