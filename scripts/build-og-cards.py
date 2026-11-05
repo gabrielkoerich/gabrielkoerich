@@ -104,7 +104,8 @@ def main():
         if front["date"] > date.today():
             continue
 
-        slug = re.sub(r"^\d{4}-\d{2}-\d{2}[-_]", "", path.stem)
+        # The template looks the card up by page.slug, which a front matter `slug` overrides
+        slug = front.get("slug") or re.sub(r"^\d{4}-\d{2}-\d{2}[-_]", "", path.stem)
         # CI draws only missing cards, so a different Pillow build does not rewrite committed ones
         if (OUT / f"{slug}.png").exists() and "--all" not in sys.argv:
             continue
