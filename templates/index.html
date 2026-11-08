@@ -28,6 +28,7 @@
 {% set_global pages = pages | sort(attribute="date") | reverse %}
 {% endif %}
 {% if pages | length > 0 %}
+{% include "partials/subscribe.html" %}
 <div class="section-heading-inline">
     <h2>{{ trans(key="latest_posts", lang=lang) }}</h2>
     <a class="section-heading-link" href="{{ i18n::url(path='posts/_index.md', lang=lang) }}">{{ trans(key="all_posts", lang=lang) }}</a>

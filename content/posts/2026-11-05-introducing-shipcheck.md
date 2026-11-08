@@ -4,7 +4,7 @@ date = 2026-11-05
 slug = "shipcheck"
 description = "shipcheck turns the tests your agents already ran into the PR's required checks. How it works, why agents can't cheat, and two weeks of real numbers."
 [taxonomies]
-tags = ["ci", "agents", "rust", "shipcheck", "security"]
+tags = ["rust", "ai", "agents", "ci", "shipcheck"]
 +++
 
 I run coding agents with [orch](https://github.com/gabrielkoerich/orch). An agent finishes a change in a few minutes, and then its PR waits while GitHub Actions runs the same tests the agent just ran. Every push uses Actions minutes, and every month, somewhere between the 10th and the 15th, I run out of free ones and start paying for each minute.
