@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How brain works</title>
+<meta name="description" content="brain is one shared memory for AI coding agents and their owner. Follow a piece of knowledge from one agent's session to another agent's answer.">
+<style>
+@property --lit { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --p { syntax: '<number>'; inherits: false; initial-value: 0; }
+
+:root {
+  --bg: #F2F4F7;
+  --surface: #FFFFFF;
+  --ink: #101A25;
+  --ink2: #455263;
+  --muted: #667282;
+  --rule: #D3D9E1;
+  --rule2: #B4BEC9;
+  --in: #2747E8;
+  --out: #C27C00;
+  --on-in: #FFFFFF;
+  --on-out: #101A25;
+  --sans: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --T: 16s;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D141C;
+    --surface: #141D28;
+    --ink: #E8EDF3;
+    --ink2: #AAB5C3;
+    --muted: #8591A1;
+    --rule: #263240;
+    --rule2: #3D4B5C;
+    --in: #6A84F5;
+    --out: #C0841C;
+    --on-in: #0D141C;
+    --on-out: #0D141C;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0D141C;
+  --surface: #141D28;
+  --ink: #E8EDF3;
+  --ink2: #AAB5C3;
+  --muted: #8591A1;
+  --rule: #263240;
+  --rule2: #3D4B5C;
+  --in: #6A84F5;
+  --out: #C0841C;
+  --on-in: #0D141C;
+  --on-out: #0D141C;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+
+.wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ---------- top bar ---------- */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+
+.mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.mark svg { display: block; }
+
+.controls { display: flex; gap: 8px; }
+
+.btn {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink2);
+  background: transparent;
+  border: 1px solid var(--rule2);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+.btn:hover { color: var(--ink); border-color: var(--ink2); }
+.btn:focus-visible, a:focus-visible { outline: 2px solid var(--in); outline-offset: 2px; }
+html:not(.anim) #motion { display: none; }
+
+/* ---------- hero ---------- */
+
+.hero { padding-top: 28px; }
+
+.hero h1 {
+  font-size: clamp(2.3rem, 5.2vw, 4.1rem);
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  max-width: 17em;
+}
+
+@media (min-width: 900px) { .hero h1 span { display: table; } .hero h1 .u-out { margin-top: 0.08em; } }
+
+.hero h1 span {
+  text-decoration: underline;
+  text-decoration-thickness: 0.085em;
+  text-underline-offset: 0.16em;
+  text-decoration-skip-ink: none;
+}
+
+.hero h1 .u-in { text-decoration-color: var(--in); }
+.hero h1 .u-out { text-decoration-color: var(--out); }
+
+.lede {
+  margin-top: 26px;
+  max-width: 44em;
+  font-size: 1.16rem;
+  line-height: 1.55;
+  color: var(--ink2);
+}
+
+/* ---------- the flow ---------- */
+
+.flow {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) 150px;
+  align-items: start;
+}
+
+.fan {
+  position: relative;
+  height: 200px;
+}
+
+.fan-label { display: none; }
+
+.fan ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 200px;
+  width: 100px;
+}
+
+.fan.dst ul { margin-left: 50px; }
+
+.chip {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink2);
+  background: var(--bg);
+  border: 1.5px solid var(--rule2);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.fan.src { --phase: var(--in); --on-phase: var(--on-in); }
+.fan.dst { --phase: var(--out); --on-phase: var(--on-out); }
+
+.chip.story {
+  border-color: var(--phase);
+  color: color-mix(in srgb, var(--on-phase) calc(var(--lit) * 100%), var(--ink));
+  background: color-mix(in srgb, var(--phase) calc(var(--lit) * 100%), var(--bg));
+}
+
+.fan svg {
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 200px;
+  overflow: visible;
+}
+
+.fan.src svg { left: 100px; }
+.fan.dst svg { left: 0; }
+
+.fan path { fill: none; stroke: var(--phase); stroke-linecap: round; }
+.fan .thin { stroke-width: 2; opacity: 0.38; }
+.fan .thick { stroke-width: 4; }
+.fan .spark { stroke: var(--ink); stroke-width: 11; stroke-dasharray: 0.1 300; stroke-dashoffset: 0; opacity: 0; }
+
+.stops {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.stop {
+  position: relative;
+  display: grid;
+  grid-template-rows: 88px 24px auto;
+  --phase: var(--in);
+  --on-phase: var(--on-in);
+}
+
+.stop > * { min-width: 0; }
+
+.stop.out { --phase: var(--out); --on-phase: var(--on-out); }
+
+.phase {
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  padding-bottom: 7px;
+  border-bottom: 2px solid var(--phase);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink2);
+  white-space: nowrap;
+}
+
+.phase.w3 { width: calc(300% - 28px); right: auto; }
+.phase.w2 { width: calc(200% - 28px); right: auto; }
+
+.stop-head {
+  align-self: end;
+  padding: 0 14px 12px 14px;
+}
+
+.stop-head h3 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.rail {
+  position: relative;
+  align-self: center;
+  height: 6px;
+  background: var(--phase);
+}
+
+.run {
+  position: absolute;
+  top: 94px;
+  left: 20px;
+  right: -20px;
+  height: 12px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bead {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(calc(var(--p) * 100%));
+}
+
+.bead::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 2.5px var(--surface);
+}
+
+.stop:last-child .run { right: 0; }
+
+.dot {
+  position: absolute;
+  top: 86px;
+  left: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  border: 3px solid var(--phase);
+  background: color-mix(in srgb, var(--phase) calc(var(--lit) * 100%), var(--bg));
+  color: color-mix(in srgb, var(--on-phase) calc(var(--lit) * 100%), var(--ink));
+  box-shadow: 0 0 0 calc(var(--lit) * 6px) color-mix(in srgb, var(--phase) 22%, transparent);
+}
+
+.stop-body { padding: 14px 16px 0 14px; }
+
+.exhibit {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.stop-body p {
+  margin-top: 14px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink2);
+}
+
+/* exhibits */
+
+.sheet {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--phase) calc(var(--lit) * 100%), var(--rule2));
+  border-radius: 3px;
+  padding: 10px 11px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sheet .dim { color: var(--muted); }
+.sheet-name {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink2);
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.secret { position: relative; display: inline-block; }
+
+.cover {
+  position: absolute;
+  inset: 1px -2px;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  display: grid;
+  place-items: center;
+  border-radius: 2px;
+}
+
+.wline {
+  display: block;
+  margin: 0 -4px;
+  padding: 0 4px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--phase) calc(var(--lit) * 20%), transparent);
+}
+
+.commits {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 7px;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.commits i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--rule2);
+  margin-right: 12px;
+  position: relative;
+}
+
+.commits i::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 12px;
+  height: 1px;
+  background: var(--rule2);
+}
+
+.commits i.last { background: var(--in); margin-right: 8px; }
+.commits i.last::after { display: none; }
+
+.facets { display: grid; gap: 7px; }
+
+.facet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 9px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--phase) calc(var(--lit) * 16%), var(--surface));
+  border: 1px solid color-mix(in srgb, var(--phase) calc(var(--lit) * 100%), var(--rule2));
+}
+
+.facet svg { flex: none; color: var(--in); }
+
+.lane-names {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink2);
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.lanes { display: block; width: 100%; height: auto; overflow: visible; }
+.lanes .it { fill: var(--rule2); }
+.lanes .hit { fill: var(--out); }
+.lanes .join { fill: none; stroke: var(--out); stroke-width: 1.5; opacity: 0.7; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.lanes rect { transform-box: fill-box; transform-origin: left center; }
+
+.answer {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--phase) calc(var(--lit) * 100%), var(--rule2));
+  border-left: 4px solid var(--out);
+  border-radius: 3px;
+  padding: 9px 11px;
+}
+
+.answer q {
+  display: block;
+  quotes: none;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.answer small {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.scopes { display: flex; gap: 5px; margin-top: 9px; }
+
+.scopes span {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--rule2);
+  color: var(--ink2);
+}
+
+.scopes .match {
+  border-color: var(--out);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--out) 16%, transparent);
+}
+
+.flow-note {
+  margin-top: 36px;
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 60em;
+}
+
+/* ---------- closer looks ---------- */
+
+section.wrap { padding-top: 112px; }
+
+.sec-head { max-width: 46em; }
+
+.sec-head h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.sec-head p {
+  margin-top: 14px;
+  font-size: 1.06rem;
+  color: var(--ink2);
+}
+
+.looks {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+}
+
+.look { --phase: var(--out); }
+.look.write { --phase: var(--in); }
+
+.look h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.look h3::before {
+  content: "";
+  width: 22px;
+  height: 6px;
+  background: var(--phase);
+}
+
+.look > p {
+  margin-top: 8px;
+  color: var(--ink2);
+  font-size: 15px;
+  max-width: 34em;
+}
+
+.line { margin-top: 26px; }
+
+.line li {
+  position: relative;
+  padding: 0 0 26px 38px;
+}
+
+.line li::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--phase);
+}
+
+.line li:last-child::before { bottom: auto; height: 12px; }
+.line li:first-child::before { top: 6px; }
+
+.line li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--phase);
+}
+
+.drip {
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  overflow: hidden;
+}
+
+.drip::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60%;
+  background: linear-gradient(180deg, transparent, var(--ink), transparent);
+  opacity: 0.55;
+  transform: translateY(-110%);
+}
+
+.line li:last-child .drip { display: none; }
+
+.line strong {
+  display: block;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.line span.t {
+  display: block;
+  color: var(--ink2);
+  font-size: 15px;
+  max-width: 32em;
+}
+
+.lanes-fig {
+  margin-top: 14px;
+  max-width: 330px;
+  padding: 14px 16px 12px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+}
+
+.lanes-fig .lane-names { font-size: 12px; }
+
+.lanes-fig figcaption {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.key {
+  display: inline-block;
+  width: 14px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--out);
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* ---------- numbers ---------- */
+
+.nums {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 2px solid var(--ink);
+}
+
+.num {
+  padding: 24px 28px 6px 0;
+  border-right: 1px solid var(--rule);
+  margin-right: 28px;
+}
+
+.num:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+
+.num h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink2);
+}
+
+.big {
+  margin-top: 6px;
+  font-size: clamp(2.3rem, 3.6vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.big small { font-size: 0.5em; font-weight: 600; letter-spacing: -0.01em; }
+
+.num p {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink2);
+}
+
+.bars { margin-top: 16px; display: grid; gap: 9px; }
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+  font-size: 12.5px;
+  color: var(--ink2);
+}
+
+.bar-row .track { display: flex; align-items: center; gap: 8px; }
+
+.bar-row .fill {
+  height: 12px;
+  border-radius: 0 4px 4px 0;
+  background: color-mix(in srgb, var(--muted) 62%, var(--bg));
+  min-width: 3px;
+}
+
+.bar-row.us .fill { background: var(--in); }
+
+.bar-row b {
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.group-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 6px;
+}
+
+.group-name:first-child { margin-top: 0; }
+
+.legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--ink2);
+}
+
+.legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 6px;
+  background: color-mix(in srgb, var(--muted) 62%, var(--bg));
+}
+
+.legend .us i { background: var(--in); }
+
+.fine {
+  margin-top: 26px;
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 62em;
+}
+
+/* ---------- guarantees ---------- */
+
+.holds {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 34px 56px;
+}
+
+.holds dt {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule2);
+}
+
+.holds dd {
+  margin-top: 6px;
+  font-size: 15px;
+  color: var(--ink2);
+}
+
+.coming {
+  margin-top: 44px;
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  font-size: 15px;
+  color: var(--ink2);
+  max-width: 52em;
+}
+
+.coming b {
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  border: 1.5px dashed var(--rule2);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+footer {
+  margin-top: 96px;
+  padding: 26px 0 40px;
+  border-top: 1px solid var(--rule);
+  font-size: 13.5px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* ---------- motion: one 16 s loop, static picture is the resting state ---------- */
+
+html.anim .A {
+  animation-duration: var(--T);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: calc(var(--t0, 0s) + var(--d, 0s));
+}
+
+html.anim.paused .A, html.anim.frozen .A { animation-play-state: paused; }
+html.anim.paused .drip::before, html.anim.frozen .drip::before { animation-play-state: paused; }
+
+html.anim .lit-src { animation-name: lit-src; }
+html.anim .lit-dst { animation-name: lit-dst; }
+html.anim .lit1 { animation-name: lit1; }
+html.anim .lit2 { animation-name: lit2; }
+html.anim .lit3 { animation-name: lit3; }
+html.anim .lit4 { animation-name: lit4; }
+html.anim .lit5 { animation-name: lit5; }
+html.anim .c1 { animation-name: c1; }
+html.anim .c2 { animation-name: c2; }
+html.anim .c3 { animation-name: c3; }
+html.anim .c4 { animation-name: c4; }
+html.anim .c5 { animation-name: c5; }
+html.anim .spark-in { animation-name: spark-in; }
+html.anim .spark-out { animation-name: spark-out; }
+html.anim .cap-lines { animation-name: cap-lines; }
+html.anim .cover { animation-name: cover; }
+html.anim .w-store { animation-name: w-store; }
+html.anim .commit-new { animation-name: commit-new; }
+html.anim .w-index { animation-name: w-index; }
+html.anim .lane-run { animation-name: lane-run; }
+html.anim .join { animation-name: join; }
+html.anim .fused { animation-name: fused; }
+html.anim .rr-up { animation-name: rr-up; }
+html.anim .rr-down { animation-name: rr-down; }
+html.anim .w-answer { animation-name: w-answer; }
+
+html.anim .drip::before {
+  animation: drip 6s linear infinite;
+  animation-delay: calc(var(--t0, 0s) + var(--d, 0s));
+}
+
+@keyframes lit-src { 0% { --lit: 0; } 2%, 8% { --lit: 1; } 12%, 100% { --lit: 0; } }
+@keyframes lit-dst { 0%, 96.5% { --lit: 0; } 98.5%, 99.4% { --lit: 1; } 100% { --lit: 1; } }
+@keyframes lit1 { 0%, 9% { --lit: 0; } 11.5%, 26% { --lit: 1; } 28.5%, 100% { --lit: 0; } }
+@keyframes lit2 { 0%, 27% { --lit: 0; } 29.5%, 42% { --lit: 1; } 44.5%, 100% { --lit: 0; } }
+@keyframes lit3 { 0%, 43% { --lit: 0; } 45.5%, 57% { --lit: 1; } 59.5%, 100% { --lit: 0; } }
+@keyframes lit4 { 0%, 58% { --lit: 0; } 60.5%, 79% { --lit: 1; } 81.5%, 100% { --lit: 0; } }
+@keyframes lit5 { 0%, 80% { --lit: 0; } 82.5%, 96% { --lit: 1; } 99%, 100% { --lit: 0; } }
+
+@keyframes c1 { 0%, 23% { --p: 0; opacity: 0; } 23.6% { --p: 0; opacity: 1; } 29% { --p: 1; opacity: 1; } 29.6%, 100% { --p: 1; opacity: 0; } }
+@keyframes c2 { 0%, 39% { --p: 0; opacity: 0; } 39.6% { --p: 0; opacity: 1; } 45% { --p: 1; opacity: 1; } 45.6%, 100% { --p: 1; opacity: 0; } }
+@keyframes c3 { 0%, 54% { --p: 0; opacity: 0; } 54.6% { --p: 0; opacity: 1; } 60% { --p: 1; opacity: 1; } 60.6%, 100% { --p: 1; opacity: 0; } }
+@keyframes c4 { 0%, 76% { --p: 0; opacity: 0; } 76.6% { --p: 0; opacity: 1; } 82% { --p: 1; opacity: 1; } 82.6%, 100% { --p: 1; opacity: 0; } }
+@keyframes c5 { 0%, 88% { --p: 0; opacity: 0; } 88.6% { --p: 0; opacity: 1; } 93.5% { --p: 1; opacity: 1; } 94.1%, 100% { --p: 1; opacity: 0; } }
+
+@keyframes spark-in { 0%, 2% { stroke-dashoffset: 0; opacity: 0; } 2.6% { stroke-dashoffset: 0; opacity: 1; } 9.5% { stroke-dashoffset: -100; opacity: 1; } 10.1%, 100% { stroke-dashoffset: -100; opacity: 0; } }
+@keyframes spark-out { 0%, 93.5% { stroke-dashoffset: 0; opacity: 0; } 94.1% { stroke-dashoffset: 0; opacity: 1; } 98.5% { stroke-dashoffset: -100; opacity: 1; } 99.1%, 100% { stroke-dashoffset: -100; opacity: 0; } }
+
+@keyframes cap-lines { 0%, 8.5% { opacity: 1; } 9.5%, 10.5% { opacity: 0; } 12.5%, 100% { opacity: 1; } }
+@keyframes cover {
+  0%, 9.5% { clip-path: inset(0 0 0 0); }
+  10%, 16.5% { clip-path: inset(0 100% 0 0); }
+  21%, 100% { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes w-store { 0%, 29.5% { --lit: 0; } 31% { --lit: 1; } 34.5%, 100% { --lit: 0; } }
+@keyframes commit-new { 0%, 28% { transform: scale(1); } 29%, 39.5% { transform: scale(0); } 41.5% { transform: scale(1.5); } 43%, 100% { transform: scale(1); } }
+@keyframes w-index { 0%, 45.5% { --lit: 0; } 47%, 49.5% { --lit: 1; } 51.5%, 100% { --lit: 0; } }
+
+@keyframes lane-run { 0%, 59% { transform: scaleX(1); } 60%, 61% { transform: scaleX(0); } 65.5%, 100% { transform: scaleX(1); } }
+@keyframes join { 0%, 59% { stroke-dashoffset: 0; } 60%, 65.5% { stroke-dashoffset: 1; } 70%, 100% { stroke-dashoffset: 0; } }
+@keyframes fused { 0%, 59% { opacity: 1; } 60%, 68.5% { opacity: 0; } 71%, 100% { opacity: 1; } }
+@keyframes rr-up { 0%, 59% { transform: translateY(0); } 60%, 74% { transform: translateY(20px); } 78%, 100% { transform: translateY(0); } }
+@keyframes rr-down { 0%, 59% { transform: translateY(0); } 60%, 74% { transform: translateY(-10px); } 78%, 100% { transform: translateY(0); } }
+
+@keyframes w-answer { 0%, 83% { --lit: 0; } 85.5%, 95% { --lit: 1; } 98%, 100% { --lit: 0; } }
+
+@keyframes drip { 0% { transform: translateY(-110%); } 30%, 100% { transform: translateY(180%); } }
+
+.answer q {
+  margin: -2px -4px;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.answer q.A { background: color-mix(in srgb, var(--out) calc(var(--lit) * 22%), transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .A, .drip::before { animation: none !important; }
+}
+
+/* ---------- narrower than a laptop: the line runs down the page ---------- */
+
+@media (max-width: 1099px) {
+  .wrap { padding: 0 20px; }
+  .hero { padding-top: 20px; }
+  .lede { font-size: 1.06rem; }
+
+  .flow {
+    display: block;
+    margin-top: 40px;
+    max-width: 640px;
+  }
+
+  .fan { height: auto; }
+  .fan svg { display: none; }
+
+  .fan-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink2);
+    margin-bottom: 8px;
+  }
+
+  .fan ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px;
+    height: auto;
+    width: auto;
+  }
+
+  .fan.dst ul { margin-left: 0; }
+  .chip { padding: 0 12px; }
+
+  .fan.src { padding-bottom: 22px; }
+  .fan.dst { padding-top: 22px; }
+
+  .fan.src::after, .fan.dst::before {
+    content: "";
+    position: absolute;
+    left: 17px;
+    width: 6px;
+    height: 22px;
+    background: var(--phase);
+  }
+
+  .fan.src::after { bottom: 0; }
+  .fan.dst::before { top: 0; }
+
+  .stops { display: block; }
+
+  .stop {
+    grid-template-columns: 40px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+  }
+
+  .phase, .phase.w2, .phase.w3 {
+    position: static;
+    width: auto;
+    grid-column: 2;
+    border-bottom: 0;
+    padding: 0 0 4px 8px;
+  }
+
+  .phase::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 6px;
+    background: var(--phase);
+    margin-right: 7px;
+    vertical-align: middle;
+  }
+
+  .rail {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    width: 6px;
+    height: auto;
+    align-self: stretch;
+    justify-self: center;
+  }
+
+  .run { top: 8px; bottom: -8px; left: 14px; right: auto; width: 12px; height: auto; }
+  .stop.has-phase .run { top: 32px; }
+  .bead { transform: translateY(calc(var(--p) * 100%)); }
+  .bead::before { top: 0; }
+
+  .dot { top: 0; left: 6px; }
+  .stop.has-phase .dot { top: 24px; }
+
+  .stop-head {
+    grid-column: 2;
+    padding: 0 0 0 8px;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+  }
+
+  .stop-body {
+    grid-column: 2;
+    padding: 6px 0 34px 8px;
+  }
+
+  .stop-body p { margin-top: 0; font-size: 15px; max-width: 30em; }
+
+  .exhibit {
+    height: auto;
+    margin-top: 14px;
+    max-width: 300px;
+    order: 2;
+  }
+
+  .stop-body { display: flex; flex-direction: column; }
+
+  section.wrap { padding-top: 76px; }
+  .looks { grid-template-columns: 1fr; gap: 56px; }
+  .nums { grid-template-columns: 1fr 1fr; }
+  .num { border-right: 0; margin-right: 0; padding: 22px 24px 18px 0; border-bottom: 1px solid var(--rule); }
+  .holds { grid-template-columns: 1fr 1fr; gap: 28px 36px; }
+}
+
+@media (max-width: 640px) {
+  .nums { grid-template-columns: 1fr; }
+  .num { padding-right: 0; }
+  .holds { grid-template-columns: 1fr; }
+  .mark { font-size: 20px; }
+  .btn { padding: 5px 11px; }
+  .coming { flex-direction: column; gap: 8px; align-items: flex-start; }
+}
+</style>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var root = document.documentElement;
+  var theme = q.get('theme');
+
+  if (theme === 'dark' || theme === 'light') {
+    root.setAttribute('data-theme', theme);
+  }
+
+  var still = q.has('static') || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!still) {
+    root.classList.add('anim');
+
+    if (q.has('t')) {
+      root.style.setProperty('--t0', '-' + parseFloat(q.get('t')) + 's');
+      root.classList.add('frozen');
+    }
+  }
+})();
+</script>
+</head>
+<body>
+
+<header class="wrap bar">
+  <div class="mark">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+      <path d="M2 6 C10 6 8 13 13 13 M2 20 C10 20 8 13 13 13" fill="none" stroke="var(--in)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M13 13 C18 13 16 6 24 6 M13 13 C18 13 16 20 24 20" fill="none" stroke="var(--out)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="13" cy="13" r="4" fill="var(--bg)" stroke="var(--ink)" stroke-width="2.5"/>
+    </svg>
+    brain
+  </div>
+  <div class="controls">
+    <button class="btn" id="motion" type="button" aria-pressed="false">Pause</button>
+    <button class="btn" id="theme" type="button">Dark</button>
+  </div>
+</header>
+
+<main>
+
+<div class="wrap hero">
+  <h1><span class="u-in">What one agent learns,</span> <span class="u-out">every agent can recall.</span></h1>
+  <p class="lede">brain is one shared memory for your AI coding agents and for you. Claude Code, Codex, opencode and others read and write the same knowledge base, through MCP or a command line. It runs as one binary on your server.</p>
+
+  <div class="flow" aria-label="How a piece of knowledge travels through brain, in five steps">
+
+    <div class="fan src">
+      <span class="fan-label">Written by</span>
+      <ul>
+        <li class="chip story A lit-src">Claude Code</li>
+        <li class="chip">Codex</li>
+        <li class="chip">opencode</li>
+        <li class="chip">You</li>
+      </ul>
+      <svg viewBox="0 0 50 200" aria-hidden="true">
+        <path class="thin" d="M0 72 C30 72 20 100 50 100"/>
+        <path class="thin" d="M0 128 C30 128 20 100 50 100"/>
+        <path class="thin" d="M0 184 C34 184 16 100 50 100"/>
+        <path class="thick" d="M0 16 C34 16 16 100 50 100"/>
+        <path class="spark A spark-in" pathLength="100" d="M0 16 C34 16 16 100 50 100"/>
+      </svg>
+    </div>
+
+    <ol class="stops">
+
+      <li class="stop has-phase A lit1">
+        <span class="phase w3">Knowledge in</span>
+        <div class="stop-head"><h3>Capture</h3></div>
+        <div class="rail"></div>
+        <span class="run" aria-hidden="true"><i class="bead A c1"></i></span>
+        <span class="dot" aria-hidden="true">1</span>
+        <div class="stop-body">
+          <div class="exhibit">
+            <div class="sheet">
+              <div class="sheet-name"><span>From a session</span></div>
+              <div class="A cap-lines">
+                retry the upload<br>
+                once, then fail.<br>
+                <span class="dim">key:</span> <span class="secret">sk-live-9f2c<span class="cover A">REDACTED</span></span>
+              </div>
+            </div>
+          </div>
+          <p>Agents and you write notes, learnings, tasks and handoffs. Every agent session is collected automatically. Secrets are redacted before anything is stored.</p>
+        </div>
+      </li>
+
+      <li class="stop A lit2">
+        <div class="stop-head"><h3>Store</h3></div>
+        <div class="rail"></div>
+        <span class="run" aria-hidden="true"><i class="bead A c2"></i></span>
+        <span class="dot" aria-hidden="true">2</span>
+        <div class="stop-body">
+          <div class="exhibit">
+            <div class="sheet">
+              <div class="sheet-name"><span>upload-retries.md</span></div>
+              <span class="wline A w-store"><span class="dim">type:</span> learning</span>
+              <span class="wline A w-store" style="--d:.3s"><span class="dim">scope:</span> project</span>
+              <span class="wline A w-store" style="--d:.6s">Retry the upload</span>
+              <span class="wline A w-store" style="--d:.9s">once, then fail.</span>
+              <div class="commits"><i></i><i></i><i class="last A commit-new"></i>history in git</div>
+            </div>
+          </div>
+          <p>Plain markdown files are the source of truth. You can read and edit them, and git keeps their history. The search index is built from them and can be rebuilt at any time.</p>
+        </div>
+      </li>
+
+      <li class="stop A lit3">
+        <div class="stop-head"><h3>Understand</h3></div>
+        <div class="rail"></div>
+        <span class="run" aria-hidden="true"><i class="bead A c3"></i></span>
+        <span class="dot" aria-hidden="true">3</span>
+        <div class="stop-body">
+          <div class="exhibit">
+            <div class="facets">
+              <div class="facet A w-index">
+                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 4h14M2 9h14M2 14h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                Full text
+              </div>
+              <div class="facet A w-index" style="--d:.6s">
+                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><g fill="currentColor"><circle cx="3" cy="13" r="2"/><circle cx="8" cy="6" r="2"/><circle cx="11" cy="12" r="2"/><circle cx="15" cy="4" r="2"/></g></svg>
+                A vector per passage
+              </div>
+              <div class="facet A w-index" style="--d:1.2s">
+                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 3M4 4l3 10M14 7l-7 7" stroke="currentColor" stroke-width="1.5"/><g fill="currentColor"><circle cx="4" cy="4" r="2.5"/><circle cx="14" cy="7" r="2.5"/><circle cx="7" cy="14" r="2.5"/></g></svg>
+                The link graph
+              </div>
+            </div>
+          </div>
+          <p>The index holds the full text, a vector for each passage and the links between notes. Nightly upkeep consolidates and archives. It never deletes.</p>
+        </div>
+      </li>
+
+      <li class="stop out has-phase A lit4">
+        <span class="phase w2">Answers out</span>
+        <div class="stop-head"><h3>Recall</h3></div>
+        <div class="rail"></div>
+        <span class="run" aria-hidden="true"><i class="bead A c4"></i></span>
+        <span class="dot" aria-hidden="true">4</span>
+        <div class="stop-body">
+          <div class="exhibit">
+            <div class="lane-names" aria-hidden="true"><span>words</span><span>titles</span><span>dates</span><span>meaning</span></div>
+            <svg class="lanes" viewBox="0 0 176 104" role="img" aria-label="Four ranked lists run side by side, fuse into one list, and the reranker moves the matching passage to the top">
+              <g>
+                <rect class="it A lane-run" x="6" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="it A lane-run" x="6" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="hit A lane-run" x="6" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+                <rect class="it A lane-run" x="50" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="it A lane-run" x="50" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="it A lane-run" x="50" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+                <rect class="it A lane-run" x="94" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="hit A lane-run" x="94" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="it A lane-run" x="94" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+                <rect class="hit A lane-run" x="138" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="it A lane-run" x="138" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="it A lane-run" x="138" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+              </g>
+              <path class="join A" pathLength="1" d="M22 30 C22 46 88 40 88 56"/>
+              <path class="join A" pathLength="1" d="M66 30 C66 44 88 42 88 56"/>
+              <path class="join A" pathLength="1" d="M110 30 C110 44 88 42 88 56"/>
+              <path class="join A" pathLength="1" d="M154 30 C154 46 88 40 88 56"/>
+              <g class="A fused">
+                <rect class="hit A rr-up" x="44" y="62" width="88" height="6" rx="3"/>
+                <rect class="it A rr-down" x="44" y="72" width="88" height="6" rx="3"/>
+                <rect class="it A rr-down" x="44" y="82" width="88" height="6" rx="3"/>
+                <rect class="it" x="44" y="92" width="88" height="6" rx="3"/>
+              </g>
+            </svg>
+          </div>
+          <p>One search runs several lists side by side, fuses them and reranks the best with a cross-encoder. No LLM runs at query time, so it is fast and cheap.</p>
+        </div>
+      </li>
+
+      <li class="stop out A lit5">
+        <div class="stop-head"><h3>Serve</h3></div>
+        <div class="rail"></div>
+        <span class="run" aria-hidden="true"><i class="bead A c5"></i></span>
+        <span class="dot" aria-hidden="true">5</span>
+        <div class="stop-body">
+          <div class="exhibit">
+            <div class="answer">
+              <q class="A w-answer">Retry the upload once, then fail.</q>
+              <small>3 Nov, from a Claude Code session</small>
+            </div>
+            <div class="scopes"><span>global</span><span class="match">project</span><span>personal</span></div>
+          </div>
+          <p>Any agent gets the same answer, within its access: global, project or personal. At the start of a session and on demand.</p>
+        </div>
+      </li>
+
+    </ol>
+
+    <div class="fan dst">
+      <span class="fan-label">Recalled by</span>
+      <ul>
+        <li class="chip">Claude Code</li>
+        <li class="chip story A lit-dst">Codex</li>
+        <li class="chip">opencode</li>
+        <li class="chip">Others</li>
+      </ul>
+      <svg viewBox="0 0 50 200" aria-hidden="true">
+        <path class="thin" d="M0 100 C34 100 16 16 50 16"/>
+        <path class="thin" d="M0 100 C30 100 20 128 50 128"/>
+        <path class="thin" d="M0 100 C34 100 16 184 50 184"/>
+        <path class="thick" d="M0 100 C30 100 20 72 50 72"/>
+        <path class="spark A spark-out" pathLength="100" d="M0 100 C30 100 20 72 50 72"/>
+      </svg>
+    </div>
+
+  </div>
+
+  <p class="flow-note">The example follows one learning: written during a Claude Code session, recalled later by Codex in the same project.</p>
+</div>
+
+<section class="wrap">
+  <div class="sec-head">
+    <h2>Two closer looks</h2>
+    <p>The two paths that matter most to an agent: what happens when it asks, and what happens when it writes.</p>
+  </div>
+
+  <div class="looks">
+
+    <div class="look search">
+      <h3>A search</h3>
+      <p>Retrieval is ranking and one small reranking model. Nothing generates text.</p>
+      <ol class="line">
+        <li><i class="drip"></i>
+          <strong>Ask</strong>
+          <span class="t">An agent, or you, ask in plain words.</span>
+        </li>
+        <li><i class="drip" style="--d:.5s"></i>
+          <strong>Filter by access</strong>
+          <span class="t">Access rules apply first, inside the database. A prompt or a tool argument cannot widen them.</span>
+        </li>
+        <li><i class="drip" style="--d:1s"></i>
+          <strong>Rank four ways, side by side</strong>
+          <span class="t">Words in the text. Notes named for the question. Dated notes, when the question names a period such as last week. Passages closest in meaning.</span>
+          <figure class="lanes-fig">
+            <div class="lane-names" aria-hidden="true"><span>words</span><span>titles</span><span>dates</span><span>meaning</span></div>
+            <svg class="lanes" viewBox="0 0 176 104" role="img" aria-label="Four ranked lists fuse into one, then the reranker moves the matching passage to the top">
+              <g>
+                <rect class="it A lane-run" x="6" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="it A lane-run" x="6" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="hit A lane-run" x="6" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+                <rect class="it A lane-run" x="50" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="it A lane-run" x="50" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="it A lane-run" x="50" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+                <rect class="it A lane-run" x="94" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="hit A lane-run" x="94" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="it A lane-run" x="94" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+                <rect class="hit A lane-run" x="138" y="2" width="32" height="5" rx="2.5"/>
+                <rect class="it A lane-run" x="138" y="11" width="32" height="5" rx="2.5" style="--d:.1s"/>
+                <rect class="it A lane-run" x="138" y="20" width="32" height="5" rx="2.5" style="--d:.2s"/>
+              </g>
+              <path class="join A" pathLength="1" d="M22 30 C22 46 88 40 88 56"/>
+              <path class="join A" pathLength="1" d="M66 30 C66 44 88 42 88 56"/>
+              <path class="join A" pathLength="1" d="M110 30 C110 44 88 42 88 56"/>
+              <path class="join A" pathLength="1" d="M154 30 C154 46 88 40 88 56"/>
+              <g class="A fused">
+                <rect class="hit A rr-up" x="44" y="62" width="88" height="6" rx="3"/>
+                <rect class="it A rr-down" x="44" y="72" width="88" height="6" rx="3"/>
+                <rect class="it A rr-down" x="44" y="82" width="88" height="6" rx="3"/>
+                <rect class="it" x="44" y="92" width="88" height="6" rx="3"/>
+              </g>
+            </svg>
+            <figcaption><span class="key"></span>The same passage, found by three lists and ranked first after the rerank.</figcaption>
+          </figure>
+        </li>
+        <li><i class="drip" style="--d:1.5s"></i>
+          <strong>Fuse</strong>
+          <span class="t">The lists merge into one ranking, with one hit for each note or session.</span>
+        </li>
+        <li><i class="drip" style="--d:2s"></i>
+          <strong>Rerank the best</strong>
+          <span class="t">A cross-encoder reads the top 20 against the question. If it runs past its time budget, the fused order is returned.</span>
+        </li>
+        <li>
+          <strong>Return the passage</strong>
+          <span class="t">The passage that matched, the turns around it and its date. Near-duplicates are dropped and the answer is trimmed to a token budget.</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="look write">
+      <h3>A write</h3>
+      <p>One writer owns every change, so a file and its index never disagree.</p>
+      <ol class="line">
+        <li><i class="drip" style="--d:.25s"></i>
+          <strong>Write</strong>
+          <span class="t">An agent remembers a note, edits a section, retires a fact or leaves a handoff.</span>
+        </li>
+        <li><i class="drip" style="--d:.75s"></i>
+          <strong>Queue on the agent's machine</strong>
+          <span class="t">The write is saved locally and answered at once. If your server is down, it is sent when the server is back.</span>
+        </li>
+        <li><i class="drip" style="--d:1.25s"></i>
+          <strong>Redact</strong>
+          <span class="t">Secrets are replaced with a marker before the text is stored, indexed or embedded.</span>
+        </li>
+        <li><i class="drip" style="--d:1.75s"></i>
+          <strong>Check</strong>
+          <span class="t">An edit based on an old version is refused with a conflict. A write that is sent twice is applied once.</span>
+        </li>
+        <li><i class="drip" style="--d:2.25s"></i>
+          <strong>Write the file</strong>
+          <span class="t">The markdown file is replaced in one step, so a crash never leaves half a note.</span>
+        </li>
+        <li><i class="drip" style="--d:2.75s"></i>
+          <strong>Update the index</strong>
+          <span class="t">Full text and links commit in one transaction. The passage vectors follow in the background.</span>
+        </li>
+        <li>
+          <strong>Keep the history</strong>
+          <span class="t">The files are committed to git every three minutes.</span>
+        </li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="sec-head">
+    <h2>By the numbers</h2>
+    <p>Measured on our own deployment in November 2026. Each figure says what it measures.</p>
+  </div>
+
+  <div class="nums">
+
+    <div class="num">
+      <h3>Search time</h3>
+      <div class="big">85 <small>ms</small></div>
+      <p>Median time for one search, 101 ms at the 95th percentile. On a GPU server, with reranking, over the questions of the LoCoMo benchmark.</p>
+      <p>Long questions over a live index of real agent sessions: 299 ms median, 394 ms at the 95th percentile.</p>
+    </div>
+
+    <div class="num">
+      <h3>Tokens an agent reads per question</h3>
+      <div class="big">8.6× <small>fewer</small></div>
+      <div class="bars" role="img" aria-label="brain serves 2,317 tokens per question. The whole conversation is about 19,900 tokens.">
+        <div class="bar-row us">
+          <span>What one brain search serves</span>
+          <div class="track"><span class="fill" style="width:9.3%" title="2,317 tokens"></span><b>2,317</b></div>
+        </div>
+        <div class="bar-row">
+          <span>The whole conversation</span>
+          <div class="track"><span class="fill" style="width:80%" title="about 19,900 tokens"></span><b>19,900</b></div>
+        </div>
+      </div>
+      <p>Mean tokens per LoCoMo question. The conversation figure is approximate.</p>
+    </div>
+
+    <div class="num">
+      <h3>Answers from one search</h3>
+      <div class="big">79.5<small>%</small></div>
+      <p>LoCoMo questions answered correctly using only what one search served. All 1,536 answerable questions, graded by a model.</p>
+      <p>With the whole matching passages instead: 88.7%.</p>
+    </div>
+
+    <div class="num">
+      <h3>Against industry average, on real note queries</h3>
+      <div class="bars" role="img" aria-label="Recall at 10: brain 0.646, avg 0.455. Mean reciprocal rank: brain 0.824, avg 0.597.">
+        <div class="group-name">Relevant notes found in the top 10</div>
+        <div class="bar-row us"><div class="track"><span class="fill" style="width:51.7%" title="brain, recall at 10: 0.646"></span><b>0.646</b></div></div>
+        <div class="bar-row"><div class="track"><span class="fill" style="width:36.4%" title="avg, recall at 10: 0.455"></span><b>0.455</b></div></div>
+        <div class="group-name">How high the first relevant note ranks</div>
+        <div class="bar-row us"><div class="track"><span class="fill" style="width:65.9%" title="brain, mean reciprocal rank: 0.824"></span><b>0.824</b></div></div>
+        <div class="bar-row"><div class="track"><span class="fill" style="width:47.8%" title="avg, mean reciprocal rank: 0.597"></span><b>0.597</b></div></div>
+      </div>
+      <div class="legend"><span class="us"><i></i>brain</span><span><i></i>avg</span></div>
+      <p>Recall at 10 and mean reciprocal rank on 30 queries from real use. Both tools searched the same notes, and one model judged a shared pool of their results. Scale 0 to 1.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="wrap">
+  <div class="sec-head">
+    <h2>What always holds</h2>
+  </div>
+
+  <dl class="holds">
+    <div>
+      <dt>The files are the truth</dt>
+      <dd>Delete the index and brain rebuilds it from the markdown files, with no loss.</dd>
+    </div>
+    <div>
+      <dt>Nothing is overwritten silently</dt>
+      <dd>A write based on an old version fails with a conflict. Agents append or patch a section.</dd>
+    </div>
+    <div>
+      <dt>Upkeep archives, it never deletes</dt>
+      <dd>Only the owner can purge a note, and never through an agent.</dd>
+    </div>
+    <div>
+      <dt>Secrets are redacted first</dt>
+      <dd>Before anything is stored, split into passages or embedded.</dd>
+    </div>
+    <div>
+      <dt>Access is checked in the database</dt>
+      <dd>On every query. Personal notes live in a separate database file.</dd>
+    </div>
+    <div>
+      <dt>Search works with no GPU and no LLM</dt>
+      <dd>Vectors and the reranker add to it. If they fail, keyword search still answers.</dd>
+    </div>
+  </dl>
+
+  <p class="coming"><b>Coming</b><span>Distilling long sessions into short notes, so work from months ago is as easy to find as a note written yesterday.</span></p>
+</section>
+
+</main>
+
+<div class="wrap">
+  <footer>
+    <span>brain, one shared memory for AI coding agents and their owner.</span>
+    <!--<span>Self-hosted. Your files stay on your server.</span>-->
+  </footer>
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('theme');
+  var motionBtn = document.getElementById('motion');
+
+  function isDark() {
+    var set = root.getAttribute('data-theme');
+
+    if (set) {
+      return set === 'dark';
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function label() {
+    themeBtn.textContent = isDark() ? 'Light' : 'Dark';
+  }
+
+  themeBtn.addEventListener('click', function () {
+    root.setAttribute('data-theme', isDark() ? 'light' : 'dark');
+    label();
+  });
+
+  motionBtn.addEventListener('click', function () {
+    var paused = root.classList.toggle('paused');
+    motionBtn.textContent = paused ? 'Play' : 'Pause';
+    motionBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+  });
+
+  label();
+})();
+</script>
+</body>
+</html>
