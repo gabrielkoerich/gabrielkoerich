@@ -221,6 +221,30 @@ def humanize_delta(iso_ts):
     return f"{years} year{'s' if years > 1 else ''} ago"
 
 
+def fetch_last_commits(token=None):
+    """Map each public repo name to its last commit date on the default branch, GraphQL needs a token"""
+    if not token:
+        return {}
+
+    query = (
+        f'{{user(login:"{USERNAME}"){{repositories(first:100,privacy:PUBLIC,ownerAffiliations:OWNER)'
+        "{nodes{name defaultBranchRef{target{... on Commit{committedDate}}}}}}}"
+    )
+    req = urllib.request.Request(
+        "https://api.github.com/graphql",
+        data=json.dumps({"query": query}).encode(),
+        headers={"Authorization": f"bearer {token}", "Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req) as response:
+            nodes = json.loads(response.read())["data"]["user"]["repositories"]["nodes"]
+    except (urllib.error.URLError, KeyError, TypeError) as e:
+        print(f"Error fetching last commits: {e}", file=sys.stderr)
+        return {}
+
+    return {n["name"]: ((n.get("defaultBranchRef") or {}).get("target") or {}).get("committedDate") for n in nodes}
+
+
 def fetch_repos(token=None):
     """Fetch user repositories"""
     headers = {}
@@ -232,10 +256,15 @@ def fetch_repos(token=None):
     if not html:
         return []
     repos = json.loads(html)
+    commits = fetch_last_commits(token)
 
     # Enrich with relative-time strings and a days_since_push integer for filtering
     now = datetime.now(timezone.utc)
     for r in repos:
+        # pushed_at moves on any branch push, so a stale repo can look active
+        last = commits.get(r["name"])
+        r["last_commit_at"] = last
+        r["days_since_commit"] = (now - datetime.fromisoformat(last.replace("Z", "+00:00"))).days if last else None
         pushed = r.get("pushed_at")
         if pushed:
             try:

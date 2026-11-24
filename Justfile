@@ -7,6 +7,11 @@ default:
 fetch-github:
     python3 scripts/fetch-github.py
 
+# Refill the project and post lists in the GitHub profile README, CI runs this on every deploy
+[group('github')]
+readme: fetch-github
+    python3 scripts/build-readme.py
+
 # Fetch GitHub data with token (for higher API limits)
 [group('github')]
 fetch-github-auth TOKEN:
