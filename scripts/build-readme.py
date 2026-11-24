@@ -56,11 +56,11 @@ def projects():
         if (repo.get("days_since_push", 9999) if age is None else age) > CURRENT_DAYS:
             continue
 
-        line = f"- **[{repo['name']}]({repo['html_url']})** · {repo['description'].strip()}"
+        line = f"- **[{repo['name']}]({repo['html_url']})** - {repo['description'].strip()}"
         home = (repo.get("homepage") or "").strip().rstrip("/")
         if home:
             home = re.sub(r"^(https?://)?", "https://", home)
-            line += f" · [{home.removeprefix('https://')}]({home})"
+            line += f" [{home.removeprefix('https://')}]({home})"
 
         lines.append(line)
 
