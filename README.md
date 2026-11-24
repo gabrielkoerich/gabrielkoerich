@@ -1,13 +1,19 @@
 ### Hi there 👋
 
-I'm a technical, productivity-focused entrepreneur and software engineer.
+I build Solana DeFi protocols in Rust and write tooling for AI agents. Previously founded Bulldesk, a marketing automation SaaS acquired in 2021.
 
-I started coding at 13 out of curiosity. More than 15 years later I build DeFi protocols and scalable systems, and I like hard, real world problems, especially in finance.
+## Current Projects
 
-Previously founded Bulldesk (marketing automation SaaS, acquired 2021).
+<!-- projects:start -->
+<!-- projects:end -->
 
-Since 2021 Python & Rust has been my main languages, currently architecting Solana DeFi smart contracts & writting AI agents tooling.
+## Latest Posts
 
-I run Claude Code, Codex and OpenCode in parallel with [orch](https://github.com/gabrielkoerich/orch), a tool I built for my personal projects, and made [passbox](https://passbox.gabrielkoerich.com) so those agents can use secrets without seeing them. The skills they use are public in [skills](https://projects.gabrielkoerich.com/skills/), self-contained skills that work with any agent that follows the Agent Skills standard.
+<!-- posts:start -->
+<!-- posts:end -->
 
-Read more about me at https://gabrielkoerich.com
+[All posts](https://gabrielkoerich.com/posts/)
+
+---
+
+[Website](https://gabrielkoerich.com) · [X](https://x.com/gabrielmkoerich) · [LinkedIn](https://linkedin.com/in/gabrielkoerich) · [Projects](https://projects.gabrielkoerich.com)
