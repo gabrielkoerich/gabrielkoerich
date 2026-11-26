@@ -5,10 +5,10 @@ I build Solana DeFi protocols in Rust and write tooling for AI agents. Previousl
 ## Current Projects
 
 <!-- projects:start -->
-- **[passbox](https://github.com/gabrielkoerich/passbox)** - A password manager for AI agents. A fingerprint releases one secret into one process, not into the agent's context. [passbox.gabrielkoerich.com](https://passbox.gabrielkoerich.com)
-- **[dotfiles](https://github.com/gabrielkoerich/dotfiles)** - Gabriel's config files (zsh, tmux, git, etc) + backups, brew installs, coding agents and macOS setup.
-- **[shipcheck](https://github.com/gabrielkoerich/shipcheck)** - Run GitHub Actions locally with on host or with act, cache the result by git tree, and post it as the PR's required check. [shipcheck.run](https://shipcheck.run)
 - **[tmux-agents](https://github.com/gabrielkoerich/tmux-agents)** - tmux plugin that tracks Claude Code, Codex and OpenCode in your panes, locally and over ssh, with a sidebar and a go to anywhere picker
+- **[dotfiles](https://github.com/gabrielkoerich/dotfiles)** - Gabriel's config files (zsh, tmux, git, etc) + backups, brew installs, coding agents and macOS setup.
+- **[passbox](https://github.com/gabrielkoerich/passbox)** - A password manager for AI agents. A fingerprint releases one secret into one process, not into the agent's context. [passbox.gabrielkoerich.com](https://passbox.gabrielkoerich.com)
+- **[shipcheck](https://github.com/gabrielkoerich/shipcheck)** - Run GitHub Actions locally with on host or with act, cache the result by git tree, and post it as the PR's required check. [shipcheck.run](https://shipcheck.run)
 - **[solana-fib-cpi](https://github.com/gabrielkoerich/solana-fib-cpi)** - Simple program that uses only the modular Solana v2 crates
 - **[orch](https://github.com/gabrielkoerich/orch)** - Autonomous Agents Orchestrator Experiment [orch.gabrielkoerich.com](https://orch.gabrielkoerich.com)
 - **[opencvm](https://github.com/gabrielkoerich/opencvm)** - CVM open data (DFP, ITR, IPE, CAD): download, normalize, compute indicators, and serve them over an API
