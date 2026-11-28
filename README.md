@@ -5,10 +5,10 @@ I build Solana DeFi protocols in Rust and write tooling for AI agents. Previousl
 ## Current Projects
 
 <!-- projects:start -->
-- **[git-cow](https://github.com/gabrielkoerich/git-cow)** - Git worktrees that share files through copy-on-write clones (APFS, XFS, btrfs). A git subcommand and a Rust crate [docs.rs/git-cow](https://docs.rs/git-cow)
-- **[passbox](https://github.com/gabrielkoerich/passbox)** - A password manager for AI agents. A fingerprint releases one secret into one process, not into the agent's context. [passbox.gabrielkoerich.com](https://passbox.gabrielkoerich.com)
 - **[orch](https://github.com/gabrielkoerich/orch)** - Autonomous Agents Orchestrator Experiment [orch.gabrielkoerich.com](https://orch.gabrielkoerich.com)
+- **[git-cow](https://github.com/gabrielkoerich/git-cow)** - Git worktrees that share files through copy-on-write clones (APFS, XFS, btrfs). A git subcommand and a Rust crate [docs.rs/git-cow](https://docs.rs/git-cow)
 - **[shipcheck](https://github.com/gabrielkoerich/shipcheck)** - Run GitHub Actions locally with on host or with act, cache the result by git tree, and post it as the PR's required check. [shipcheck.run](https://shipcheck.run)
+- **[passbox](https://github.com/gabrielkoerich/passbox)** - A password manager for AI agents. A fingerprint releases one secret into one process, not into the agent's context. [passbox.gabrielkoerich.com](https://passbox.gabrielkoerich.com)
 - **[dylint-lints](https://github.com/gabrielkoerich/dylint-lints)** - Custom Rust lints for dylint, for rules Clippy does not have
 - **[tmux-agents](https://github.com/gabrielkoerich/tmux-agents)** - tmux plugin that tracks Claude Code, Codex and OpenCode in your panes, locally and over ssh, with a sidebar, a go to anywhere picker, notifications, and agents that come back after a restart
 - **[tmux-osc-7577](https://github.com/gabrielkoerich/tmux-osc-7577)** - tmux plugin for the OSC 7577 Program Resume Protocol: programs report how to start them again, and they come back after tmux restarts. One small C reader serves every pane
@@ -18,7 +18,7 @@ I build Solana DeFi protocols in Rust and write tooling for AI agents. Previousl
 - **[skills](https://github.com/gabrielkoerich/skills)** - A collection of independent, self-contained skills for AI agents. [projects.gabrielkoerich.com/skills](https://projects.gabrielkoerich.com/skills)
 - **[opencvm](https://github.com/gabrielkoerich/opencvm)** - CVM open data (DFP, ITR, IPE, CAD): download, normalize, compute indicators, and serve them over an API
 - **[evm-lend-protocol](https://github.com/gabrielkoerich/evm-lend-protocol)** - Isolated-market lending, curated ERC-4626 vaults on EVM
-- **[vlm-security](https://github.com/gabrielkoerich/vlm-security)** - Local VLM decides whether camera motion should trigger an alarm
+- **[vlm-security](https://github.com/gabrielkoerich/vlm-security)** - MVP of a local Visual Language Model which decides whether camera motion should trigger an alarm
 - **[secret-redact](https://github.com/gabrielkoerich/secret-redact)** - Find and redact secrets in text: a Rust crate and a CLI
 - **[sandbox-jail](https://github.com/gabrielkoerich/sandbox-jail)** - Run a command in the OS sandbox, Seatbelt on macOS and bubblewrap on Linux, under a policy the caller defines [docs.rs/sandbox-jail](https://docs.rs/sandbox-jail)
 - **[smart-money-concepts](https://github.com/gabrielkoerich/smart-money-concepts)** - A TypeScript implementation of Smart Money Concepts (SMC) methodology for market structure analysis. Detects order blocks, fair value gaps, breaks of structure, changes of character, liquidity grabs, and more. [projects.gabrielkoerich.com/smart-money-concepts](https://projects.gabrielkoerich.com/smart-money-concepts)
